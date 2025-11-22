@@ -13,3 +13,52 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+// --- MODEL DATABASE ---
+
+// Model untuk Pengguna (User)
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String   // Disimpan sebagai hash!
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  accounts    Account[]
+  transactions Transaction[]
+}
+
+// Model untuk Akun Keuangan (misalnya, Bank, Tunai)
+model Account {
+  id        Int      @id @default(autoincrement())
+  name      String
+  balance   Float    @default(0) // Saldo awal
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relasi ke User
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  
+  // Transaksi yang terkait dengan akun ini (opsional: bisa dihubungkan ke salah satu akun)
+  transactions Transaction[]
+}
+
+// Model untuk Transaksi (Pendapatan/Pengeluaran)
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  type        String   // 'INCOME' atau 'EXPENSE'
+  category    String   // 'Makanan', 'Gaji', 'Tagihan', dll.
+  description String?
+  date        DateTime @default(now()) // Tanggal transaksi
+  createdAt   DateTime @default(now())
+
+  // Relasi ke User
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+
+  // Relasi ke Account (Opsional: dari akun mana dana keluar/masuk)
+  accountId   Int? // Gunakan Int? karena mungkin ada transaksi yang tidak terkait akun spesifik
+  account     Account? @relation(fields: [accountId], references: [id])
+}
