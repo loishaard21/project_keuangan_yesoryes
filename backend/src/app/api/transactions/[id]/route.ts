@@ -2,17 +2,17 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function GET(_: Request, { params }: any) {
-  const acc = await prisma.account.findUnique({
+  const trx = await prisma.transaction.findUnique({
     where: { id: Number(params.id) },
   });
 
-  return NextResponse.json(acc);
+  return NextResponse.json(trx);
 }
 
 export async function PUT(req: Request, { params }: any) {
   const body = await req.json();
 
-  const updated = await prisma.account.update({
+  const updated = await prisma.transaction.update({
     where: { id: Number(params.id) },
     data: body,
   });
@@ -21,9 +21,9 @@ export async function PUT(req: Request, { params }: any) {
 }
 
 export async function DELETE(_: Request, { params }: any) {
-  await prisma.account.delete({
+  await prisma.transaction.delete({
     where: { id: Number(params.id) },
   });
 
-  return NextResponse.json({ message: "Account deleted" });
+  return NextResponse.json({ message: "Transaction deleted" });
 }
