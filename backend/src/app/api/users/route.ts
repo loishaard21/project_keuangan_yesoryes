@@ -81,3 +81,30 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+// =======================
+// DELETE USER (DELETE)
+// =======================
+export async function DELETE(req: Request) {
+  try {
+    const body = await req.json();
+    const { id } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID user wajib dikirim untuk delete!" },
+        { status: 400 }
+      );
+    }
+
+    // Hapus user
+    await prisma.user.delete({
+      where: { id: Number(id) },
+    });
+
+    return NextResponse.json({ message: "User berhasil dihapus!" });
+  } catch (error: any) {
+    console.error("DELETE USER ERROR:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
