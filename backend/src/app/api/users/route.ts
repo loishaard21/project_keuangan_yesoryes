@@ -15,6 +15,7 @@ export async function GET() {
 
   return NextResponse.json(users);
 }
+
 // =======================
 // CREATE NEW USER (POST)
 // =======================
@@ -43,6 +44,40 @@ export async function POST(req: Request) {
     return NextResponse.json(newUser);
   } catch (error: any) {
     console.error("CREATE USER ERROR:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+// =======================
+// UPDATE USER (PUT)
+// =======================
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const { id, email, name, password } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID user wajib dikirim untuk update!" },
+        { status: 400 }
+      );
+    }
+
+    const dataToUpdate: any = { email, name };
+
+    // Kalau password dikirim → hash ulang
+    if (password) {
+      dataToUpdate.password = await hashPassword(password);
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: Number(id) },
+      data: dataToUpdate,
+    });
+
+    return NextResponse.json(updatedUser);
+  } catch (error: any) {
+    console.error("UPDATE USER ERROR:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
