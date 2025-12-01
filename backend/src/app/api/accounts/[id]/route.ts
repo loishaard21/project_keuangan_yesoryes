@@ -17,7 +17,7 @@ export async function GET(
 
     if (!trx) {
       return NextResponse.json(
-        { error: "Transaction not found" },
+        { error: "Transaksi Tidak Ditemukan" },
         { status: 404 }
       );
     }
@@ -25,7 +25,7 @@ export async function GET(
     return NextResponse.json(trx);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to fetch transaction" },
+      { error: "Gagal mendapatkan transaksi" },
       { status: 500 }
     );
   }
