@@ -19,3 +19,26 @@ export async function GET() {
     );
   }
 }
+
+// CREATE account
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { name, balance, userId } = body;
+
+    const newAccount = await prisma.account.create({
+      data: {
+        name,
+        balance,
+        userId,
+      },
+    });
+
+    return NextResponse.json(newAccount);
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    );
+  }
+}
