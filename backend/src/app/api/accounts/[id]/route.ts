@@ -47,7 +47,7 @@ export async function PUT(
     return NextResponse.json(updated);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to update account" },
+      { error: "Gagal memperbarui akun" },
       { status: 500 }
     );
   }
