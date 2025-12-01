@@ -52,3 +52,22 @@ export async function PUT(
     );
   }
 }
+
+// DELETE account
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await prisma.account.delete({
+      where: { id: Number(params.id) },
+    });
+
+    return NextResponse.json({ message: "Account deleted" });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Failed to delete account" },
+      { status: 500 }
+    );
+  }
+}
