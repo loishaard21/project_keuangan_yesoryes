@@ -52,3 +52,22 @@ export async function PUT(
     );
   }
 }
+
+// DELETE transaction
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await prisma.transaction.delete({
+      where: { id: Number(params.id) },
+    });
+
+    return NextResponse.json({ message: "Transaction deleted" });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Failed to delete transaction" },
+      { status: 500 }
+    );
+  }
+}
