@@ -20,4 +20,30 @@ export async function GET() {
   }
 }
 
+// CREATE transaction
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { amount, type, category, description, userId, accountId } = body;
+
+    const newTrx = await prisma.transaction.create({
+      data: {
+        amount,
+        type,
+        category,
+        description,
+        userId,
+        accountId,
+      },
+    });
+
+    return NextResponse.json(newTrx);
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
 
