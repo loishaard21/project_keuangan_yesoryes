@@ -30,3 +30,25 @@ export async function GET(
     );
   }
 }
+
+// UPDATE transaction
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const body = await req.json();
+
+    const updated = await prisma.transaction.update({
+      where: { id: Number(params.id) },
+      data: body,
+    });
+
+    return NextResponse.json(updated);
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Failed to update transaction" },
+      { status: 500 }
+    );
+  }
+}
