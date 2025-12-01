@@ -14,7 +14,7 @@ export async function GET() {
     return NextResponse.json(trx);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to fetch transactions" },
+      { error: "Gagal mendapatkan transaksi" },
       { status: 500 }
     );
   }
