@@ -47,7 +47,7 @@ export async function PUT(
     return NextResponse.json(updated);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to update transaction" },
+      { error: "Gagal memperbarui transaksi" },
       { status: 500 }
     );
   }
