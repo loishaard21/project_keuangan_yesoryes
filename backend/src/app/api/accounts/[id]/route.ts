@@ -17,7 +17,7 @@ export async function GET(
 
     if (!account) {
       return NextResponse.json(
-        { error: "Account not found" },
+        { error: "Akun Tidak Ditemukan" },
         { status: 404 }
       );
     }
@@ -25,7 +25,7 @@ export async function GET(
     return NextResponse.json(account);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to fetch account" },
+      { error: "Gagal mendapatkan akun" },
       { status: 500 }
     );
   }
