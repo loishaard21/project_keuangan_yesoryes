@@ -63,7 +63,7 @@ export async function DELETE(
       where: { id: Number(params.id) },
     });
 
-    return NextResponse.json({ message: "Transaction deleted" });
+    return NextResponse.json({ message: "Transaksi berhasil dihapus" });
   } catch (error: any) {
     return NextResponse.json(
       { error: "Gagal menghapus transaksi" },
