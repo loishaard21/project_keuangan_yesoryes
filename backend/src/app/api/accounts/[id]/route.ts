@@ -66,7 +66,7 @@ export async function DELETE(
     return NextResponse.json({ message: "Transaction deleted" });
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to delete transaction" },
+      { error: "Gagal menghapus transaksi" },
       { status: 500 }
     );
   }
