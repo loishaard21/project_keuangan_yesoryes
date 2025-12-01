@@ -63,10 +63,10 @@ export async function DELETE(
       where: { id: Number(params.id) },
     });
 
-    return NextResponse.json({ message: "Account deleted" });
+    return NextResponse.json({ message: "Akun berhasil dihapus" });
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to delete account" },
+      { error: "Gagal menghapus akun" },
       { status: 500 }
     );
   }
