@@ -14,7 +14,7 @@ export async function GET() {
     return NextResponse.json(accounts);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Failed to fetch accounts" },
+      { error: "Gagal mendapatkan akun" },
       { status: 500 }
     );
   }
