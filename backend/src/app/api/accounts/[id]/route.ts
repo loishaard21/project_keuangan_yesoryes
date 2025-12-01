@@ -1,29 +1,32 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(_: Request, { params }: any) {
-  const acc = await prisma.account.findUnique({
-    where: { id: Number(params.id) },
-  });
+// GET transaction by ID
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const trx = await prisma.transaction.findUnique({
+      where: { id: Number(params.id) },
+      include: {
+        user: true,
+        account: true,
+      },
+    });
 
-  return NextResponse.json(acc);
-}
+    if (!trx) {
+      return NextResponse.json(
+        { error: "Transaction not found" },
+        { status: 404 }
+      );
+    }
 
-export async function PUT(req: Request, { params }: any) {
-  const body = await req.json();
-
-  const updated = await prisma.account.update({
-    where: { id: Number(params.id) },
-    data: body,
-  });
-
-  return NextResponse.json(updated);
-}
-
-export async function DELETE(_: Request, { params }: any) {
-  await prisma.account.delete({
-    where: { id: Number(params.id) },
-  });
-
-  return NextResponse.json({ message: "Account deleted" });
+    return NextResponse.json(trx);
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Failed to fetch transaction" },
+      { status: 500 }
+    );
+  }
 }
