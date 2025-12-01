@@ -1,29 +1,73 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(_: Request, { params }: any) {
-  const trx = await prisma.transaction.findUnique({
-    where: { id: Number(params.id) },
-  });
+// GET transaction by ID
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const trx = await prisma.transaction.findUnique({
+      where: { id: Number(params.id) },
+      include: {
+        user: true,
+        account: true,
+      },
+    });
 
-  return NextResponse.json(trx);
+    if (!trx) {
+      return NextResponse.json(
+        { error: "Transaksi Tidak Ditemukan" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(trx);
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Gagal mendapatkan transaksi" },
+      { status: 500 }
+    );
+  }
 }
 
-export async function PUT(req: Request, { params }: any) {
-  const body = await req.json();
+// UPDATE transaction
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const body = await req.json();
 
-  const updated = await prisma.transaction.update({
-    where: { id: Number(params.id) },
-    data: body,
-  });
+    const updated = await prisma.transaction.update({
+      where: { id: Number(params.id) },
+      data: body,
+    });
 
-  return NextResponse.json(updated);
+    return NextResponse.json(updated);
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Gagal memperbarui transaksi" },
+      { status: 500 }
+    );
+  }
 }
 
-export async function DELETE(_: Request, { params }: any) {
-  await prisma.transaction.delete({
-    where: { id: Number(params.id) },
-  });
+// DELETE transaction
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await prisma.transaction.delete({
+      where: { id: Number(params.id) },
+    });
 
-  return NextResponse.json({ message: "Transaction deleted" });
+    return NextResponse.json({ message: "Transaction deleted" });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Gagal menghapus transaksi" },
+      { status: 500 }
+    );
+  }
 }
