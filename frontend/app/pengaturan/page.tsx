@@ -38,7 +38,7 @@ export default function PengaturanPage() {
 
       {/* SIDEBAR */}
       <aside className="w-60 bg-gray-900 text-white flex flex-col p-6 space-y-6">
-        <h1 className="text-2xl font-bold tracking-wide mb-4">KeuanganKu</h1>
+        <h1 className="text-2xl font-bold tracking-wide mb-4">CERDAS FINANSIAL</h1>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
           <a href="/dashboard" className="hover:text-white">
