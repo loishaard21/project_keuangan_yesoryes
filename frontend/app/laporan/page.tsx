@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import * as XLSX from "xlsx";
 
 type Transaction = {
   id: string;
@@ -18,43 +19,54 @@ export default function LaporanPage() {
   // FILTER STATE
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [openProfile, setOpenProfile] = useState(false);
 
-  const [openProfile, setOpenProfile] = useState(false); // dropdown profil
-
-  // AMBIL DATA DARI API
+  /* ================= FETCH DATA ================= */
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/transactions", {
-          method: "GET",
-        });
-
+        const res = await fetch("http://localhost:3000/api/transactions");
         const data = await res.json();
         setTransactions(data);
-        setFiltered(data); // default tanpa filter
+        setFiltered(data);
       } catch (err) {
         console.error("Gagal mengambil data transaksi:", err);
       } finally {
         setLoading(false);
       }
     }
-
     fetchData();
   }, []);
 
-  // FUNGSI FILTER
+  /* ================= FILTER ================= */
   const applyFilter = () => {
     let data = [...transactions];
 
-    if (startDate) {
-      data = data.filter((t) => t.date >= startDate);
-    }
-
-    if (endDate) {
-      data = data.filter((t) => t.date <= endDate);
-    }
+    if (startDate) data = data.filter((t) => t.date >= startDate);
+    if (endDate) data = data.filter((t) => t.date <= endDate);
 
     setFiltered(data);
+  };
+
+  /* ================= EXPORT EXCEL ================= */
+  const exportToExcel = () => {
+    if (filtered.length === 0) {
+      alert("Tidak ada data untuk diexport");
+      return;
+    }
+
+    const worksheetData = filtered.map((t) => ({
+      Tanggal: t.date,
+      Jenis: t.type === "income" ? "Pendapatan" : "Pengeluaran",
+      Kategori: t.category,
+      Nominal: t.amount,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan");
+
+    XLSX.writeFile(workbook, "laporan-keuangan.xlsx");
   };
 
   const totalIncome = filtered
@@ -70,65 +82,42 @@ export default function LaporanPage() {
 
       {/* SIDEBAR */}
       <aside className="w-60 bg-gray-900 text-white flex flex-col p-6 space-y-6">
-        <h1 className="text-2xl font-bold tracking-wide mb-4">KeuanganKu</h1>
-
+        <h1 className="text-2xl font-bold mb-4">KeuanganKu</h1>
         <nav className="flex flex-col space-y-4 text-gray-300">
-          <a href="/dashboard" className="hover:text-white cursor-pointer">
-            Dashboard
-          </a>
-          <a href="/transaksi" className="hover:text-white cursor-pointer">
-            Transaksi
-          </a>
-          <a href="/laporan" className="font-semibold text-white cursor-pointer">
-            Laporan
-          </a>
-          <a href="/anggaran" className="hover:text-white cursor-pointer">
-            Anggaran
-          </a>
-          <a href="/pengaturan" className="hover:text-white cursor-pointer">
-            Pengaturan
-          </a>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/transaksi">Transaksi</a>
+          <a href="/laporan" className="text-white font-semibold">Laporan</a>
+          <a href="/anggaran">Anggaran</a>
+          <a href="/pengaturan">Pengaturan</a>
         </nav>
       </aside>
 
-      {/* MAIN CONTENT */}
+      {/* MAIN */}
       <div className="flex-1 p-6">
 
-        {/* HEADER BAR + PROFIL */}
-        <div className="w-full flex justify-between items-center mb-6">
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Laporan Keuangan</h1>
 
           {/* PROFIL */}
           <div className="relative">
             <button
               onClick={() => setOpenProfile(!openProfile)}
-              className="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow cursor-pointer"
+              className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow"
             >
-              <img
-                src="https://i.pravatar.cc/40"
-                alt="profile"
-                className="w-8 h-8 rounded-full"
-              />
-              <span className="font-medium text-gray-700">Akun</span>
+              <img src="https://i.pravatar.cc/40" className="w-8 h-8 rounded-full" />
+              <span>Akun</span>
             </button>
 
             {openProfile && (
-              <div className="absolute right-0 w-48 bg-white shadow-lg rounded-lg mt-2 border">
-                <a
-                  href="/profil"
-                  className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                >
+              <div className="absolute right-0 w-48 bg-white border rounded shadow mt-2">
+                <a href="/profil" className="block px-4 py-2 hover:bg-gray-100">
                   Profil
                 </a>
-                <a
-                  href="/pengaturan"
-                  className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                >
+                <a href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Pengaturan
                 </a>
-                <button
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
-                >
+                <button className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
                   Logout
                 </button>
               </div>
@@ -136,27 +125,25 @@ export default function LaporanPage() {
           </div>
         </div>
 
-        {loading && <p className="text-gray-600">Memuat data...</p>}
-
         {/* RINGKASAN */}
         {!loading && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="grid md:grid-cols-3 gap-6 mb-6">
             <div className="bg-white p-6 rounded shadow">
-              <h3 className="text-gray-600">Total Pendapatan</h3>
+              <h3>Total Pendapatan</h3>
               <p className="text-2xl font-bold text-green-600">
                 Rp {totalIncome.toLocaleString()}
               </p>
             </div>
 
             <div className="bg-white p-6 rounded shadow">
-              <h3 className="text-gray-600">Total Pengeluaran</h3>
+              <h3>Total Pengeluaran</h3>
               <p className="text-2xl font-bold text-red-600">
                 Rp {totalExpense.toLocaleString()}
               </p>
             </div>
 
             <div className="bg-white p-6 rounded shadow">
-              <h3 className="text-gray-600">Saldo Akhir</h3>
+              <h3>Saldo Akhir</h3>
               <p className="text-2xl font-bold text-blue-600">
                 Rp {(totalIncome - totalExpense).toLocaleString()}
               </p>
@@ -166,79 +153,56 @@ export default function LaporanPage() {
 
         {/* FILTER */}
         <div className="bg-white p-6 rounded shadow mb-6">
-          <h2 className="text-xl font-semibold mb-4">Filter Rentang Tanggal</h2>
+          <h2 className="text-xl font-semibold mb-4">Filter Tanggal</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-gray-600 mb-1">Tanggal Mulai</label>
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="border p-2 rounded w-full"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-600 mb-1">Tanggal Akhir</label>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="border p-2 rounded w-full"
-              />
-            </div>
-
-            <div className="flex items-end">
-              <button
-                onClick={applyFilter}
-                className="w-full bg-blue-600 text-white px-4 py-2 rounded"
-              >
-                Terapkan Filter
-              </button>
-            </div>
+          <div className="grid md:grid-cols-4 gap-4">
+            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="border p-2 rounded" />
+            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border p-2 rounded" />
+            <button onClick={applyFilter} className="bg-blue-600 text-white rounded">
+              Terapkan Filter
+            </button>
+            <button onClick={exportToExcel} className="bg-green-600 text-white rounded">
+              Export Excel
+            </button>
           </div>
         </div>
 
         {/* TABEL */}
         <div className="bg-white p-6 rounded shadow">
-          <h2 className="text-xl font-semibold mb-4">Detail Transaksi</h2>
-
           <table className="w-full border">
             <thead className="bg-gray-100">
               <tr>
-                <th className="p-2 border">Tanggal</th>
-                <th className="p-2 border">Jenis</th>
-                <th className="p-2 border">Kategori</th>
-                <th className="p-2 border">Nominal</th>
+                <th className="border p-2">Tanggal</th>
+                <th className="border p-2">Jenis</th>
+                <th className="border p-2">Kategori</th>
+                <th className="border p-2">Nominal</th>
               </tr>
             </thead>
-
             <tbody>
-              {!loading &&
-                filtered.length > 0 &&
-                filtered.map((t) => (
-                  <tr key={t.id}>
-                    <td className="p-2 border">{t.date}</td>
-                    <td className="p-2 border">
-                      {t.type === "income" ? "Pendapatan" : "Pengeluaran"}
-                    </td>
-                    <td className="p-2 border">{t.category}</td>
-                    <td className="p-2 border">Rp {t.amount.toLocaleString()}</td>
-                  </tr>
-                ))}
+              {filtered.map((t) => (
+                <tr key={t.id}>
+                  <td className="border p-2">{t.date}</td>
+                  <td className="border p-2">
+                    {t.type === "income" ? "Pendapatan" : "Pengeluaran"}
+                  </td>
+                  <td className="border p-2">{t.category}</td>
+                  <td className="border p-2">
+                    Rp {t.amount.toLocaleString()}
+                  </td>
+                </tr>
+              ))}
 
               {!loading && filtered.length === 0 && (
                 <tr>
                   <td colSpan={4} className="text-center py-4 text-gray-500">
-                    Tidak ada transaksi pada rentang tanggal ini
+                    Tidak ada data
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
-
         </div>
+
       </div>
     </div>
   );
