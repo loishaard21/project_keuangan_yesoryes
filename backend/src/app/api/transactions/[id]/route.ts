@@ -1,37 +1,37 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// GET account by ID
+// GET transaction by ID
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const account = await prisma.account.findUnique({
+    const trx = await prisma.transaction.findUnique({
       where: { id: Number(params.id) },
       include: {
         user: true,
-        transactions: true,
+        account: true,
       },
     });
 
-    if (!account) {
+    if (!trx) {
       return NextResponse.json(
-        { error: "Akun Tidak Ditemukan" },
+        { error: "Transaksi Tidak Ditemukan" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(account);
+    return NextResponse.json(trx);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Gagal mendapatkan akun" },
+      { error: "Gagal mendapatkan transaksi" },
       { status: 500 }
     );
   }
 }
 
-// UPDATE account
+// UPDATE transaction
 export async function PUT(
   req: Request,
   { params }: { params: { id: string } }
@@ -39,7 +39,7 @@ export async function PUT(
   try {
     const body = await req.json();
 
-    const updated = await prisma.account.update({
+    const updated = await prisma.transaction.update({
       where: { id: Number(params.id) },
       data: body,
     });
@@ -47,26 +47,26 @@ export async function PUT(
     return NextResponse.json(updated);
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Gagal memperbarui akun" },
+      { error: "Gagal memperbarui transaksi" },
       { status: 500 }
     );
   }
 }
 
-// DELETE account
+// DELETE transaction
 export async function DELETE(
   req: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    await prisma.account.delete({
+    await prisma.transaction.delete({
       where: { id: Number(params.id) },
     });
 
-    return NextResponse.json({ message: "Akun berhasil dihapus" });
+    return NextResponse.json({ message: "Transaksi berhasil dihapus" });
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Gagal menghapus akun" },
+      { error: "Gagal menghapus transaksi" },
       { status: 500 }
     );
   }
