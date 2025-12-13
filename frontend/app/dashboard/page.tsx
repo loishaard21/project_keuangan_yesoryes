@@ -170,6 +170,21 @@ export default function FinanceDashboard() {
           <SummaryCard title="Total Pengeluaran" value={totalExpense} color="text-red-600" />
         </div>
 
+        {/* ================= CHART ================= */}
+        <div className="bg-white p-6 rounded-lg shadow mb-6">
+          <h2 className="text-xl font-semibold mb-4">Ringkasan Grafik</h2>
+          <div className="w-full h-64">
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie data={chartData} dataKey="value" outerRadius={100} label>
+                  <Cell fill="#4ade80" />
+                  <Cell fill="#f87171" />
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
 
         {/* ================= TRANSACTIONS ================= */}
         <div className="bg-white p-6 rounded-lg shadow mb-6">
