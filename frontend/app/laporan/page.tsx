@@ -159,6 +159,9 @@ export default function LaporanPage() {
 
             {openProfile && (
               <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow z-50">
+                <Link href="/profil" className="block px-4 py-2 hover:bg-gray-100">
+                  Profil Saya
+                </Link>
                 <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Pengaturan
                 </Link>

@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -16,15 +17,38 @@ export default function RegisterPage() {
     setForm({ ...form, [key]: value });
   };
 
-  const handleRegister = (e: any) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.password)
-      return alert("Semua field wajib diisi!");
+    if (!form.name || !form.email || !form.password) {
+      alert("Semua field wajib diisi!");
+      return;
+    }
 
-    // Nanti bisa diganti API
-    alert("Registrasi berhasil!");
-    router.push("/login");
+    try {
+      setLoading(true);
+
+      const res = await fetch("http://localhost:3000/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Registrasi gagal");
+        return;
+      }
+
+      alert("Registrasi berhasil, silakan login");
+      router.push("/login");
+    } catch (err) {
+      console.error(err);
+      alert("Terjadi kesalahan server");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,50 +57,33 @@ export default function RegisterPage() {
         <h1 className="text-3xl font-bold text-center mb-6">Register</h1>
 
         <form onSubmit={handleRegister}>
-          <label className="block mb-2 font-semibold">Nama Lengkap</label>
           <input
-            type="text"
-            value={form.name}
-            onChange={(e) => handleChange("name", e.target.value)}
+            placeholder="Nama Lengkap"
             className="w-full border p-2 rounded mb-4"
-            placeholder="Nama kamu"
+            onChange={(e) => handleChange("name", e.target.value)}
           />
 
-          <label className="block mb-2 font-semibold">Email</label>
           <input
             type="email"
-            value={form.email}
-            onChange={(e) => handleChange("email", e.target.value)}
+            placeholder="Email"
             className="w-full border p-2 rounded mb-4"
-            placeholder="contoh@mail.com"
+            onChange={(e) => handleChange("email", e.target.value)}
           />
 
-          <label className="block mb-2 font-semibold">Password</label>
           <input
             type="password"
-            value={form.password}
-            onChange={(e) => handleChange("password", e.target.value)}
+            placeholder="Password"
             className="w-full border p-2 rounded mb-4"
-            placeholder="Masukkan password"
+            onChange={(e) => handleChange("password", e.target.value)}
           />
 
           <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded shadow mt-2"
+            disabled={loading}
+            className="w-full bg-green-600 text-white py-2 rounded"
           >
-            Daftar
+            {loading ? "Mendaftar..." : "Daftar"}
           </button>
         </form>
-
-        <p className="mt-4 text-center text-sm">
-          Sudah punya akun?{" "}
-          <span
-            onClick={() => router.push("/login")}
-            className="text-blue-600 cursor-pointer"
-          >
-            Login
-          </span>
-        </p>
       </div>
     </div>
   );

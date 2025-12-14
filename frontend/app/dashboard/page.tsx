@@ -172,6 +172,9 @@ export default function FinanceDashboard() {
 
             {openUserMenu && (
               <div className="absolute right-0 mt-2 w-44 bg-white rounded shadow border">
+                <Link href="/profil" className="block px-4 py-2 hover:bg-gray-100">
+                  Profil Saya
+                </Link>
                 <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Pengaturan
                 </Link>
