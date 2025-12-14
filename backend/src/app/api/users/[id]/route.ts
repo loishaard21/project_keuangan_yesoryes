@@ -78,7 +78,7 @@ export async function PUT(req: Request, context: Params) {
   } catch (error) {
     console.error("UPDATE USER ERROR:", error);
     return NextResponse.json(
-      { error: "Gagal update user" },
+      { error: "Gagal Update User" },
       { status: 500 }
     );
   }
