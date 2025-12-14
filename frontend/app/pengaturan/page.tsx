@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function PengaturanPage() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [name, setName] = useState("Nama Pengguna");
   const [email, setEmail] = useState("email@example.com");
-
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
-
   const [theme, setTheme] = useState("light");
 
   const handleSaveProfile = () => {
@@ -17,7 +20,8 @@ export default function PengaturanPage() {
 
   const handleChangePassword = () => {
     if (!oldPass || !newPass) {
-      return alert("Isi semua kolom password");
+      alert("Isi semua kolom password");
+      return;
     }
     alert("Password berhasil diperbarui");
     setOldPass("");
@@ -33,40 +37,58 @@ export default function PengaturanPage() {
     }
   };
 
+  const handleLogout = () => {
+    alert("Logout berhasil");
+    router.push("/login");
+  };
+
+  const menu = [
+    { label: "Dashboard", path: "/dashboard" },
+    { label: "Transaksi", path: "/transaksi" },
+    { label: "Laporan", path: "/laporan" },
+    { label: "Anggaran", path: "/anggaran" },
+    { label: "Pengaturan", path: "/pengaturan" },
+  ];
+
   return (
     <div className="flex min-h-screen bg-gray-100">
 
-      {/* SIDEBAR */}
-      <aside className="w-60 bg-gray-900 text-white flex flex-col p-6 space-y-6">
-        <h1 className="text-lg font-bold mb-6">CERDAS FINANSIAL</h1>
+      {/* ================= SIDEBAR ================= */}
+      <aside className="w-60 bg-gray-900 text-white p-6">
+        <h1 className="text-lg font-bold mb-8">CERDAS FINANSIAL</h1>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
-          <a href="/dashboard" className="hover:text-white">
-            Dashboard
-          </a>
-          <a href="/transaksi" className="hover:text-white">
-            Transaksi
-          </a>
-          <a href="/laporan" className="hover:text-white">
-            Laporan
-          </a>
-          <a href="/anggaran" className="hover:text-white">
-            Anggaran
-          </a>
-          <a href="/pengaturan" className="font-semibold text-white">
-            Pengaturan
-          </a>
+          {menu.map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              className={`px-3 py-2 rounded transition ${
+                pathname === item.path
+                  ? "bg-gray-800 text-white font-semibold"
+                  : "hover:bg-gray-800 hover:text-white"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
+
+        <button
+          onClick={handleLogout}
+          className="mt-10 text-left text-red-400 hover:text-red-500"
+        >
+          Logout
+        </button>
       </aside>
 
-      {/* MAIN CONTENT */}
-      <div className="flex-1 p-8">
+      {/* ================= MAIN ================= */}
+      <main className="flex-1 p-8">
         <h1 className="text-3xl font-bold mb-6">Pengaturan</h1>
 
         <div className="space-y-10">
 
-          {/* PENGATURAN PROFIL */}
-          <section className="bg-white p-6 rounded shadow">
+          {/* PROFIL */}
+          <section className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Profil Pengguna</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,30 +121,25 @@ export default function PengaturanPage() {
             </button>
           </section>
 
-          {/* GANTI PASSWORD */}
-          <section className="bg-white p-6 rounded shadow">
+          {/* PASSWORD */}
+          <section className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Ganti Password</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="text-gray-600">Password Lama</label>
-                <input
-                  type="password"
-                  className="w-full border p-2 rounded"
-                  value={oldPass}
-                  onChange={(e) => setOldPass(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label className="text-gray-600">Password Baru</label>
-                <input
-                  type="password"
-                  className="w-full border p-2 rounded"
-                  value={newPass}
-                  onChange={(e) => setNewPass(e.target.value)}
-                />
-              </div>
+              <input
+                type="password"
+                placeholder="Password Lama"
+                className="border p-2 rounded"
+                value={oldPass}
+                onChange={(e) => setOldPass(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password Baru"
+                className="border p-2 rounded"
+                value={newPass}
+                onChange={(e) => setNewPass(e.target.value)}
+              />
             </div>
 
             <button
@@ -134,8 +151,8 @@ export default function PengaturanPage() {
           </section>
 
           {/* TEMA */}
-          <section className="bg-white p-6 rounded shadow">
-            <h2 className="text-xl font-semibold mb-4">Tampilan (Tema)</h2>
+          <section className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold mb-4">Tampilan</h2>
 
             <select
               value={theme}
@@ -146,17 +163,19 @@ export default function PengaturanPage() {
               <option value="dark">Dark Mode</option>
             </select>
 
-            <p className="text-gray-600 mt-2">
-              Tema tidak permanen, hanya simulasi (bisa disambungkan dengan localStorage jika diperlukan).
+            <p className="text-gray-600 mt-2 text-sm">
+              Tema masih simulasi (bisa dihubungkan ke localStorage).
             </p>
           </section>
 
-          {/* RESET DATA */}
-          <section className="bg-white p-6 rounded shadow">
-            <h2 className="text-xl font-semibold mb-4 text-red-600">Reset Data</h2>
+          {/* RESET */}
+          <section className="bg-white p-6 rounded-lg shadow border border-red-200">
+            <h2 className="text-xl font-semibold mb-4 text-red-600">
+              Reset Data
+            </h2>
 
             <p className="text-gray-600 mb-4">
-              Menghapus semua transaksi, anggaran, dan data laporan secara permanen.
+              Semua transaksi, anggaran, dan laporan akan dihapus permanen.
             </p>
 
             <button
@@ -168,7 +187,7 @@ export default function PengaturanPage() {
           </section>
 
         </div>
-      </div>
+      </main>
     </div>
   );
 }
