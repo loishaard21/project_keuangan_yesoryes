@@ -21,6 +21,8 @@ export default function AnggaranPage() {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("");
   const [limit, setLimit] = useState("");
+
+  const [openSidebar, setOpenSidebar] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
 
   /* ================= FETCH DATA ================= */
@@ -79,11 +81,23 @@ export default function AnggaranPage() {
 
   /* ================= RENDER ================= */
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 relative">
+
+      {/* ================= OVERLAY ================= */}
+      {openSidebar && (
+        <div
+          onClick={() => setOpenSidebar(false)}
+          className="fixed inset-0 bg-black/40 z-30"
+        />
+      )}
 
       {/* ================= SIDEBAR ================= */}
-      <aside className="w-60 bg-gray-900 text-white p-6">
-        <h1 className="text-lg font-bold mb-6">CERDAS FINANSIAL</h1>
+      <aside
+        className={`fixed top-0 left-0 h-full w-60 bg-gray-900 text-white p-6 z-40
+        transform transition-transform duration-300
+        ${openSidebar ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <h1 className="text-lg font-bold mb-8">CERDAS FINANSIAL</h1>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
           {[
@@ -96,11 +110,12 @@ export default function AnggaranPage() {
             <Link
               key={item.path}
               href={item.path}
-              className={
+              onClick={() => setOpenSidebar(false)}
+              className={`${
                 pathname === item.path
                   ? "text-white font-semibold"
                   : "hover:text-white"
-              }
+              }`}
             >
               {item.label}
             </Link>
@@ -109,13 +124,26 @@ export default function AnggaranPage() {
       </aside>
 
       {/* ================= MAIN ================= */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-6 relative z-10">
 
         {/* ================= TOP BAR ================= */}
         <div className="flex justify-between items-center mb-6">
+
+          {/* HAMBURGER */}
+          <button
+            onClick={() => setOpenSidebar(true)}
+            className="p-2 rounded bg-white shadow border"
+          >
+            <div className="space-y-1">
+              <span className="block w-6 h-0.5 bg-gray-800" />
+              <span className="block w-6 h-0.5 bg-gray-800" />
+              <span className="block w-6 h-0.5 bg-gray-800" />
+            </div>
+          </button>
+
           <h1 className="text-3xl font-bold">Manajemen Anggaran</h1>
 
-          {/* === MENU PROFIL (SAMA PERSIS) === */}
+          {/* PROFILE MENU */}
           <div className="relative">
             <button
               onClick={() => setOpenUserMenu(!openUserMenu)}
@@ -123,20 +151,14 @@ export default function AnggaranPage() {
             >
               <img
                 src="https://i.pravatar.cc/40"
-                alt="Profile"
                 className="w-8 h-8 rounded-full"
               />
-              <span className="text-sm font-medium text-gray-700">
-                Akun
-              </span>
+              <span className="text-sm font-medium">Akun</span>
             </button>
 
             {openUserMenu && (
               <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg z-50">
-                <Link
-                  href="/profil"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
+                <Link href="/profil" className="block px-4 py-2 hover:bg-gray-100">
                   Profil Saya
                 </Link>
                 <Link
@@ -160,9 +182,8 @@ export default function AnggaranPage() {
         <div className="bg-white p-6 rounded-lg shadow mb-6">
           <h2 className="text-xl font-semibold mb-4">Tambah Anggaran</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             <input
-              type="text"
               placeholder="Kategori"
               className="border p-2 rounded"
               value={category}
@@ -177,7 +198,7 @@ export default function AnggaranPage() {
             />
             <button
               onClick={handleAddBudget}
-              className="bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white rounded"
             >
               Tambah
             </button>
@@ -188,8 +209,7 @@ export default function AnggaranPage() {
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-semibold mb-4">Daftar Anggaran</h2>
 
-          {loading && <p className="text-gray-500">Memuat data...</p>}
-
+          {loading && <p>Memuat data...</p>}
           {!loading && budgets.length === 0 && (
             <p className="text-gray-500">Belum ada anggaran.</p>
           )}
@@ -199,10 +219,7 @@ export default function AnggaranPage() {
               const percent = Math.round((b.used / b.limit) * 100);
 
               return (
-                <div
-                  key={b.id}
-                  className="border p-4 rounded bg-gray-50 shadow-sm"
-                >
+                <div key={b.id} className="border p-4 rounded bg-gray-50">
                   <div className="flex justify-between font-semibold mb-2">
                     <span>{b.category}</span>
                     <span>
@@ -211,7 +228,6 @@ export default function AnggaranPage() {
                     </span>
                   </div>
 
-                  {/* PROGRESS BAR */}
                   <div className="w-full bg-gray-300 h-3 rounded">
                     <div
                       className={`h-3 rounded ${
