@@ -110,7 +110,7 @@ export default function LaporanPage() {
             { label: "Transaksi", path: "/transaksi" },
             { label: "Laporan", path: "/laporan" },
             { label: "Anggaran", path: "/anggaran" },
-            { label: "pengaturan", path: "/pengaturan" },
+            { label: "Pengaturan", path: "/pengaturan" },
           ].map((item) => (
             <Link
               key={item.path}
