@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewUserPage from './dashboard/page'
+import ViewUserPage from './homepage/page'
 
 export default function HomePage() {
   return (
