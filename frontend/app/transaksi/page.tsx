@@ -18,15 +18,16 @@ export default function TransaksiPage() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [form, setForm] = useState({
     type: "income",
     category: "",
     amount: "",
   });
-
-  const [showModal, setShowModal] = useState(false);
-  const [openUserMenu, setOpenUserMenu] = useState(false);
 
   /* ================= HANDLERS ================= */
   const handleInputChange = (key: string, value: string) => {
@@ -55,17 +56,31 @@ export default function TransaksiPage() {
   };
 
   const handleLogout = () => {
-    alert("Berhasil logout");
     router.push("/login");
   };
 
   /* ================= RENDER ================= */
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
+
+      {/* ================= OVERLAY ================= */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        />
+      )}
 
       {/* ================= SIDEBAR ================= */}
-      <aside className="w-60 bg-gray-900 text-white p-6">
-        <h1 className="text-lg font-bold mb-6">CERDAS FINANSIAL</h1>
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white p-6 z-50
+        transform transition-transform duration-300
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
+          <button onClick={() => setSidebarOpen(false)}>✕</button>
+        </div>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
           {[
@@ -78,6 +93,7 @@ export default function TransaksiPage() {
             <Link
               key={item.path}
               href={item.path}
+              onClick={() => setSidebarOpen(false)}
               className={
                 pathname === item.path
                   ? "text-white font-semibold"
@@ -91,13 +107,25 @@ export default function TransaksiPage() {
       </aside>
 
       {/* ================= MAIN ================= */}
-      <div className="flex-1 p-6">
+      <div className="p-6">
 
         {/* ================= TOP BAR ================= */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Manajemen Transaksi</h1>
+          <div className="flex items-center gap-4">
+            {/* HAMBURGER BUTTON */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 bg-white rounded-md shadow border"
+            >
+              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
+              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
+              <span className="block w-6 h-0.5 bg-gray-800"></span>
+            </button>
 
-          {/* === PROFILE MENU (SAMA PERSIS DENGAN DASHBOARD) === */}
+            <h1 className="text-3xl font-bold">Manajemen Transaksi</h1>
+          </div>
+
+          {/* PROFILE MENU */}
           <div className="relative">
             <button
               onClick={() => setOpenUserMenu(!openUserMenu)}
@@ -105,22 +133,13 @@ export default function TransaksiPage() {
             >
               <img
                 src="https://i.pravatar.cc/40"
-                alt="Profile"
                 className="w-8 h-8 rounded-full"
               />
-              <span className="text-sm font-medium text-gray-700">
-                Akun
-              </span>
+              <span className="text-sm font-medium">Akun</span>
             </button>
 
             {openUserMenu && (
-              <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg overflow-hidden z-50">
-                <Link
-                  href="/profil"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Profil Saya
-                </Link>
+              <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg z-50">
                 <Link
                   href="/pengaturan"
                   className="block px-4 py-2 hover:bg-gray-100"
@@ -160,7 +179,6 @@ export default function TransaksiPage() {
                 <th className="border p-2">Aksi</th>
               </tr>
             </thead>
-
             <tbody>
               {transactions.length === 0 && (
                 <tr>
@@ -242,7 +260,6 @@ export default function TransaksiPage() {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

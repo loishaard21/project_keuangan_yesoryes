@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import * as XLSX from "xlsx";
 
 type Transaction = {
@@ -12,14 +14,18 @@ type Transaction = {
 };
 
 export default function LaporanPage() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [filtered, setFiltered] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // FILTER STATE
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [openProfile, setOpenProfile] = useState(false);
 
   /* ================= FETCH DATA ================= */
   useEffect(() => {
@@ -41,10 +47,8 @@ export default function LaporanPage() {
   /* ================= FILTER ================= */
   const applyFilter = () => {
     let data = [...transactions];
-
     if (startDate) data = data.filter((t) => t.date >= startDate);
     if (endDate) data = data.filter((t) => t.date <= endDate);
-
     setFiltered(data);
   };
 
@@ -55,17 +59,17 @@ export default function LaporanPage() {
       return;
     }
 
-    const worksheetData = filtered.map((t) => ({
-      Tanggal: t.date,
-      Jenis: t.type === "income" ? "Pendapatan" : "Pengeluaran",
-      Kategori: t.category,
-      Nominal: t.amount,
-    }));
+    const worksheet = XLSX.utils.json_to_sheet(
+      filtered.map((t) => ({
+        Tanggal: t.date,
+        Jenis: t.type === "income" ? "Pendapatan" : "Pengeluaran",
+        Kategori: t.category,
+        Nominal: t.amount,
+      }))
+    );
 
-    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan");
-
     XLSX.writeFile(workbook, "laporan-keuangan.xlsx");
   };
 
@@ -77,47 +81,91 @@ export default function LaporanPage() {
     .filter((t) => t.type === "expense")
     .reduce((sum, t) => sum + t.amount, 0);
 
+  /* ================= RENDER ================= */
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
+
+      {/* OVERLAY */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        />
+      )}
 
       {/* SIDEBAR */}
-      <aside className="w-60 bg-gray-900 text-white flex flex-col p-6 space-y-6">
-        <h1 className="text-lg font-bold mb-6">CERDAS FINANSIAL</h1>
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white p-6 z-50
+        transform transition-transform duration-300
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
+          <button onClick={() => setSidebarOpen(false)}>✕</button>
+        </div>
+
         <nav className="flex flex-col space-y-4 text-gray-300">
-          <a href="/dashboard">Dashboard</a>
-          <a href="/transaksi">Transaksi</a>
-          <a href="/laporan" className="text-white font-semibold">Laporan</a>
-          <a href="/anggaran">Anggaran</a>
-          <a href="/pengaturan">Pengaturan</a>
+          {[
+            { label: "Dashboard", path: "/dashboard" },
+            { label: "Transaksi", path: "/transaksi" },
+            { label: "Laporan", path: "/laporan" },
+            { label: "Anggaran", path: "/anggaran" },
+            { label: "Pengaturan", path: "/pengaturan" },
+          ].map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              onClick={() => setSidebarOpen(false)}
+              className={
+                pathname === item.path
+                  ? "text-white font-semibold"
+                  : "hover:text-white"
+              }
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
       </aside>
 
       {/* MAIN */}
-      <div className="flex-1 p-6">
+      <div className="p-6">
 
         {/* HEADER */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Laporan Keuangan</h1>
+          <div className="flex items-center gap-4">
+            {/* HAMBURGER */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 bg-white rounded shadow border"
+            >
+              <span className="block w-6 h-0.5 bg-gray-800 mb-1" />
+              <span className="block w-6 h-0.5 bg-gray-800 mb-1" />
+              <span className="block w-6 h-0.5 bg-gray-800" />
+            </button>
 
-          {/* PROFIL */}
+            <h1 className="text-3xl font-bold">Laporan Keuangan</h1>
+          </div>
+
+          {/* PROFILE */}
           <div className="relative">
             <button
               onClick={() => setOpenProfile(!openProfile)}
-              className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow"
+              className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow border"
             >
               <img src="https://i.pravatar.cc/40" className="w-8 h-8 rounded-full" />
               <span>Akun</span>
             </button>
 
             {openProfile && (
-              <div className="absolute right-0 w-48 bg-white border rounded shadow mt-2">
-                <a href="/profil" className="block px-4 py-2 hover:bg-gray-100">
-                  Profil
-                </a>
-                <a href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
+              <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow z-50">
+                <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Pengaturan
-                </a>
-                <button className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                </Link>
+                <button
+                  onClick={() => router.push("/login")}
+                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                >
                   Logout
                 </button>
               </div>
@@ -153,8 +201,6 @@ export default function LaporanPage() {
 
         {/* FILTER */}
         <div className="bg-white p-6 rounded shadow mb-6">
-          <h2 className="text-xl font-semibold mb-4">Filter Tanggal</h2>
-
           <div className="grid md:grid-cols-4 gap-4">
             <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="border p-2 rounded" />
             <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border p-2 rounded" />
@@ -167,7 +213,7 @@ export default function LaporanPage() {
           </div>
         </div>
 
-        {/* TABEL */}
+        {/* TABLE */}
         <div className="bg-white p-6 rounded shadow">
           <table className="w-full border">
             <thead className="bg-gray-100">
