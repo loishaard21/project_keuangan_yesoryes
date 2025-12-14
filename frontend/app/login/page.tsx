@@ -11,18 +11,44 @@ export default function LoginPage() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (key: string, value: string) => {
     setForm({ ...form, [key]: value });
   };
 
-  const handleLogin = (e: any) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
 
-    if (!form.email || !form.password) return alert("Isi semua field!");
+    if (!form.email || !form.password) {
+      alert("Isi semua field!");
+      return;
+    }
 
-    // Nanti bisa diganti API Login
-    alert("Login berhasil!");
-    router.push("/dashboard");
+    try {
+      setLoading(true);
+
+      const res = await fetch("http://localhost:3000/api/users");
+      const users = await res.json();
+
+      const user = users.find(
+        (u: any) => u.email === form.email
+      );
+
+      if (!user) {
+        alert("Email tidak ditemukan");
+        return;
+      }
+
+      // ⚠️ sementara tanpa compare hash
+      alert("Login berhasil!");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert("Login gagal");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,7 +63,6 @@ export default function LoginPage() {
             value={form.email}
             onChange={(e) => handleChange("email", e.target.value)}
             className="w-full border p-2 rounded mb-4"
-            placeholder="contoh@mail.com"
           />
 
           <label className="block mb-2 font-semibold">Password</label>
@@ -46,21 +71,21 @@ export default function LoginPage() {
             value={form.password}
             onChange={(e) => handleChange("password", e.target.value)}
             className="w-full border p-2 rounded mb-4"
-            placeholder="Masukkan password"
           />
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded shadow mt-2"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded mt-2"
           >
-            Masuk
+            {loading ? "Masuk..." : "Masuk"}
           </button>
         </form>
 
         <p className="mt-4 text-center text-sm">
           Belum punya akun?{" "}
           <span
-            onClick={() => router.push("/register")}
+            onClick={() => router.push("/registrasi")}
             className="text-blue-600 cursor-pointer"
           >
             Daftar sekarang

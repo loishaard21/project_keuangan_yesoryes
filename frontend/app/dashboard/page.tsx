@@ -3,7 +3,13 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 /* ================= TYPES ================= */
 type Transaction = {
@@ -14,10 +20,14 @@ type Transaction = {
   date: string;
 };
 
-/* ================= COMPONENT ================= */
+/* ================= MAIN COMPONENT ================= */
 export default function FinanceDashboard() {
   const router = useRouter();
   const pathname = usePathname();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openUserMenu, setOpenUserMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [form, setForm] = useState({
@@ -25,9 +35,6 @@ export default function FinanceDashboard() {
     category: "",
     amount: "",
   });
-
-  const [showModal, setShowModal] = useState(false);
-  const [openUserMenu, setOpenUserMenu] = useState(false);
 
   /* ================= HANDLERS ================= */
   const handleInputChange = (key: string, value: string) => {
@@ -56,16 +63,15 @@ export default function FinanceDashboard() {
   };
 
   const handleLogout = () => {
-    alert("Berhasil logout");
     router.push("/login");
   };
 
-  /* ================= CALCULATIONS ================= */
+  /* ================= CALCULATION ================= */
   const totalIncome = useMemo(
     () =>
       transactions
         .filter((t) => t.type === "income")
-        .reduce((sum, t) => sum + t.amount, 0),
+        .reduce((a, b) => a + b.amount, 0),
     [transactions]
   );
 
@@ -73,24 +79,39 @@ export default function FinanceDashboard() {
     () =>
       transactions
         .filter((t) => t.type === "expense")
-        .reduce((sum, t) => sum + t.amount, 0),
+        .reduce((a, b) => a + b.amount, 0),
     [transactions]
   );
 
   const balance = totalIncome - totalExpense;
 
   const chartData = [
-    { name: "Income", value: totalIncome },
-    { name: "Expense", value: totalExpense },
+    { name: "Pendapatan", value: totalIncome },
+    { name: "Pengeluaran", value: totalExpense },
   ];
 
   /* ================= RENDER ================= */
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
+
+      {/* ================= OVERLAY ================= */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        />
+      )}
 
       {/* ================= SIDEBAR ================= */}
-      <aside className="w-60 bg-gray-900 text-white p-6">
-        <h1 className="text-lg font-bold mb-6">CERDAS FINANSIAL</h1>
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white p-6 z-50
+        transform transition-transform duration-300
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
+          <button onClick={() => setSidebarOpen(false)}>✕</button>
+        </div>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
           {[
@@ -103,6 +124,7 @@ export default function FinanceDashboard() {
             <Link
               key={item.path}
               href={item.path}
+              onClick={() => setSidebarOpen(false)}
               className={
                 pathname === item.path
                   ? "text-white font-semibold"
@@ -116,13 +138,26 @@ export default function FinanceDashboard() {
       </aside>
 
       {/* ================= MAIN ================= */}
-      <div className="flex-1 p-6">
+      <div className="p-6">
 
         {/* ================= TOP BAR ================= */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Dashboard Keuangan</h1>
 
-          {/* === PROFILE MENU (FIXED & CLEAN) === */}
+          <div className="flex items-center gap-4">
+            {/* HAMBURGER */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 bg-white rounded-md shadow border"
+            >
+              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
+              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
+              <span className="block w-6 h-0.5 bg-gray-800"></span>
+            </button>
+
+            <h1 className="text-3xl font-bold">Dashboard Keuangan</h1>
+          </div>
+
+          {/* PROFILE */}
           <div className="relative">
             <button
               onClick={() => setOpenUserMenu(!openUserMenu)}
@@ -130,31 +165,19 @@ export default function FinanceDashboard() {
             >
               <img
                 src="https://i.pravatar.cc/40"
-                alt="Profile"
                 className="w-8 h-8 rounded-full"
               />
-              <span className="text-sm font-medium text-gray-700">
-                Akun
-              </span>
+              <span className="text-sm">Akun</span>
             </button>
 
             {openUserMenu && (
-              <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg overflow-hidden">
-                <Link
-                  href="/profil"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Profil Saya
-                </Link>
-                <Link
-                  href="/pengaturan"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
+              <div className="absolute right-0 mt-2 w-44 bg-white rounded shadow border">
+                <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Pengaturan
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
+                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
                 >
                   Logout
                 </button>
@@ -165,18 +188,18 @@ export default function FinanceDashboard() {
 
         {/* ================= SUMMARY ================= */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <SummaryCard title="Saldo" value={balance} color="text-green-600" />
-          <SummaryCard title="Total Pendapatan" value={totalIncome} color="text-blue-600" />
-          <SummaryCard title="Total Pengeluaran" value={totalExpense} color="text-red-600" />
+          <Summary title="Saldo" value={balance} color="text-green-600" />
+          <Summary title="Pendapatan" value={totalIncome} color="text-blue-600" />
+          <Summary title="Pengeluaran" value={totalExpense} color="text-red-600" />
         </div>
 
         {/* ================= CHART ================= */}
         <div className="bg-white p-6 rounded-lg shadow mb-6">
           <h2 className="text-xl font-semibold mb-4">Ringkasan Grafik</h2>
-          <div className="w-full h-64">
+          <div className="h-64">
             <ResponsiveContainer>
               <PieChart>
-                <Pie data={chartData} dataKey="value" outerRadius={100} label>
+                <Pie data={chartData} dataKey="value" outerRadius={90} label>
                   <Cell fill="#4ade80" />
                   <Cell fill="#f87171" />
                 </Pie>
@@ -186,8 +209,8 @@ export default function FinanceDashboard() {
           </div>
         </div>
 
-        {/* ================= TRANSACTIONS ================= */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        {/* ================= TRANSACTION TABLE ================= */}
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex justify-between mb-4">
             <h2 className="text-xl font-semibold">Daftar Transaksi</h2>
             <button
@@ -222,9 +245,7 @@ export default function FinanceDashboard() {
                   <td className="border p-2">{t.date}</td>
                   <td className="border p-2">{t.type}</td>
                   <td className="border p-2">{t.category}</td>
-                  <td className="border p-2">
-                    Rp {t.amount.toLocaleString()}
-                  </td>
+                  <td className="border p-2">Rp {t.amount.toLocaleString()}</td>
                   <td className="border p-2">
                     <button
                       onClick={() => handleDelete(t.id)}
@@ -254,8 +275,7 @@ export default function FinanceDashboard() {
 }
 
 /* ================= HELPER COMPONENTS ================= */
-
-function SummaryCard({
+function Summary({
   title,
   value,
   color,
@@ -265,8 +285,8 @@ function SummaryCard({
   color: string;
 }) {
   return (
-    <div className="bg-white p-5 rounded-lg shadow">
-      <h2 className="text-lg font-semibold">{title}</h2>
+    <div className="bg-white p-5 rounded shadow">
+      <h3 className="font-semibold">{title}</h3>
       <p className={`text-2xl font-bold ${color}`}>
         Rp {value.toLocaleString()}
       </p>
@@ -274,15 +294,10 @@ function SummaryCard({
   );
 }
 
-function Modal({
-  form,
-  onChange,
-  onClose,
-  onSave,
-}: any) {
+function Modal({ form, onChange, onClose, onSave }: any) {
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg w-96">
         <h2 className="text-xl font-bold mb-4">Tambah Transaksi</h2>
 
         <select
@@ -320,4 +335,3 @@ function Modal({
     </div>
   );
 }
-
