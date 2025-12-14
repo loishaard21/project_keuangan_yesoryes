@@ -2,109 +2,28 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { hashPassword } from "@/lib/hash";
 
-// =======================
 // GET ALL USERS
-// =======================
 export async function GET() {
-  const users = await prisma.user.findMany({
-    include: {
-      accounts: true,
-      transactions: true,
-    },
-  });
-
+  const users = await prisma.user.findMany();
   return NextResponse.json(users);
 }
 
-// =======================
-// CREATE NEW USER (POST)
-// =======================
+// CREATE USER
 export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    const { email, password, name } = body;
+  const { email, password, name } = await req.json();
 
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: "Email dan password wajib diisi!" },
-        { status: 400 }
-      );
-    }
-
-    const hashed = await hashPassword(password);
-
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        name,
-        password: hashed,
-      },
-    });
-
-    return NextResponse.json(newUser);
-  } catch (error: any) {
-    console.error("CREATE USER ERROR:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!email || !password) {
+    return NextResponse.json(
+      { error: "Email dan password wajib diisi" },
+      { status: 400 }
+    );
   }
-}
 
-// =======================
-// UPDATE USER (PUT)
-// =======================
-export async function PUT(req: Request) {
-  try {
-    const body = await req.json();
-    const { id, email, name, password } = body;
+  const hashed = await hashPassword(password);
 
-    if (!id) {
-      return NextResponse.json(
-        { error: "ID user wajib dikirim untuk update!" },
-        { status: 400 }
-      );
-    }
+  const user = await prisma.user.create({
+    data: { email, name, password: hashed },
+  });
 
-    const dataToUpdate: any = { email, name };
-
-    // Kalau password dikirim → hash ulang
-    if (password) {
-      dataToUpdate.password = await hashPassword(password);
-    }
-
-    const updatedUser = await prisma.user.update({
-      where: { id: Number(id) },
-      data: dataToUpdate,
-    });
-
-    return NextResponse.json(updatedUser);
-  } catch (error: any) {
-    console.error("UPDATE USER ERROR:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
-
-// =======================
-// DELETE USER (DELETE)
-// =======================
-export async function DELETE(req: Request) {
-  try {
-    const body = await req.json();
-    const { id } = body;
-
-    if (!id) {
-      return NextResponse.json(
-        { error: "ID user wajib dikirim untuk delete!" },
-        { status: 400 }
-      );
-    }
-
-    // Hapus user
-    await prisma.user.delete({
-      where: { id: Number(id) },
-    });
-
-    return NextResponse.json({ message: "User berhasil dihapus!" });
-  } catch (error: any) {
-    console.error("DELETE USER ERROR:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+  return NextResponse.json(user);
 }
