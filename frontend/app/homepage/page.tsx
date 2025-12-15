@@ -33,9 +33,10 @@ export default function HomePage() {
           </h2>
 
           <p className="text-gray-600 mb-8">
-            Cerdas Finansial membantu kamu mencatat transaksi, 
-            mengelola anggaran, dan melihat laporan keuangan secara otomatis 
-            dalam satu dashboard yang mudah digunakan.
+            Website Cerdas Finansial merupakan aplikasi pengelolaan keuangan berbasis web yang dirancang untuk membantu pengguna mencatat, 
+            mengontrol, dan menganalisis kondisi keuangan secara mudah dan terstruktur. Melalui fitur pencatatan transaksi, 
+            pengelolaan anggaran, serta laporan keuangan otomatis, website ini memungkinkan pengguna memantau pemasukan dan pengeluaran secara real-time, 
+            mengurangi risiko kesalahan pencatatan manual, serta mendukung pengambilan keputusan finansial yang lebih tepat dan efisien.
           </p>
 
           <Link
