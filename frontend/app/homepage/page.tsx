@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -13,8 +14,12 @@ export default function HomePage() {
         </h1>
 
         <nav className="space-x-6 text-gray-600 font-medium">
-          <Link href="#fitur" className="hover:text-blue-600">Fitur</Link>
-          <Link href="#manfaat" className="hover:text-blue-600">Manfaat</Link>
+          <Link href="#fitur" className="hover:text-blue-600">
+            Fitur
+          </Link>
+          <Link href="#manfaat" className="hover:text-blue-600">
+            Manfaat
+          </Link>
           <Link
             href="/login"
             className="bg-blue-600 text-white px-5 py-2 rounded-lg"
@@ -25,33 +30,38 @@ export default function HomePage() {
       </header>
 
       {/* ================= HERO ================= */}
-      <section className="grid md:grid-cols-2 gap-10 px-10 py-20 items-center">
+      <section className="grid md:grid-cols-2 gap-12 px-10 py-24 items-center">
         <div>
           <h2 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
             Kelola Keuangan Lebih Mudah <br />
             Tanpa Ribet & Manual
           </h2>
 
-          <p className="text-gray-600 mb-8">
-            Website Cerdas Finansial merupakan aplikasi pengelolaan keuangan berbasis web yang dirancang untuk membantu pengguna mencatat, 
-            mengontrol, dan menganalisis kondisi keuangan secara mudah dan terstruktur. Melalui fitur pencatatan transaksi, 
-            pengelolaan anggaran, serta laporan keuangan otomatis, website ini memungkinkan pengguna memantau pemasukan dan pengeluaran secara real-time, 
-            mengurangi risiko kesalahan pencatatan manual, serta mendukung pengambilan keputusan finansial yang lebih tepat dan efisien.
+          <p className="text-gray-600 mb-8 leading-relaxed">
+            Cerdas Finansial adalah aplikasi pengelolaan keuangan berbasis web
+            yang membantu pengguna mencatat, mengontrol, dan menganalisis
+            pemasukan serta pengeluaran secara terstruktur. Dengan fitur
+            dashboard interaktif, manajemen anggaran, dan laporan otomatis,
+            pengguna dapat memantau kondisi keuangan secara real-time dan
+            mengambil keputusan finansial yang lebih tepat.
           </p>
 
           <Link
             href="/registrasi"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium"
+            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition"
           >
-            Mulai Sekarang →
+            Coba Sekarang →
           </Link>
         </div>
 
         <div className="flex justify-center">
-          <img
-            src="https://dummyimage.com/600x400/e5e7eb/374151&text=Dashboard+Keuangan"
-            alt="Dashboard"
+          <Image
+            src="/images/dashboard.png"
+            alt="Dashboard Cerdas Finansial"
+            width={600}
+            height={400}
             className="rounded-xl shadow-lg"
+            priority
           />
         </div>
       </section>
@@ -63,32 +73,32 @@ export default function HomePage() {
         </h3>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              title: "Pencatatan Manual Rawan Salah",
-              desc: "Tanpa sistem otomatis, kesalahan pencatatan sering terjadi dan menyulitkan evaluasi keuangan."
-            },
-            {
-              title: "Laporan Keuangan Tidak Terstruktur",
-              desc: "Data tersebar membuat laporan sulit dibaca dan tidak akurat."
-            },
-            {
-              title: "Sulit Mengontrol Pengeluaran",
-              desc: "Tanpa anggaran yang jelas, pengeluaran sering melebihi batas."
-            }
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-xl shadow-sm"
-            >
-              <h4 className="font-semibold text-lg mb-3">
-                {item.title}
-              </h4>
-              <p className="text-gray-600 text-sm">
-                {item.desc}
-              </p>
-            </div>
-          ))}
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <h4 className="font-semibold text-lg mb-3">
+              Pencatatan Lebih Akurat
+            </h4>
+            <p className="text-gray-600 text-sm">
+              Mengurangi kesalahan pencatatan manual dengan sistem otomatis.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <h4 className="font-semibold text-lg mb-3">
+              Laporan Keuangan Jelas
+            </h4>
+            <p className="text-gray-600 text-sm">
+              Data keuangan tersaji rapi dan mudah dipahami.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-sm">
+            <h4 className="font-semibold text-lg mb-3">
+              Kontrol Pengeluaran
+            </h4>
+            <p className="text-gray-600 text-sm">
+              Atur anggaran agar pengeluaran tidak melebihi batas.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -99,36 +109,41 @@ export default function HomePage() {
         </h3>
 
         <div className="grid md:grid-cols-4 gap-8">
-          {[
-            {
-              title: "Dashboard Keuangan",
-              desc: "Ringkasan saldo, pemasukan, dan pengeluaran secara real-time."
-            },
-            {
-              title: "Manajemen Transaksi",
-              desc: "Catat pemasukan dan pengeluaran dengan mudah."
-            },
-            {
-              title: "Anggaran (Budgeting)",
-              desc: "Atur batas pengeluaran untuk setiap kategori."
-            },
-            {
-              title: "Laporan Keuangan",
-              desc: "Laporan bulanan & tahunan dalam bentuk ringkas."
-            }
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="border p-6 rounded-xl hover:shadow-md transition"
-            >
-              <h4 className="font-semibold mb-2">
-                {item.title}
-              </h4>
-              <p className="text-sm text-gray-600">
-                {item.desc}
-              </p>
-            </div>
-          ))}
+          <div className="border p-6 rounded-xl hover:shadow-md transition">
+            <h4 className="font-semibold mb-2">
+              Dashboard Keuangan
+            </h4>
+            <p className="text-sm text-gray-600">
+              Ringkasan saldo, pemasukan, dan pengeluaran real-time.
+            </p>
+          </div>
+
+          <div className="border p-6 rounded-xl hover:shadow-md transition">
+            <h4 className="font-semibold mb-2">
+              Manajemen Transaksi
+            </h4>
+            <p className="text-sm text-gray-600">
+              Catat transaksi dengan cepat dan mudah.
+            </p>
+          </div>
+
+          <div className="border p-6 rounded-xl hover:shadow-md transition">
+            <h4 className="font-semibold mb-2">
+              Anggaran (Budgeting)
+            </h4>
+            <p className="text-sm text-gray-600">
+              Atur batas pengeluaran setiap kategori.
+            </p>
+          </div>
+
+          <div className="border p-6 rounded-xl hover:shadow-md transition">
+            <h4 className="font-semibold mb-2">
+              Laporan Keuangan
+            </h4>
+            <p className="text-sm text-gray-600">
+              Laporan bulanan dan tahunan otomatis.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -142,7 +157,7 @@ export default function HomePage() {
         </p>
         <Link
           href="/registrasi"
-          className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold"
+          className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100"
         >
           Daftar Gratis
         </Link>
