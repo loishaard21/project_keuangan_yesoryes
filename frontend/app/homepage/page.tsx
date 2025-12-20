@@ -116,36 +116,36 @@ export default function HomePage() {
             <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               📊
             </div>
-              <h4 className="font-bold mb-2 text-[#2D4839]">
-                Dashboard Keuangan
-              </h4>
-              <p className="text-sm text-[#426E55]">
-                Ringkasan saldo, pemasukan, dan pengeluaran real-time.
-              </p>
+            <h4 className="font-bold mb-2 text-[#2D4839]">
+              Dashboard Keuangan
+            </h4>
+            <p className="text-sm text-[#426E55]">
+              Ringkasan saldo, pemasukan, dan pengeluaran real-time.
+            </p>
           </div>
 
           <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
             <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               💸
             </div>
-              <h4 className="font-bold mb-2 text-[#2D4839]">
-                Manajemen Transaksi
-              </h4>
-              <p className="text-sm text-[#426E55]">
-                Catat transaksi harian dengan cepat dan mudah.
-              </p>
+            <h4 className="font-bold mb-2 text-[#2D4839]">
+              Manajemen Transaksi
+            </h4>
+            <p className="text-sm text-[#426E55]">
+              Catat transaksi harian dengan cepat dan mudah.
+            </p>
           </div>
 
           <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
             <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               🛡️
             </div>
-              <h4 className="font-bold mb-2 text-[#2D4839]">
-                Anggaran (Budgeting)
-              </h4>
-              <p className="text-sm text-[#426E55]">
-                Atur batas pengeluaran setiap kategori agar hemat.
-              </p>
+            <h4 className="font-bold mb-2 text-[#2D4839]">
+              Anggaran (Budgeting)
+            </h4>
+            <p className="text-sm text-[#426E55]">
+              Atur batas pengeluaran setiap kategori agar hemat.
+            </p>
           </div>
 
           <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
@@ -153,12 +153,12 @@ export default function HomePage() {
               className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               📑
             </div>
-              <h4 className="font-bold mb-2 text-[#2D4839]">
-                Laporan Keuangan
-              </h4>
-              <p className="text-sm text-[#426E55]">
-                Export laporan bulanan dan tahunan secara otomatis.
-              </p>
+            <h4 className="font-bold mb-2 text-[#2D4839]">
+              Laporan Keuangan
+            </h4>
+            <p className="text-sm text-[#426E55]">
+              Export laporan bulanan dan tahunan secara otomatis.
+            </p>
           </div>
         </div>
       </section>
@@ -166,18 +166,15 @@ export default function HomePage() {
       {/* ================= CTA ================= */}
       <section className="bg-gradient-to-br from-[#2D4839] to-[#426E55] text-white py-24 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern.png')] opacity-5"></div>
-        <h3 className="text-3xl font-bold mb-4">
-          Siap Mengelola Keuangan Lebih Baik?
-        </h3>
-        <p className="mb-8">
-          Mulai gunakan Cerdas Finansial sekarang dan rasakan kemudahannya.
-        </p>
-        <Link
-          href="/registrasi"
-          className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100"
-        >
-          Daftar Gratis
-        </Link>
+        <div className="absolute -top-24 -left-24 w-64 h-64 bg-[#73986F] rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <h3 className="text-4xl font-bold mb-6 text-[#EED4DB]">
+            Siap Mengelola Keuangan Lebih Baik?
+          </h3>
+          
+        </div>
+
       </section>
 
     </main>
