@@ -83,21 +83,23 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h4 className="font-semibold text-lg mb-3">
+          <div
+            className="bg-[#FDF8F9] p-8 rounded-2xl border border-[#EED4DB] hover:border-[#CB748E] hover:shadow-xl hover:shadow-[#CB748E]/10 transition-all duration-300 hover:-translate-y-2 group">
+            <h4 className="font-bold text-xl mb-3 text-[#2D4839] group-hover:text-[#CB748E] transition-colors">
               Laporan Keuangan Jelas
             </h4>
-            <p className="text-gray-600 text-sm">
-              Data keuangan tersaji rapi dan mudah dipahami.
+            <p className="text-[#426E55] text-sm leading-relaxed">
+              Data keuangan tersaji rapi dalam visualisasi grafik yang mudah dipahami.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h4 className="font-semibold text-lg mb-3">
+          <div
+            className="bg-[#FDF8F9] p-8 rounded-2xl border border-[#EED4DB] hover:border-[#CB748E] hover:shadow-xl hover:shadow-[#CB748E]/10 transition-all duration-300 hover:-translate-y-2 group">
+            <h4 className="font-bold text-xl mb-3 text-[#2D4839] group-hover:text-[#CB748E] transition-colors">
               Kontrol Pengeluaran
             </h4>
-            <p className="text-gray-600 text-sm">
-              Atur anggaran agar pengeluaran tidak melebihi batas.
+            <p className="text-[#426E55] text-sm leading-relaxed">
+              Fitur budgeting pintar untuk menjaga pengeluaran agar tidak melebihi batas.
             </p>
           </div>
         </div>
