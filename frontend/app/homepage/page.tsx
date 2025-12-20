@@ -106,19 +106,23 @@ export default function HomePage() {
       </section>
 
       {/* ================= FITUR ================= */}
-      <section id="fitur" className="py-20 px-10">
-        <h3 className="text-3xl font-bold text-center mb-12">
+      <section id="fitur" className="py-24 px-10 bg-gradient-to-b from-[#FDF8F9] to-white">
+        <h3 className="text-3xl font-bold text-center mb-16 text-[#2D4839]">
           Fitur Unggulan
         </h3>
 
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="border p-6 rounded-xl hover:shadow-md transition">
-            <h4 className="font-semibold mb-2">
-              Dashboard Keuangan
-            </h4>
-            <p className="text-sm text-gray-600">
-              Ringkasan saldo, pemasukan, dan pengeluaran real-time.
-            </p>
+        <div className="grid md:grid-cols-4 gap-6">
+          <div
+            className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
+            <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
+              📊
+            </div>
+              <h4 className="font-bold mb-2 text-[#2D4839]">
+                Dashboard Keuangan
+              </h4>
+              <p className="text-sm text-[#426E55]">
+                Ringkasan saldo, pemasukan, dan pengeluaran real-time.
+              </p>
           </div>
 
           <div className="border p-6 rounded-xl hover:shadow-md transition">
