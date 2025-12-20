@@ -8,7 +8,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#FDF8F9] text-[#426E55] selection:bg-[#CB748E] selection:text-white font-sans antialiased">
 
       {/* ================= NAVBAR ================= */}
-      <header className="flex justify-between items-center px-10 py-6 border-b">
+      <header className="sticky top-0 z-50 flex justify-between items-center px-10 py-6 border-b border-[#EED4DB]/50 bg-white/70 backdrop-blur-md transition-all">
         <h1 className="text-2xl font-bold text-blue-700">
           Cerdas Finansial
         </h1>
