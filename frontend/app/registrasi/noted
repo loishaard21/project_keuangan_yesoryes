@@ -1,0 +1,118 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function RegisterPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (key: string, value: string) => {
+    setForm({ ...form, [key]: value });
+  };
+
+  const handleRegister = async (e: any) => {
+    e.preventDefault();
+
+    if (!form.name || !form.email || !form.password) {
+      alert("Semua field wajib diisi!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await fetch("http://localhost:3000/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Registrasi gagal");
+        return;
+      }
+
+      alert("Registrasi berhasil, silakan login");
+      router.push("/login");
+    } catch (err) {
+      console.error(err);
+      alert("Terjadi kesalahan server");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    // Background menggunakan gradient halus dari Putih ke Shy Pink
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-[#FDF8F9] via-white to-[#EED4DB]">
+      
+      {/* Dekorasi blur di belakang kartu (aesthetic only) */}
+      <div className="absolute w-96 h-96 bg-[#CB748E]/10 rounded-full blur-3xl -top-10 -left-10 pointer-events-none"></div>
+      <div className="absolute w-80 h-80 bg-[#73986F]/10 rounded-full blur-3xl bottom-10 right-10 pointer-events-none"></div>
+
+      {/* Kartu Form dengan efek Glassmorphism */}
+      <div className="bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-2xl shadow-[#2D4839]/10 border border-white/60 w-full max-w-md relative z-10">
+        
+        <h1 className="text-3xl font-extrabold text-center mb-8 text-[#2D4839]">
+          Register
+          {/* Garis bawah dekoratif */}
+          <span className="block h-1 w-12 bg-[#CB748E] mx-auto mt-2 rounded-full"></span>
+        </h1>
+
+        <form onSubmit={handleRegister} className="space-y-5">
+          {/* Input Nama */}
+          <div>
+            <input
+              placeholder="Nama Lengkap"
+              className="w-full bg-[#FDF8F9] border border-[#EED4DB] text-[#2D4839] placeholder-[#73986F]/60 px-4 py-3 rounded-xl focus:outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/10 transition-all duration-300"
+              onChange={(e) => handleChange("name", e.target.value)}
+            />
+          </div>
+
+          {/* Input Email */}
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full bg-[#FDF8F9] border border-[#EED4DB] text-[#2D4839] placeholder-[#73986F]/60 px-4 py-3 rounded-xl focus:outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/10 transition-all duration-300"
+              onChange={(e) => handleChange("email", e.target.value)}
+            />
+          </div>
+
+          {/* Input Password */}
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full bg-[#FDF8F9] border border-[#EED4DB] text-[#2D4839] placeholder-[#73986F]/60 px-4 py-3 rounded-xl focus:outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/10 transition-all duration-300"
+              onChange={(e) => handleChange("password", e.target.value)}
+            />
+          </div>
+
+          {/* Tombol Register */}
+          <button
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-[#CB748E] to-[#D698AB] text-white font-bold py-3.5 rounded-xl shadow-lg shadow-[#CB748E]/30 hover:shadow-xl hover:shadow-[#CB748E]/40 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed disabled:shadow-none"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                Processing...
+              </span>
+            ) : (
+              "Daftar Sekarang"
+            )}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
