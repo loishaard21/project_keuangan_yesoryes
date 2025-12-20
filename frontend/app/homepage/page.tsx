@@ -72,13 +72,14 @@ export default function HomePage() {
           Kenapa Harus Pakai <span className="border-b-4 border-[#CB748E]/50">Cerdas Finansial?</span>
         </h3>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h4 className="font-semibold text-lg mb-3">
+        <div className="grid md:grid-cols-3 gap-8 relative z-10">
+          <div
+            className="bg-[#FDF8F9] p-8 rounded-2xl border border-[#EED4DB] hover:border-[#CB748E] hover:shadow-xl hover:shadow-[#CB748E]/10 transition-all duration-300 hover:-translate-y-2 group">
+            <h4 className="font-bold text-xl mb-3 text-[#2D4839] group-hover:text-[#CB748E] transition-colors">
               Pencatatan Lebih Akurat
             </h4>
-            <p className="text-gray-600 text-sm">
-              Mengurangi kesalahan pencatatan manual dengan sistem otomatis.
+            <p className="text-[#426E55] text-sm leading-relaxed">
+              Mengurangi kesalahan pencatatan manual dengan sistem otomatis yang terintegrasi.
             </p>
           </div>
 
