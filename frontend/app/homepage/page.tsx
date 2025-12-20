@@ -35,7 +35,7 @@ export default function HomePage() {
       <section className="grid md:grid-cols-2 gap-12 px-10 py-24 items-center bg-gradient-to-br from-white via-[#FDF8F9] to-[#EED4DB]/40">
         <div>
           <h2 className="text-5xl font-extrabold text-[#2D4839] leading-tight mb-6 tracking-tight">
-            Kelola Keuangan Lebih Mudah <br />
+            Kelola Keuangan <span className="text-[#CB748E]">Lebih Mudah</span> <br />
             Tanpa Ribet & Manual
           </h2>
 
