@@ -176,7 +176,9 @@ export default function HomePage() {
             Jangan biarkan uangmu habis tanpa jejak. Mulai gunakan Cerdas Finansial sekarang dan rasakan
             kemudahannya.
           </p>
-          
+          <Link href="/registrasi" className="bg-white text-[#2D4839] px-8 py-4 rounded-full font-bold hover:bg-[#EED4DB] transition-colors shadow-lg hover:shadow-[#EED4DB]/30">
+            Daftar Gratis Sekarang
+          </Link>
         </div>
 
       </section>
