@@ -62,7 +62,7 @@ export default function RegisterPage() {
           <span className="block h-1 w-12 bg-[#CB748E] mx-auto mt-2 rounded-full"></span>
         </h1>
 
-        <form onSubmit={handleRegister} className="space-y-3">
+        <form onSubmit={handleRegister} className="space-y-3.5">
           <div>
             <input
               placeholder="Nama Lengkap"
