@@ -57,7 +57,10 @@ export default function RegisterPage() {
       <div className="absolute w-80 h-80 bg-[#73986F]/10 rounded-full blur-3xl bottom-10 right-10 pointer-events-none"></div>
 
       <div className="bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-2xl shadow-[#2D4839]/10 border border-white/60 w-full max-w-md relative z-10">
-        <h1 className="text-3xl font-bold text-center mb-6">Register</h1>
+        <h1 className="text-3xl font-extrabold text-center mb-8 text-[#2D4839]">
+          Register
+          <span className="block h-1 w-12 bg-[#CB748E] mx-auto mt-2 rounded-full"></span>
+        </h1>
 
         <form onSubmit={handleRegister}>
           <input
