@@ -17,14 +17,16 @@ export default function HomePage() {
           <Link href="#fitur" className="hover:text-[#CB748E] transition-colors duration-300">
             Fitur
           </Link>
-          <Link href="#manfaat" className="hover:text-blue-600">
+          <Link href="#manfaat" className="hover:text-[#CB748E] transition-colors duration-300">
             Manfaat
           </Link>
-          <Link
-            href="/login"
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg"
-          >
-            Login
+          <Link href="/login"
+            className="group relative px-5 py-2 rounded-full overflow-hidden bg-[#426E55] text-white shadow-lg shadow-[#426E55]/30 hover:shadow-[#426E55]/50 transition-all duration-300">
+            <span className="relative z-10 group-hover:tracking-wider transition-all">Login</span>
+            {/* Animasi background saat hover */}
+            <div
+              className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-[#2D4839]/20">
+            </div>
           </Link>
         </nav>
       </header>
