@@ -91,7 +91,7 @@ export default function RegisterPage() {
 
           <button
             disabled={loading}
-            className="w-full bg-green-600 text-white py-2 rounded"
+            className="w-full bg-gradient-to-r from-[#CB748E] to-[#D698AB] text-white font-bold py-3.5 rounded-xl shadow-lg shadow-[#CB748E]/30 hover:shadow-xl hover:shadow-[#CB748E]/40 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed disabled:shadow-none"
           >
             {loading ? "Mendaftar..." : "Daftar"}
           </button>
