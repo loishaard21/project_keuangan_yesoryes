@@ -53,7 +53,10 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-[#FDF8F9] via-white to-[#EED4DB]">
-      <div className="bg-white p-8 rounded-xl shadow-xl w-96">
+      <div className="absolute w-96 h-96 bg-[#CB748E]/10 rounded-full blur-3xl -top-10 -left-10 pointer-events-none"></div>
+      <div className="absolute w-80 h-80 bg-[#73986F]/10 rounded-full blur-3xl bottom-10 right-10 pointer-events-none"></div>
+
+      <div className="bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-2xl shadow-[#2D4839]/10 border border-white/60 w-full max-w-md relative z-10">
         <h1 className="text-3xl font-bold text-center mb-6">Register</h1>
 
         <form onSubmit={handleRegister}>
