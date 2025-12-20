@@ -9,7 +9,7 @@ export default function HomePage() {
 
       {/* ================= NAVBAR ================= */}
       <header className="sticky top-0 z-50 flex justify-between items-center px-10 py-6 border-b border-[#EED4DB]/50 bg-white/70 backdrop-blur-md transition-all">
-        <h1 className="text-2xl font-bold text-blue-700">
+        <h1 className="text-2xl font-extrabold bg-gradient-to-r from-[#CB748E] to-[#D698AB] bg-clip-text text-transparent">
           Cerdas Finansial
         </h1>
 
