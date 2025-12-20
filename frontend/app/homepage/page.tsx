@@ -164,7 +164,8 @@ export default function HomePage() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="bg-blue-600 text-white py-20 text-center">
+      <section className="bg-gradient-to-br from-[#2D4839] to-[#426E55] text-white py-24 text-center relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern.png')] opacity-5"></div>
         <h3 className="text-3xl font-bold mb-4">
           Siap Mengelola Keuangan Lebih Baik?
         </h3>
