@@ -112,36 +112,32 @@ export default function HomePage() {
         </h3>
 
         <div className="grid md:grid-cols-4 gap-6">
-          <div
-            className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
+          <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
             <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               📊
             </div>
-            <h4 className="font-bold mb-2 text-[#2D4839]">
-              Dashboard Keuangan
-            </h4>
-            <p className="text-sm text-[#426E55]">
-              Ringkasan saldo, pemasukan, dan pengeluaran real-time.
-            </p>
+              <h4 className="font-bold mb-2 text-[#2D4839]">
+                Dashboard Keuangan
+              </h4>
+              <p className="text-sm text-[#426E55]">
+                Ringkasan saldo, pemasukan, dan pengeluaran real-time.
+              </p>
           </div>
 
-          <div
-            className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
+          <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
             <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               💸
             </div>
-            <h4 className="font-bold mb-2 text-[#2D4839]">
-              Manajemen Transaksi
-            </h4>
-            <p className="text-sm text-[#426E55]">
-              Catat transaksi harian dengan cepat dan mudah.
-            </p>
+              <h4 className="font-bold mb-2 text-[#2D4839]">
+                Manajemen Transaksi
+              </h4>
+              <p className="text-sm text-[#426E55]">
+                Catat transaksi harian dengan cepat dan mudah.
+              </p>
           </div>
 
-          <div
-            className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
-            <div
-              className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
+          <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
+            <div className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
               🛡️
             </div>
               <h4 className="font-bold mb-2 text-[#2D4839]">
@@ -152,13 +148,17 @@ export default function HomePage() {
               </p>
           </div>
 
-          <div className="border p-6 rounded-xl hover:shadow-md transition">
-            <h4 className="font-semibold mb-2">
-              Laporan Keuangan
-            </h4>
-            <p className="text-sm text-gray-600">
-              Laporan bulanan dan tahunan otomatis.
-            </p>
+          <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg hover:shadow-[#73986F]/20 transition-all duration-300 hover:scale-105">
+            <div
+              className="w-12 h-12 bg-[#EED4DB] rounded-lg mb-4 flex items-center justify-center text-[#CB748E] font-bold text-lg">
+              📑
+            </div>
+              <h4 className="font-bold mb-2 text-[#2D4839]">
+                Laporan Keuangan
+              </h4>
+              <p className="text-sm text-[#426E55]">
+                Export laporan bulanan dan tahunan secara otomatis.
+              </p>
           </div>
         </div>
       </section>
