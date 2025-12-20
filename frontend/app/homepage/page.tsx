@@ -13,8 +13,8 @@ export default function HomePage() {
           Cerdas Finansial
         </h1>
 
-        <nav className="space-x-6 text-gray-600 font-medium">
-          <Link href="#fitur" className="hover:text-blue-600">
+        <nav className="space-x-6 text-[#426E55] font-medium">
+          <Link href="#fitur" className="hover:text-[#CB748E] transition-colors duration-300">
             Fitur
           </Link>
           <Link href="#manfaat" className="hover:text-blue-600">
