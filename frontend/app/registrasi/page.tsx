@@ -93,7 +93,13 @@ export default function RegisterPage() {
             disabled={loading}
             className="w-full bg-gradient-to-r from-[#CB748E] to-[#D698AB] text-white font-bold py-3.5 rounded-xl shadow-lg shadow-[#CB748E]/30 hover:shadow-xl hover:shadow-[#CB748E]/40 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed disabled:shadow-none"
           >
-            {loading ? "Mendaftar..." : "Daftar"}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                Processing...
+              </span>
+            ) : (
+              "Daftar Sekarang"
+            )}
           </button>
         </form>
       </div>
