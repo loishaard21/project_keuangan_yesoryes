@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#FDF8F9] text-[#426E55] selection:bg-[#CB748E] selection:text-white font-sans antialiased">
 
       {/* ================= NAVBAR ================= */}
       <header className="flex justify-between items-center px-10 py-6 border-b">
