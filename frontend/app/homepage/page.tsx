@@ -172,6 +172,10 @@ export default function HomePage() {
           <h3 className="text-4xl font-bold mb-6 text-[#EED4DB]">
             Siap Mengelola Keuangan Lebih Baik?
           </h3>
+          <p className="mb-10 text-gray-200 text-lg max-w-2xl mx-auto">
+            Jangan biarkan uangmu habis tanpa jejak. Mulai gunakan Cerdas Finansial sekarang dan rasakan
+            kemudahannya.
+          </p>
           
         </div>
 
