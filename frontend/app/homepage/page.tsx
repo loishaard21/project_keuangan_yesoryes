@@ -63,9 +63,13 @@ export default function HomePage() {
       </section>
 
       {/* ================= MANFAAT ================= */}
-      <section id="manfaat" className="bg-gray-50 py-20 px-10">
-        <h3 className="text-3xl font-bold text-center mb-12">
-          Kenapa Harus Pakai Cerdas Finansial?
+      <section id="manfaat" className="bg-white py-24 px-10 relative overflow-hidden">
+        <div
+          className="absolute top-0 right-0 w-64 h-64 bg-[#EED4DB] rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2">
+        </div>
+
+        <h3 className="text-3xl font-bold text-center mb-16 text-[#2D4839]">
+          Kenapa Harus Pakai <span className="border-b-4 border-[#CB748E]/50">Cerdas Finansial?</span>
         </h3>
 
         <div className="grid md:grid-cols-3 gap-8">
