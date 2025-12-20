@@ -51,15 +51,14 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="flex justify-center">
-          <Image
-            src="/images/dashboard.png"
-            alt="Dashboard Cerdas Finansial"
-            width={600}
-            height={400}
-            className="rounded-xl shadow-lg"
-            priority
-          />
+        <div className="flex justify-center relative">
+          {/* Dekorasi blur di belakang gambar */}
+          <div
+            className="absolute -inset-4 bg-gradient-to-r from-[#CB748E] to-[#73986F] opacity-20 blur-2xl rounded-full">
+          </div>
+          <Image src="/images/dashboard.png" alt="Dashboard Cerdas Finansial" width={600} height={400}
+            className="relative rounded-2xl shadow-2xl shadow-[#2D4839]/20 border border-white/50 transform hover:scale-[1.02] transition-transform duration-500"
+            priority />
         </div>
       </section>
 
