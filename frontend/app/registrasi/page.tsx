@@ -80,12 +80,14 @@ export default function RegisterPage() {
             />
           </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full border p-2 rounded mb-4"
-            onChange={(e) => handleChange("password", e.target.value)}
-          />
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full bg-[#FDF8F9] border border-[#EED4DB] text-[#2D4839] placeholder-[#73986F]/60 px-4 py-3 rounded-xl focus:outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/10 transition-all duration-300"
+              onChange={(e) => handleChange("password", e.target.value)}
+            />
+          </div>
 
           <button
             disabled={loading}
