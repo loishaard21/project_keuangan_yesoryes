@@ -71,13 +71,10 @@ export default function LoginPage() {
             />
           </div>
 
-          <label className="block mb-2 font-semibold">Password</label>
-          <input
-            type="password"
-            value={form.password}
-            onChange={(e) => handleChange("password", e.target.value)}
-            className="w-full border p-2 rounded mb-4"
-          />
+          <div>
+            <label className="block mb-2 text-sm font-bold text-[#426E55]">Password</label>
+          </div>
+          
 
           <button
             type="submit"
