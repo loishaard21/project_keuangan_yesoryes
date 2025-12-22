@@ -53,8 +53,10 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-[#EED4DB] px-4">
-      <div className="bg-white p-8 rounded-xl shadow-xl w-96">
-        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
+      <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-[0_10px_40px_-10px_rgba(45,72,57,0.3)] w-full max-w-md border border-[#D698AB]">
+        <h1 className="text-3xl font-extrabold text-center mb-8 text-[#2D4839] tracking-tight">
+          Login Here
+        </h1>
 
         <form onSubmit={handleLogin}>
           <label className="block mb-2 font-semibold">Email</label>
