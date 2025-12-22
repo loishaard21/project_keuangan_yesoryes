@@ -52,41 +52,57 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="bg-white p-8 rounded-xl shadow-xl w-96">
-        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
+    <div className="min-h-screen flex justify-center items-center bg-[#EED4DB] px-4">
+      <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-[0_10px_40px_-10px_rgba(45,72,57,0.3)] w-full max-w-md border border-[#D698AB]">
+        <h1 className="text-3xl font-extrabold text-center mb-8 text-[#2D4839] tracking-tight">
+          Login Here
+        </h1>
 
-        <form onSubmit={handleLogin}>
-          <label className="block mb-2 font-semibold">Email</label>
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            className="w-full border p-2 rounded mb-4"
-          />
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label className="block mb-2 text-sm font-bold text-[#426E55]">Email</label>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+              // Border default "Sleeping pink", Focus "Growing pink", Text "Sleeping green"
+              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839] placeholder-[#D698AB]/70"
+              placeholder="nama@email.com"
+            />
+          </div>
 
-          <label className="block mb-2 font-semibold">Password</label>
-          <input
-            type="password"
-            value={form.password}
-            onChange={(e) => handleChange("password", e.target.value)}
-            className="w-full border p-2 rounded mb-4"
-          />
+          <div>
+            <label className="block mb-2 text-sm font-bold text-[#426E55]">Password</label>
+            <input
+              type="password"
+              value={form.password}
+              onChange={(e) => handleChange("password", e.target.value)}
+              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839] placeholder-[#D698AB]/70"
+              placeholder="••••••••"
+            />
+          </div>
+
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded mt-2"
+            // Button base: "Sleeping green", Hover: "Grounding green", Text: "Shy pink" (biar soft)
+            className={`w-full py-3.5 rounded-xl font-bold text-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 
+              ${loading
+                ? "bg-[#73986F] cursor-not-allowed text-white"
+                : "bg-[#2D4839] hover:bg-[#426E55] text-[#EED4DB] hover:shadow-[#426E55]/40"
+              }`}
           >
-            {loading ? "Masuk..." : "Masuk"}
+            {loading ? "Memproses..." : "Login"}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-8 text-center text-sm text-[#73986F]">
           Belum punya akun?{" "}
           <span
             onClick={() => router.push("/registrasi")}
-            className="text-blue-600 cursor-pointer"
+            // Link color: "Growing pink" hover ke "Sleeping green"
+            className="text-[#CB748E] font-bold cursor-pointer hover:text-[#2D4839] hover:underline transition-colors"
           >
             Daftar sekarang
           </span>

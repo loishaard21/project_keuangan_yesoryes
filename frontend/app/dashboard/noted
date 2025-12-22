@@ -92,6 +92,7 @@ export default function FinanceDashboard() {
 
   /* ================= RENDER ================= */
   return (
+    // Background utama menggunakan "Shy pink"
     <div className="min-h-screen bg-[#EED4DB] text-[#2D4839]">
 
       {/* ================= OVERLAY ================= */}
@@ -104,6 +105,7 @@ export default function FinanceDashboard() {
 
       {/* ================= SIDEBAR ================= */}
       <aside
+        // Sidebar menggunakan "Sleeping green"
         className={`fixed top-0 left-0 h-full w-64 bg-[#2D4839] text-[#EED4DB] p-6 z-50
         transform transition-transform duration-300 shadow-2xl
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
@@ -192,6 +194,7 @@ export default function FinanceDashboard() {
 
         {/* ================= SUMMARY ================= */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Mengganti class text warna default dengan hex palette */}
           <Summary title="Saldo" value={balance} color="text-[#426E55]" />
           <Summary title="Pendapatan" value={totalIncome} color="text-[#73986F]" />
           <Summary title="Pengeluaran" value={totalExpense} color="text-[#CB748E]" />
@@ -204,7 +207,9 @@ export default function FinanceDashboard() {
             <ResponsiveContainer>
               <PieChart>
                 <Pie data={chartData} dataKey="value" outerRadius={90} paddingAngle={5} label>
+                  {/* Tulipe leafs untuk income */}
                   <Cell fill="#73986F" stroke="none" /> 
+                  {/* Growing pink untuk expense */}
                   <Cell fill="#CB748E" stroke="none" />
                 </Pie>
                 <Tooltip 
@@ -219,52 +224,68 @@ export default function FinanceDashboard() {
         {/* ================= TRANSACTION TABLE ================= */}
         <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-[#D698AB]/20">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-[#2D4839]">Riwayat Transaksi</h2>
+            <h2 className="text-xl font-bold text-[#2D4839]">Daftar Transaksi</h2>
             <button
               onClick={() => setShowModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              // Tombol Tambah: Grounding green
+              className="bg-[#426E55] hover:bg-[#2D4839] text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
             >
-              Tambah Transaksi
+              + Tambah Transaksi
             </button>
           </div>
 
-          <table className="w-full border">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="border p-2">Tanggal</th>
-                <th className="border p-2">Jenis</th>
-                <th className="border p-2">Kategori</th>
-                <th className="border p-2">Nominal</th>
-                <th className="border p-2">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.length === 0 && (
+          <div className="overflow-x-auto rounded-xl border border-[#D698AB]/30">
+            <table className="w-full text-left">
+              <thead className="bg-[#D698AB]/20 text-[#2D4839]">
                 <tr>
-                  <td colSpan={5} className="text-center py-4 text-gray-500">
-                    Belum ada transaksi
-                  </td>
+                  <th className="p-4 font-bold">Tanggal</th>
+                  <th className="p-4 font-bold">Jenis</th>
+                  <th className="p-4 font-bold">Kategori</th>
+                  <th className="p-4 font-bold">Nominal</th>
+                  <th className="p-4 font-bold text-center">Aksi</th>
                 </tr>
-              )}
+              </thead>
+              <tbody className="divide-y divide-[#D698AB]/20 bg-white">
+                {transactions.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="text-center py-8 text-[#73986F] italic">
+                      Belum ada transaksi saat ini.
+                    </td>
+                  </tr>
+                )}
 
-              {transactions.map((t) => (
-                <tr key={t.id}>
-                  <td className="border p-2">{t.date}</td>
-                  <td className="border p-2">{t.type}</td>
-                  <td className="border p-2">{t.category}</td>
-                  <td className="border p-2">Rp {t.amount.toLocaleString()}</td>
-                  <td className="border p-2">
-                    <button
-                      onClick={() => handleDelete(t.id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded"
-                    >
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                {transactions.map((t) => (
+                  <tr key={t.id} className="hover:bg-[#EED4DB]/30 transition">
+                    <td className="p-4 text-[#426E55]">{t.date}</td>
+                    <td className="p-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                        t.type === 'income' 
+                        ? 'bg-[#73986F]/20 text-[#2D4839]' 
+                        : 'bg-[#CB748E]/20 text-[#CB748E]'
+                      }`}>
+                        {t.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}
+                      </span>
+                    </td>
+                    <td className="p-4 text-[#2D4839]">{t.category}</td>
+                    <td className={`p-4 font-bold ${
+                        t.type === 'income' ? 'text-[#73986F]' : 'text-[#CB748E]'
+                    }`}>
+                      Rp {t.amount.toLocaleString()}
+                    </td>
+                    <td className="p-4 text-center">
+                      <button
+                        onClick={() => handleDelete(t.id)}
+                        // Tombol Hapus: Growing pink
+                        className="bg-[#CB748E] hover:bg-[#a8566e] text-white px-3 py-1.5 rounded-lg text-sm transition shadow-sm hover:shadow-md"
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* ================= MODAL ================= */}
@@ -292,9 +313,9 @@ function Summary({
   color: string;
 }) {
   return (
-    <div className="bg-white p-5 rounded shadow">
-      <h3 className="font-semibold">{title}</h3>
-      <p className={`text-2xl font-bold ${color}`}>
+    <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-5px_rgba(45,72,57,0.1)] border border-[#D698AB]/20 flex flex-col justify-between h-32">
+      <h3 className="font-semibold text-[#73986F] text-sm uppercase tracking-wider">{title}</h3>
+      <p className={`text-3xl font-extrabold ${color} mt-2`}>
         Rp {value.toLocaleString()}
       </p>
     </div>
@@ -303,38 +324,55 @@ function Summary({
 
 function Modal({ form, onChange, onClose, onSave }: any) {
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-xl font-bold mb-4">Tambah Transaksi</h2>
+    <div className="fixed inset-0 bg-[#2D4839]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl border border-[#D698AB]">
+        <h2 className="text-2xl font-bold mb-6 text-[#2D4839]">Tambah Transaksi</h2>
 
-        <select
-          value={form.type}
-          onChange={(e) => onChange("type", e.target.value)}
-          className="w-full border p-2 rounded mb-3"
-        >
-          <option value="income">Pendapatan</option>
-          <option value="expense">Pengeluaran</option>
-        </select>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-bold text-[#426E55] mb-1">Jenis</label>
+            <select
+              value={form.type}
+              onChange={(e) => onChange("type", e.target.value)}
+              className="w-full border-2 border-[#D698AB]/50 p-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-2 focus:ring-[#CB748E]/20 text-[#2D4839]"
+            >
+              <option value="income">Pendapatan</option>
+              <option value="expense">Pengeluaran</option>
+            </select>
+          </div>
 
-        <input
-          value={form.category}
-          onChange={(e) => onChange("category", e.target.value)}
-          placeholder="Kategori"
-          className="w-full border p-2 rounded mb-3"
-        />
+          <div>
+             <label className="block text-sm font-bold text-[#426E55] mb-1">Kategori</label>
+            <input
+              value={form.category}
+              onChange={(e) => onChange("category", e.target.value)}
+              placeholder="Contoh: Gaji, Makanan"
+              className="w-full border-2 border-[#D698AB]/50 p-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-2 focus:ring-[#CB748E]/20 text-[#2D4839] placeholder-[#D698AB]"
+            />
+          </div>
 
-        <input
-          value={form.amount}
-          onChange={(e) => onChange("amount", e.target.value.replace(/\D/g, ""))}
-          placeholder="Nominal"
-          className="w-full border p-2 rounded mb-4"
-        />
+          <div>
+            <label className="block text-sm font-bold text-[#426E55] mb-1">Nominal (Rp)</label>
+            <input
+              value={form.amount}
+              onChange={(e) => onChange("amount", e.target.value.replace(/\D/g, ""))}
+              placeholder="0"
+              className="w-full border-2 border-[#D698AB]/50 p-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-2 focus:ring-[#CB748E]/20 text-[#2D4839] placeholder-[#D698AB]"
+            />
+          </div>
+        </div>
 
-        <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">
+        <div className="flex justify-end gap-3 mt-8">
+          <button 
+            onClick={onClose} 
+            className="px-5 py-2.5 bg-gray-100 text-[#426E55] font-bold rounded-xl hover:bg-gray-200 transition"
+          >
             Batal
           </button>
-          <button onClick={onSave} className="px-4 py-2 bg-blue-600 text-white rounded">
+          <button 
+            onClick={onSave} 
+            className="px-5 py-2.5 bg-[#426E55] text-white font-bold rounded-xl hover:bg-[#2D4839] hover:shadow-lg transition"
+          >
             Simpan
           </button>
         </div>
