@@ -165,22 +165,23 @@ export default function FinanceDashboard() {
             >
               <img
                 src="https://i.pravatar.cc/40"
-                className="w-8 h-8 rounded-full"
+                className="w-8 h-8 rounded-full border border-[#CB748E]"
               />
-              <span className="text-sm">Akun</span>
+              <span className="text-sm font-bold text-[#2D4839]">Akun</span>
             </button>
 
             {openUserMenu && (
-              <div className="absolute right-0 mt-2 w-44 bg-white rounded shadow border">
-                <Link href="/profil" className="block px-4 py-2 hover:bg-gray-100">
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-[#D698AB] overflow-hidden z-30">
+                <Link href="/profil" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
                   Profil Saya
                 </Link>
-                <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
+                <Link href="/pengaturan" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
                   Pengaturan
                 </Link>
+                <div className="h-px bg-gray-100 mx-2"></div>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                  className="w-full text-left px-4 py-3 text-[#CB748E] font-bold hover:bg-[#fff0f3] transition"
                 >
                   Logout
                 </button>
@@ -190,14 +191,14 @@ export default function FinanceDashboard() {
         </div>
 
         {/* ================= SUMMARY ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <Summary title="Saldo" value={balance} color="text-green-600" />
-          <Summary title="Pendapatan" value={totalIncome} color="text-blue-600" />
-          <Summary title="Pengeluaran" value={totalExpense} color="text-red-600" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Summary title="Saldo" value={balance} color="text-[#426E55]" />
+          <Summary title="Pendapatan" value={totalIncome} color="text-[#73986F]" />
+          <Summary title="Pengeluaran" value={totalExpense} color="text-[#CB748E]" />
         </div>
 
         {/* ================= CHART ================= */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-[#D698AB]/30 mb-8">
           <h2 className="text-xl font-semibold mb-4">Ringkasan Grafik</h2>
           <div className="h-64">
             <ResponsiveContainer>
