@@ -98,14 +98,14 @@ export default function FinanceDashboard() {
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black/40 z-40"
+          className="fixed inset-0 bg-[#2D4839]/60 z-40 backdrop-blur-sm"
         />
       )}
 
       {/* ================= SIDEBAR ================= */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white p-6 z-50
-        transform transition-transform duration-300
+        className={`fixed top-0 left-0 h-full w-64 bg-[#2D4839] text-[#EED4DB] p-6 z-50
+        transform transition-transform duration-300 shadow-2xl
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex justify-between items-center mb-6">
