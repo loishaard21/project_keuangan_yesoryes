@@ -58,8 +58,8 @@ export default function LoginPage() {
           Login Here
         </h1>
 
-        <form onSubmit={handleLogin}>
-          <label className="block mb-2 font-semibold">Email</label>
+        <form onSubmit={handleLogin} className="space-y-5">
+          <label className="block mb-2 text-sm font-bold text-[#426E55]">Email</label>
           <input
             type="email"
             value={form.email}
