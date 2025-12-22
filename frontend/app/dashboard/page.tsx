@@ -108,9 +108,9 @@ export default function FinanceDashboard() {
         transform transition-transform duration-300 shadow-2xl
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
-          <button onClick={() => setSidebarOpen(false)}>✕</button>
+        <div className="flex justify-between items-center mb-10 border-b border-[#73986F]/30 pb-4">
+          <h1 className="font-extrabold text-xl tracking-wide">CERDAS FINANSIAL</h1>
+          <button onClick={() => setSidebarOpen(false)} className="text-[#D698AB] hover:text-white transition">✕</button>
         </div>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
