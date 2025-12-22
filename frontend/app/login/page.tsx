@@ -73,6 +73,13 @@ export default function LoginPage() {
 
           <div>
             <label className="block mb-2 text-sm font-bold text-[#426E55]">Password</label>
+            <input
+              type="password"
+              value={form.password}
+              onChange={(e) => handleChange("password", e.target.value)}
+              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839] placeholder-[#D698AB]/70"
+              placeholder="••••••••"
+            />
           </div>
           
 
