@@ -97,11 +97,12 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-8 text-center text-sm text-[#73986F]">
           Belum punya akun?{" "}
           <span
             onClick={() => router.push("/registrasi")}
-            className="text-blue-600 cursor-pointer"
+            // Link color: "Growing pink" hover ke "Sleeping green"
+            className="text-[#CB748E] font-bold cursor-pointer hover:text-[#2D4839] hover:underline transition-colors"
           >
             Daftar sekarang
           </span>
