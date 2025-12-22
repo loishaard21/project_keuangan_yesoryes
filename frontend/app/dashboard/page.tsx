@@ -161,7 +161,7 @@ export default function FinanceDashboard() {
           <div className="relative">
             <button
               onClick={() => setOpenUserMenu(!openUserMenu)}
-              className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow border"
+              className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-md border border-[#D698AB] hover:shadow-lg transition"
             >
               <img
                 src="https://i.pravatar.cc/40"
