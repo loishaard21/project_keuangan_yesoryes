@@ -149,12 +149,12 @@ export default function FinanceDashboard() {
               onClick={() => setSidebarOpen(true)}
               className="p-2 bg-white/50 hover:bg-white rounded-xl shadow-sm border border-[#D698AB] transition"
             >
-              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
-              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
-              <span className="block w-6 h-0.5 bg-gray-800"></span>
+              <span className="block w-6 h-0.5 bg-[#2D4839] mb-1"></span>
+              <span className="block w-6 h-0.5 bg-[#2D4839] mb-1"></span>
+              <span className="block w-6 h-0.5 bg-[#2D4839]"></span>
             </button>
 
-            <h1 className="text-3xl font-bold">Dashboard Keuangan</h1>
+            <h1 className="text-3xl font-extrabold text-[#2D4839]">Dashboard Keuangan</h1>
           </div>
 
           {/* PROFILE */}
