@@ -60,8 +60,8 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-          <label className="block mb-2 text-sm font-bold text-[#426E55]">Email</label>
-          <input
+            <label className="block mb-2 text-sm font-bold text-[#426E55]">Email</label>
+            <input
               type="email"
               value={form.email}
               onChange={(e) => handleChange("email", e.target.value)}
@@ -81,14 +81,19 @@ export default function LoginPage() {
               placeholder="••••••••"
             />
           </div>
-          
+
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded mt-2"
+            // Button base: "Sleeping green", Hover: "Grounding green", Text: "Shy pink" (biar soft)
+            className={`w-full py-3.5 rounded-xl font-bold text-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 
+              ${loading
+                ? "bg-[#73986F] cursor-not-allowed text-white"
+                : "bg-[#2D4839] hover:bg-[#426E55] text-[#EED4DB] hover:shadow-[#426E55]/40"
+              }`}
           >
-            {loading ? "Masuk..." : "Masuk"}
+            {loading ? "Memproses..." : "Login"}
           </button>
         </form>
 
