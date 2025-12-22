@@ -203,9 +203,9 @@ export default function FinanceDashboard() {
           <div className="h-64">
             <ResponsiveContainer>
               <PieChart>
-                <Pie data={chartData} dataKey="value" outerRadius={90} label>
-                  <Cell fill="#4ade80" />
-                  <Cell fill="#f87171" />
+                <Pie data={chartData} dataKey="value" outerRadius={90} paddingAngle={5} label>
+                  <Cell fill="#73986F" stroke="none" /> 
+                  <Cell fill="#CB748E" stroke="none" />
                 </Pie>
                 <Tooltip />
               </PieChart>
