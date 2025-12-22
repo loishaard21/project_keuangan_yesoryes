@@ -113,7 +113,7 @@ export default function FinanceDashboard() {
           <button onClick={() => setSidebarOpen(false)} className="text-[#D698AB] hover:text-white transition">✕</button>
         </div>
 
-        <nav className="flex flex-col space-y-4 text-gray-300">
+        <nav className="flex flex-col space-y-2">
           {[
             { label: "Dashboard", path: "/dashboard" },
             { label: "Transaksi", path: "/transaksi" },
@@ -125,11 +125,11 @@ export default function FinanceDashboard() {
               key={item.path}
               href={item.path}
               onClick={() => setSidebarOpen(false)}
-              className={
+              className={`px-4 py-3 rounded-xl transition-all duration-200 ${
                 pathname === item.path
-                  ? "text-white font-semibold"
-                  : "hover:text-white"
-              }
+                  ? "bg-[#426E55] text-white font-bold shadow-lg" // Active state: Grounding green
+                  : "text-[#D698AB] hover:bg-[#426E55]/30 hover:text-white" // Inactive
+              }`}
             >
               {item.label}
             </Link>
@@ -138,16 +138,16 @@ export default function FinanceDashboard() {
       </aside>
 
       {/* ================= MAIN ================= */}
-      <div className="p-6">
+      <div className="p-6 lg:ml-0 transition-all">
 
         {/* ================= TOP BAR ================= */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-8">
 
           <div className="flex items-center gap-4">
             {/* HAMBURGER */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 bg-white rounded-md shadow border"
+              className="p-2 bg-white/50 hover:bg-white rounded-xl shadow-sm border border-[#D698AB] transition"
             >
               <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
               <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
