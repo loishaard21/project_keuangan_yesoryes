@@ -207,16 +207,19 @@ export default function FinanceDashboard() {
                   <Cell fill="#73986F" stroke="none" /> 
                   <Cell fill="#CB748E" stroke="none" />
                 </Pie>
-                <Tooltip />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #D698AB' }}
+                  itemStyle={{ color: '#2D4839', fontWeight: 'bold' }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* ================= TRANSACTION TABLE ================= */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex justify-between mb-4">
-            <h2 className="text-xl font-semibold">Daftar Transaksi</h2>
+        <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-[#D698AB]/20">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-[#2D4839]">Riwayat Transaksi</h2>
             <button
               onClick={() => setShowModal(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded"
