@@ -199,7 +199,7 @@ export default function FinanceDashboard() {
 
         {/* ================= CHART ================= */}
         <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-[#D698AB]/30 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Ringkasan Grafik</h2>
+          <h2 className="text-xl font-bold mb-4 text-[#2D4839]">Ringkasan Grafik</h2>
           <div className="h-64">
             <ResponsiveContainer>
               <PieChart>
