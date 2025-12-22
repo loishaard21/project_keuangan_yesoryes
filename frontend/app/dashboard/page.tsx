@@ -92,7 +92,7 @@ export default function FinanceDashboard() {
 
   /* ================= RENDER ================= */
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#EED4DB] text-[#2D4839]">
 
       {/* ================= OVERLAY ================= */}
       {sidebarOpen && (
