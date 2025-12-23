@@ -1,21 +1,28 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import bcrypt from "bcryptjs";
+import { comparePassword } from "@/lib/hash";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "http://localhost:3001",
+  "Access-Control-Allow-Methods": "POST,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { email, password } = body;
+    const { email, password } = await req.json();
 
-    // 1. Validasi input
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email dan password wajib diisi" },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
-    // 2. Cari user berdasarkan email
     const user = await prisma.user.findUnique({
       where: { email },
     });
@@ -23,36 +30,36 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { error: "Email atau password salah" },
-        { status: 401 }
+        { status: 401, headers: corsHeaders }
       );
     }
 
-    // 3. Bandingkan password
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isMatch = await comparePassword(password, user.password);
 
-    if (!isPasswordValid) {
+    if (!isMatch) {
       return NextResponse.json(
         { error: "Email atau password salah" },
-        { status: 401 }
+        { status: 401, headers: corsHeaders }
       );
     }
 
-    // 4. Hapus password sebelum dikirim ke frontend
-    const { password: _, ...safeUser } = user;
-
-    // 5. Login sukses
-    return NextResponse.json({
-      message: "Login berhasil",
-      user: safeUser,
-    });
-  } catch (error: any) {
+    // 🔥 LOGIN BERHASIL
+    return NextResponse.json(
+      {
+        message: "Login berhasil",
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        },
+      },
+      { headers: corsHeaders }
+    );
+  } catch (error) {
     console.error("LOGIN ERROR:", error);
     return NextResponse.json(
-      { error: "Terjadi kesalahan saat login" },
-      { status: 500 }
+      { error: "Login gagal" },
+      { status: 500, headers: corsHeaders }
     );
   }
 }

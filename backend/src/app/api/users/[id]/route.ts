@@ -2,23 +2,32 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { hashPassword } from "@/lib/hash";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "http://localhost:3001",
+  "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 type Params = {
   params: {
     id: string;
   };
 };
 
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 // =======================
 // GET USER BY ID
 // =======================
 export async function GET(req: Request, context: Params) {
-  const { id } = await context.params;
-  const userId = Number(id);
+  const userId = Number(context.params.id);
 
   if (isNaN(userId)) {
     return NextResponse.json(
       { error: "ID tidak valid" },
-      { status: 400 }
+      { status: 400, headers: corsHeaders }
     );
   }
 
@@ -29,43 +38,38 @@ export async function GET(req: Request, context: Params) {
   if (!user) {
     return NextResponse.json(
       { error: "User tidak ditemukan" },
-      { status: 404 }
+      { status: 404, headers: corsHeaders }
     );
   }
 
-  return NextResponse.json(user);
+  return NextResponse.json(user, { headers: corsHeaders });
 }
 
 // =======================
-// UPDATE USER BY ID
+// UPDATE USER
 // =======================
 export async function PUT(req: Request, context: Params) {
   try {
-    const { id } = await context.params;
-    const userId = Number(id);
+    const userId = Number(context.params.id);
 
     if (isNaN(userId)) {
       return NextResponse.json(
         { error: "ID tidak valid" },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
-    const body = await req.json();
-    const { email, name, password } = body;
+    const { email, name, password } = await req.json();
 
     const data: any = {};
-
     if (email) data.email = email;
     if (name) data.name = name;
-    if (password) {
-      data.password = await hashPassword(password);
-    }
+    if (password) data.password = await hashPassword(password);
 
     if (Object.keys(data).length === 0) {
       return NextResponse.json(
         { error: "Tidak ada data untuk diupdate" },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -74,27 +78,25 @@ export async function PUT(req: Request, context: Params) {
       data,
     });
 
-    return NextResponse.json(updatedUser);
+    return NextResponse.json(updatedUser, { headers: corsHeaders });
   } catch (error) {
-    console.error("UPDATE USER ERROR:", error);
     return NextResponse.json(
-      { error: "Gagal Update User" },
-      { status: 500 }
+      { error: "Gagal update user" },
+      { status: 500, headers: corsHeaders }
     );
   }
 }
 
 // =======================
-// DELETE USER BY ID
+// DELETE USER
 // =======================
 export async function DELETE(req: Request, context: Params) {
-  const { id } = await context.params;
-  const userId = Number(id);
+  const userId = Number(context.params.id);
 
   if (isNaN(userId)) {
     return NextResponse.json(
       { error: "ID tidak valid" },
-      { status: 400 }
+      { status: 400, headers: corsHeaders }
     );
   }
 
@@ -102,7 +104,8 @@ export async function DELETE(req: Request, context: Params) {
     where: { id: userId },
   });
 
-  return NextResponse.json({
-    message: "User berhasil dihapus",
-  });
+  return NextResponse.json(
+    { message: "User berhasil dihapus" },
+    { headers: corsHeaders }
+  );
 }
