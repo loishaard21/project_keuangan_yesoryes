@@ -49,11 +49,12 @@ export default function LoginPage() {
         return;
       }
 
-      // ✅ LOGIN BERHASIL
-      console.log("User login:", data.user);
+            // 🔥 SIMPAN USER KE LOCALSTORAGE
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       alert("Login berhasil!");
       router.push("/dashboard");
+
     } catch (error) {
       console.error("LOGIN ERROR:", error);
       alert("Terjadi kesalahan pada server");
