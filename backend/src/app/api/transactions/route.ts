@@ -18,6 +18,9 @@ export async function GET() {
   try {
     const transactions = await prisma.transaction.findMany({
       orderBy: { createdAt: "desc" },
+      include: {
+        account: true, // 🔥 biar dashboard tau ini transaksi akun mana
+      },
     });
 
     return NextResponse.json(transactions, {
@@ -37,10 +40,10 @@ export async function GET() {
 // =======================
 export async function POST(req: Request) {
   try {
-    const { amount, type, category, userId } = await req.json();
+    const { amount, type, category, userId, accountId } = await req.json();
 
     // VALIDASI
-    if (!amount || !type || !category || !userId) {
+    if (!amount || !type || !category || !userId || !accountId) {
       return NextResponse.json(
         { error: "Semua field wajib diisi" },
         { status: 400, headers: corsHeaders }
@@ -61,12 +64,36 @@ export async function POST(req: Request) {
       );
     }
 
+    // 🔥 PASTIKAN ACCOUNT ADA
+    const account = await prisma.account.findUnique({
+      where: { id: Number(accountId) },
+    });
+
+    if (!account) {
+      return NextResponse.json(
+        { error: "Account tidak ditemukan" },
+        { status: 404, headers: corsHeaders }
+      );
+    }
+
+    // 🔥 CREATE TRANSACTION
     const transaction = await prisma.transaction.create({
       data: {
         amount: Number(amount),
         type,
         category,
         userId: Number(userId),
+        accountId: Number(accountId),
+      },
+    });
+
+    // 🔥 UPDATE SALDO ACCOUNT
+    await prisma.account.update({
+      where: { id: Number(accountId) },
+      data: {
+        balance: {
+          increment: type === "INCOME" ? Number(amount) : -Number(amount),
+        },
       },
     });
 

@@ -20,7 +20,9 @@ export async function verifyPassword(password: string, hashed: string): Promise<
   return await bcrypt.compare(password, hashed);
 }
 
-export function comparePassword(password: string, hash: string): boolean {
-  // function implementation
-  return true;
+export async function comparePassword(
+  password: string,
+  hash: string
+): Promise<boolean> {
+  return await bcrypt.compare(password, hash);
 }

@@ -9,7 +9,7 @@ const corsHeaders = {
 };
 
 export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+  return new NextResponse(null, { headers: corsHeaders });
 }
 
 export async function POST(req: Request) {
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 🔥 LOGIN BERHASIL
+    // 🔥 LOGIN BERHASIL (TIDAK DIUBAH STRUKTURNYA)
     return NextResponse.json(
       {
         message: "Login berhasil",
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
           name: user.name,
         },
       },
-      { headers: corsHeaders }
+      { status: 200, headers: corsHeaders }
     );
   } catch (error) {
     console.error("LOGIN ERROR:", error);
