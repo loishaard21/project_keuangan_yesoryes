@@ -3,13 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, } from "recharts";
 
 /* ================= TYPES ================= */
 type Transaction = {
@@ -36,13 +30,14 @@ export default function FinanceDashboard() {
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [accounts, setAccounts] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   
   const [form, setForm] = useState({
     type: "income",
     category: "",
     amount: "",
-  
+    accountId: "",
   });
 
   /* ================= HANDLERS ================= */
@@ -52,7 +47,10 @@ export default function FinanceDashboard() {
 
   const handleAddTransaction = async () => {
   const amount = Number(form.amount);
-  if (!form.category || isNaN(amount)) return;
+  if (!form.category || isNaN(amount) || !form.accountId) {
+  alert("Lengkapi data transaksi");
+  return;
+}
 
   try {
     const res = await fetch("http://localhost:3000/api/transactions", {
@@ -61,11 +59,12 @@ export default function FinanceDashboard() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        amount,
-        type: form.type.toUpperCase(), // INCOME / EXPENSE
-        category: form.category,
-        userId: 1, // ⚠️ ganti sesuai user login
-      }),
+      amount,
+      type: form.type.toUpperCase(),
+      category: form.category,
+      accountId: Number(form.accountId), // ✅ INI POIN 2
+      userId: user.id,
+    }),
     });
 
     if (!res.ok) {
@@ -85,7 +84,7 @@ export default function FinanceDashboard() {
     };
 
     setTransactions((prev) => [...prev, newTransaction]);
-    setForm({ type: "income", category: "", amount: "" });
+    setForm({ type: "income", category: "", amount: "", accountId: "" });
     setShowModal(false);
   } catch (error) {
     console.error(error);
@@ -97,6 +96,24 @@ const user =
   typeof window !== "undefined"
     ? JSON.parse(localStorage.getItem("user") || "null")
     : null;
+
+React.useEffect(() => {
+  if (!user?.id) return;
+
+  fetch(`http://localhost:3000/api/transactions?userId=${user.id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const formatted = data.map((t: any) => ({
+        id: t.id.toString(),
+        type: t.type.toLowerCase(),
+        category: t.category,
+        amount: t.amount,
+        date: new Date(t.createdAt).toISOString().split("T")[0],
+      }));
+      setTransactions(formatted);
+    })
+    .catch(console.error);
+}, [user]);
 
 const handleAddAccount = async () => {
   const balance = Number(accountForm.balance);
@@ -141,9 +158,19 @@ const handleAddAccount = async () => {
 };
 
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/transactions/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Gagal hapus transaksi");
+
     setTransactions((prev) => prev.filter((t) => t.id !== id));
-  };
+  } catch (err) {
+    alert("Gagal menghapus transaksi");
+  }
+};
 
   const handleLogout = () => {
     router.push("/login");
@@ -168,10 +195,18 @@ const handleAddAccount = async () => {
 
   const balance = totalIncome - totalExpense;
 
-  const chartData = [
-    { name: "Pendapatan", value: totalIncome },
-    { name: "Pengeluaran", value: totalExpense },
-  ];
+    const chartData = [
+  {
+    name: "Pendapatan",
+    value: totalIncome,
+    color: "#73986F",
+  },
+  {
+    name: "Pengeluaran",
+    value: totalExpense,
+    color: "#CB748E",
+  },
+];
 
   /* ================= RENDER ================= */
   return (
@@ -361,6 +396,7 @@ const handleAddAccount = async () => {
         {showModal && (
           <Modal
             form={form}
+            accounts={accounts}
             onChange={handleInputChange}
             onClose={() => setShowModal(false)}
             onSave={handleAddTransaction}
@@ -404,7 +440,7 @@ function Summary({
   );
 }
 
-function Modal({ form, onChange, onClose, onSave }: any) {
+function Modal({ form, accounts, onChange, onClose, onSave }: any) {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-96">
@@ -417,6 +453,19 @@ function Modal({ form, onChange, onClose, onSave }: any) {
         >
           <option value="income">Pendapatan</option>
           <option value="expense">Pengeluaran</option>
+        </select>
+
+        <select
+          value={form.accountId}
+          onChange={(e) => onChange("accountId", e.target.value)}
+          className="w-full border p-2 rounded mb-3"
+        >
+          <option value="">Pilih Akun</option>
+          {accounts.map((acc: any) => (
+            <option key={acc.id} value={acc.id}>
+              {acc.name}
+            </option>
+          ))}
         </select>
 
         <input
