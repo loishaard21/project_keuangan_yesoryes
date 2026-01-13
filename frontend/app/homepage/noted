@@ -8,13 +8,27 @@ export default function HomePage() {
     <>
       <style jsx>{`
         
+        /* Animasi background bergerak */
+        main::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(circle at 20% 80%, #73986F15 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, #D698AB10 0%, transparent 50%);
+          z-index: 0;
+          animation: float 25s infinite ease-in-out;
+        }
+
         @keyframes float {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
           33% { transform: translate(40px, -30px) rotate(120deg); }
           66% { transform: translate(-30px, 40px) rotate(240deg); }
         }
 
-        /* Petal animation */
+        /* Leaf and flower pattern */
         main::after {
           content: '';
           position: absolute;
@@ -22,23 +36,25 @@ export default function HomePage() {
           left: 0;
           width: 100%;
           height: 100%;
-          background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20 Q55 10 60 20 Q65 30 60 40 Q55 50 50 40 Q45 30 40 40 Q35 50 30 40 Q25 30 30 20 Q35 10 40 20' fill='%23D698AB' opacity='0.1'/%3E%3C/svg%3E");
-          background-size: 200px;
-          animation: petals 60s infinite linear;
+          background-image: 
+            url("data:image/svg+xml,%3Csvg width='150' height='150' viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M75 30 Q85 15 95 30 Q105 45 95 60 Q85 75 75 60 Q65 45 55 60 Q45 75 35 60 Q25 45 35 30 Q45 15 55 30' fill='%2373986F' opacity='0.03'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='20' fill='%23D698AB' opacity='0.02'/%3E%3C/svg%3E");
+          background-size: 250px, 150px;
+          animation: patterns 100s infinite linear;
           z-index: 0;
         }
 
-        @keyframes petals {
-          0% { background-position: 0 0; }
-          100% { background-position: 200px 200px; }
+        @keyframes patterns {
+          0% { background-position: 0 0, 100px 100px; }
+          100% { background-position: 250px 250px, 350px 350px; }
         }
 
         /* ================= NAVBAR ================= */
         header {
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(255, 255, 255, 0.98);
           backdrop-filter: blur(12px);
-          border-bottom: 1px solid #EED4DB;
-          box-shadow: 0 4px 25px rgba(203, 116, 142, 0.08);
+          border-bottom: 1px solid #73986F30;
+          box-shadow: 0 4px 25px rgba(45, 72, 57, 0.05);
           animation: slideDown 0.6s ease-out;
         }
 
@@ -54,7 +70,7 @@ export default function HomePage() {
         }
 
         h1 {
-          background: linear-gradient(45deg, #CB748E 0%, #D698AB 100%);
+          background: linear-gradient(45deg, #426E55 0%, #73986F 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -68,10 +84,19 @@ export default function HomePage() {
           100% { background-position: 0% 50%; }
         }
 
+        /* Navigation Links - FIXED VISIBILITY */
         nav a:not(.login-link) {
-          color: #2D4839;
+          color: #2D4839 !important;
           position: relative;
           font-weight: 500;
+          padding: 8px 12px;
+          border-radius: 6px;
+          transition: all 0.3s ease;
+        }
+
+        nav a:not(.login-link):hover {
+          background: linear-gradient(135deg, #426E5510 0%, #73986F10 100%);
+          transform: translateY(-2px);
         }
 
         nav a:not(.login-link)::after {
@@ -79,26 +104,27 @@ export default function HomePage() {
           position: absolute;
           width: 0;
           height: 2px;
-          bottom: -4px;
+          bottom: 0;
           left: 50%;
-          background: linear-gradient(90deg, #CB748E, #D698AB);
+          background: linear-gradient(90deg, #CB748E, #73986F);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           transform: translateX(-50%);
           border-radius: 2px;
         }
 
         nav a:not(.login-link):hover::after {
-          width: 100%;
+          width: 80%;
         }
 
-        /* Login Button */
+        /* Login Button - FIXED VISIBILITY */
         .login-link {
           background: linear-gradient(135deg, #CB748E 0%, #D698AB 100%);
-          color: white;
+          color: white !important;
           box-shadow: 0 4px 18px rgba(203, 116, 142, 0.3);
           position: relative;
           overflow: hidden;
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          font-weight: 500;
         }
 
         .login-link:hover {
@@ -113,7 +139,7 @@ export default function HomePage() {
           left: -100%;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
           transition: left 0.8s;
         }
 
@@ -122,7 +148,7 @@ export default function HomePage() {
         }
 
         .login-link div {
-          background: linear-gradient(135deg, #EED4DB, #FFFFFF);
+          background: linear-gradient(135deg, #EED4DB, #73986F);
         }
 
         /* ================= HERO ================= */
@@ -136,7 +162,7 @@ export default function HomePage() {
         }
 
         h2 span {
-          background: linear-gradient(45deg, #CB748E, #73986F);
+          background: linear-gradient(45deg, #426E55, #CB748E);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -152,7 +178,7 @@ export default function HomePage() {
           left: 0;
           width: 100%;
           height: 2px;
-          background: linear-gradient(90deg, #CB748E, #73986F);
+          background: linear-gradient(90deg, #426E55, #CB748E);
           transform: scaleX(0);
           transform-origin: left;
           animation: underline 3s infinite ease-in-out;
@@ -179,9 +205,9 @@ export default function HomePage() {
         }
 
         .hero-button {
-          background: linear-gradient(135deg, #CB748E 0%, #D698AB 100%);
+          background: linear-gradient(135deg, #426E55 0%, #73986F 100%);
           color: white;
-          box-shadow: 0 8px 25px rgba(203, 116, 142, 0.4);
+          box-shadow: 0 8px 25px rgba(66, 110, 85, 0.4);
           position: relative;
           overflow: hidden;
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -189,11 +215,11 @@ export default function HomePage() {
 
         .hero-button:hover {
           transform: translateY(-4px) scale(1.05);
-          box-shadow: 0 15px 35px rgba(203, 116, 142, 0.5);
+          box-shadow: 0 15px 35px rgba(66, 110, 85, 0.5);
         }
 
         .hero-button::after {
-          content: '→';
+          content: '🌿';
           position: absolute;
           right: 20px;
           opacity: 0;
@@ -202,7 +228,7 @@ export default function HomePage() {
 
         .hero-button:hover::after {
           opacity: 1;
-          transform: translateX(5px);
+          transform: rotate(360deg);
         }
 
         .hero-button:hover {
@@ -211,7 +237,7 @@ export default function HomePage() {
 
         /* Image decoration */
         .hero-image-container div {
-          background: linear-gradient(135deg, #D698AB, #73986F);
+          background: linear-gradient(135deg, #73986F, #D698AB);
           animation: pulse 5s infinite ease-in-out;
           border-radius: 50%;
         }
@@ -229,9 +255,10 @@ export default function HomePage() {
 
         /* ================= MANFAAT ================= */
         #manfaat {
-          background: rgba(238, 212, 219, 0.1);
+          background: linear-gradient(135deg, rgba(115, 152, 111, 0.05) 0%, rgba(238, 212, 219, 0.05) 100%);
           border-radius: 40px;
           margin: 40px;
+          border: 1px solid #73986F20;
         }
 
         #manfaat h3 {
@@ -239,7 +266,7 @@ export default function HomePage() {
         }
 
         #manfaat h3 span {
-          border-bottom-color: #CB748E !important;
+          border-bottom-color: #426E55 !important;
           padding-bottom: 8px;
           position: relative;
         }
@@ -251,12 +278,12 @@ export default function HomePage() {
           left: 0;
           width: 100%;
           height: 3px;
-          background: linear-gradient(90deg, #CB748E, #73986F);
+          background: linear-gradient(90deg, #426E55, #CB748E);
           border-radius: 3px;
         }
 
         #manfaat div.absolute {
-          background: radial-gradient(circle, #D698AB, transparent 70%);
+          background: radial-gradient(circle, #73986F40, #D698AB40, transparent 70%);
           animation: glow 6s infinite alternate;
         }
 
@@ -266,10 +293,10 @@ export default function HomePage() {
         }
 
         .benefit-card {
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(255, 255, 255, 0.98);
           backdrop-filter: blur(10px);
-          border: 1px solid #EED4DB !important;
-          box-shadow: 0 10px 40px rgba(203, 116, 142, 0.08);
+          border: 1px solid #73986F30 !important;
+          box-shadow: 0 10px 40px rgba(66, 110, 85, 0.08);
           transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
           overflow: hidden;
@@ -282,7 +309,7 @@ export default function HomePage() {
           left: -100%;
           width: 100%;
           height: 4px;
-          background: linear-gradient(90deg, transparent, #CB748E, #73986F, transparent);
+          background: linear-gradient(90deg, transparent, #426E55, #CB748E, transparent);
           transition: left 0.6s;
         }
 
@@ -292,8 +319,8 @@ export default function HomePage() {
 
         .benefit-card:hover {
           transform: translateY(-12px);
-          border-color: #CB748E !important;
-          box-shadow: 0 25px 50px rgba(203, 116, 142, 0.15);
+          border-color: #426E55 !important;
+          box-shadow: 0 25px 50px rgba(66, 110, 85, 0.15);
         }
 
         .benefit-card h4 {
@@ -302,7 +329,26 @@ export default function HomePage() {
         }
 
         .benefit-card:hover h4 {
-          color: #CB748E;
+          color: #426E55;
+        }
+
+        .benefit-card .icon-container {
+          background: linear-gradient(135deg, #73986F20, #D698AB20);
+          border: 1px solid #73986F30;
+          transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover .icon-container {
+          background: linear-gradient(135deg, #426E55, #CB748E);
+          color: white;
+        }
+
+        .benefit-card .icon-container span {
+          transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover .icon-container span {
+          color: white !important;
         }
 
         /* ================= FITUR ================= */
@@ -320,13 +366,13 @@ export default function HomePage() {
           transform: translateX(-50%);
           width: 100px;
           height: 3px;
-          background: linear-gradient(90deg, #CB748E, #73986F);
+          background: linear-gradient(90deg, #426E55, #CB748E);
           border-radius: 3px;
         }
 
         .feature-card {
           background: rgba(255, 255, 255, 0.98);
-          border: 1px solid #EED4DB !important;
+          border: 1px solid #73986F30 !important;
           box-shadow: 0 8px 30px rgba(115, 152, 111, 0.08);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
@@ -340,7 +386,7 @@ export default function HomePage() {
           left: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(135deg, #CB748E10, #73986F10);
+          background: linear-gradient(135deg, #426E5510, #D698AB10);
           opacity: 0;
           transition: opacity 0.3s ease;
         }
@@ -351,35 +397,41 @@ export default function HomePage() {
 
         .feature-card:hover {
           transform: translateY(-8px) scale(1.03);
-          border-color: #73986F !important;
-          box-shadow: 0 20px 40px rgba(115, 152, 111, 0.15);
+          border-color: #426E55 !important;
+          box-shadow: 0 20px 40px rgba(66, 110, 85, 0.15);
         }
 
         .feature-card div div {
-          background: linear-gradient(135deg, #EED4DB, #FFFFFF);
-          border: 1px solid #D698AB;
-          color: #CB748E;
+          background: linear-gradient(135deg, #73986F20, #FFFFFF);
+          border: 1px solid #73986F40;
+          color: #426E55;
           font-size: 1.5rem;
           transition: all 0.3s ease;
         }
 
         .feature-card:hover div div {
-          background: linear-gradient(135deg, #CB748E, #D698AB);
+          background: linear-gradient(135deg, #426E55, #CB748E);
           color: white;
           transform: rotate(5deg) scale(1.1);
+          border-color: #426E55;
         }
 
         .feature-card h4 {
           color: #2D4839;
         }
 
+        .feature-card p {
+          color: #426E55;
+        }
+
         /* ================= CTA ================= */
         .cta-section {
-          background: linear-gradient(135deg, #426E55 0%, #2D4839 100%);
+          background: linear-gradient(135deg, #2D4839 0%, #426E55 100%);
           position: relative;
           overflow: hidden;
           border-radius: 40px;
           margin: 40px;
+          border: 1px solid #426E55;
         }
 
         .cta-section::before {
@@ -399,7 +451,7 @@ export default function HomePage() {
         }
 
         .cta-section h3 {
-          text-shadow: 0 2px 15px rgba(0,0,0,0.2);
+          text-shadow: 0 2px 15px rgba(0,0,0,0.3);
           color: white;
         }
 
@@ -408,19 +460,21 @@ export default function HomePage() {
         }
 
         .cta-button {
-          background: linear-gradient(135deg, #EED4DB 0%, #FFFFFF 100%);
+          background: linear-gradient(135deg, #FFFFFF 0%, #EED4DB 100%);
           color: #2D4839 !important;
-          box-shadow: 0 10px 30px rgba(238, 212, 219, 0.3);
+          box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
           position: relative;
           overflow: hidden;
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           font-weight: 600;
+          border: 1px solid #FFFFFF;
         }
 
         .cta-button:hover {
           transform: translateY(-4px) scale(1.05);
-          box-shadow: 0 20px 40px rgba(238, 212, 219, 0.4);
+          box-shadow: 0 20px 40px rgba(255, 255, 255, 0.4);
           color: #CB748E !important;
+          background: linear-gradient(135deg, #FFFFFF 0%, #D698AB 100%);
         }
 
         .cta-button::after {
@@ -450,6 +504,40 @@ export default function HomePage() {
           50% { transform: translateY(-20px); }
         }
 
+        /* Green & Pink accent animations */
+        .green-accent {
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(circle, #73986F30, transparent 70%);
+          border-radius: 50%;
+          animation: floatAccent 8s infinite ease-in-out;
+        }
+
+        .pink-accent {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+          background: radial-gradient(circle, #D698AB30, transparent 70%);
+          border-radius: 50%;
+          animation: floatAccent 10s infinite ease-in-out reverse;
+        }
+
+        @keyframes floatAccent {
+          0%, 100% { 
+            transform: translate(0, 0) scale(1);
+            opacity: 0.3;
+          }
+          33% { 
+            transform: translate(40px, -30px) scale(1.1);
+            opacity: 0.5;
+          }
+          66% { 
+            transform: translate(-30px, 40px) scale(0.9);
+            opacity: 0.4;
+          }
+        }
+
         /* Scroll animations */
         * {
           scroll-behavior: smooth;
@@ -462,8 +550,21 @@ export default function HomePage() {
             padding-right: 1.5rem !important;
           }
           
+          nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+          }
+          
+          nav a {
+            padding: 6px 10px !important;
+            font-size: 0.9rem;
+          }
+          
           #manfaat, .cta-section {
             margin: 20px !important;
+            border-radius: 25px !important;
           }
           
           h2 {
@@ -491,6 +592,21 @@ export default function HomePage() {
           .hero-button, .cta-button {
             padding: 12px 24px !important;
           }
+          
+          #manfaat, .cta-section {
+            margin: 10px !important;
+          }
+          
+          header {
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px !important;
+          }
+          
+          nav {
+            width: 100%;
+            justify-content: space-around;
+          }
         }
       `}</style>
 
@@ -502,11 +618,11 @@ export default function HomePage() {
             Cerdas Finansial
           </h1>
 
-          <nav className="space-x-6 font-medium">
-            <Link href="#fitur" className="transition-colors duration-300">
+          <nav className="space-x-4 font-medium">
+            <Link href="#fitur" className="nav-link transition-colors duration-300">
               Fitur
             </Link>
-            <Link href="#manfaat" className="transition-colors duration-300">
+            <Link href="#manfaat" className="nav-link transition-colors duration-300">
               Manfaat
             </Link>
             <Link href="/login"
@@ -521,7 +637,10 @@ export default function HomePage() {
         </header>
 
         {/* ================= HERO ================= */}
-        <section className="grid md:grid-cols-2 gap-12 px-10 py-24 items-center">
+        <section className="grid md:grid-cols-2 gap-12 px-10 py-24 items-center relative">
+          <div className="green-accent" style={{ top: '10%', left: '5%' }}></div>
+          <div className="pink-accent" style={{ bottom: '20%', right: '15%' }}></div>
+          
           <div className="floating-element">
             <h2 className="text-5xl font-extrabold leading-tight mb-6 tracking-tight">
               Kelola Keuangan <span>Lebih Mudah</span> <br />
@@ -564,8 +683,8 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8 relative z-10">
             <div
               className="benefit-card p-8 rounded-2xl border transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center bg-gradient-to-br from-[#EED4DB] to-white">
-                <span className="text-[#CB748E] text-xl">✓</span>
+              <div className="icon-container w-12 h-12 rounded-full mb-4 flex items-center justify-center">
+                <span className="text-[#426E55] text-xl">✓</span>
               </div>
               <h4 className="font-bold text-xl mb-3 transition-colors">
                 Pencatatan Lebih Akurat
@@ -577,8 +696,8 @@ export default function HomePage() {
 
             <div
               className="benefit-card p-8 rounded-2xl border transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center bg-gradient-to-br from-[#EED4DB] to-white">
-                <span className="text-[#CB748E] text-xl">📈</span>
+              <div className="icon-container w-12 h-12 rounded-full mb-4 flex items-center justify-center">
+                <span className="text-[#426E55] text-xl">📈</span>
               </div>
               <h4 className="font-bold text-xl mb-3 transition-colors">
                 Laporan Keuangan Jelas
@@ -590,8 +709,8 @@ export default function HomePage() {
 
             <div
               className="benefit-card p-8 rounded-2xl border transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center bg-gradient-to-br from-[#EED4DB] to-white">
-                <span className="text-[#CB748E] text-xl">💰</span>
+              <div className="icon-container w-12 h-12 rounded-full mb-4 flex items-center justify-center">
+                <span className="text-[#426E55] text-xl">💰</span>
               </div>
               <h4 className="font-bold text-xl mb-3 transition-colors">
                 Kontrol Pengeluaran
@@ -617,7 +736,7 @@ export default function HomePage() {
               <h4 className="font-bold mb-2">
                 Dashboard Keuangan
               </h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-sm">
                 Ringkasan saldo, pemasukan, dan pengeluaran real-time.
               </p>
             </div>
@@ -629,7 +748,7 @@ export default function HomePage() {
               <h4 className="font-bold mb-2">
                 Manajemen Transaksi
               </h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-sm">
                 Catat transaksi harian dengan cepat dan mudah.
               </p>
             </div>
@@ -641,7 +760,7 @@ export default function HomePage() {
               <h4 className="font-bold mb-2">
                 Anggaran (Budgeting)
               </h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-sm">
                 Atur batas pengeluaran setiap kategori agar hemat.
               </p>
             </div>
@@ -654,7 +773,7 @@ export default function HomePage() {
               <h4 className="font-bold mb-2">
                 Laporan Keuangan
               </h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-sm">
                 Export laporan bulanan dan tahunan secara otomatis.
               </p>
             </div>
@@ -664,7 +783,8 @@ export default function HomePage() {
         {/* ================= CTA ================= */}
         <section className="cta-section text-white py-24 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full opacity-5"></div>
-          <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full blur-3xl opacity-20 bg-[#CB748E]"></div>
+          <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full blur-3xl opacity-20 bg-[#73986F]"></div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-15 bg-[#D698AB]"></div>
 
           <div className="relative z-10">
             <h3 className="text-4xl font-bold mb-6">

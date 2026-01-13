@@ -8,24 +8,11 @@ export default function HomePage() {
     <>
       <style jsx>{`
         main {
-          background: linear-gradient(135deg, #EED4DB 0%, #EED4DB 30%, #FFFFFF 100%);
+          background: linear-gradient(135deg, #FFFFFF 0%, #73986F 30%, #EED4DB 100%);
           position: relative;
           overflow-x: hidden;
         }
 
-        main::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: radial-gradient(circle at 20% 80%, #D698AB22 0%, transparent 50%),
-                      radial-gradient(circle at 80% 20%, #73986F22 0%, transparent 50%);
-          z-index: 0;
-          animation: float 25s infinite ease-in-out;
-        }
-        
        `}</style> 
     <main className="min-h-screen font-sans antialiased">
 
