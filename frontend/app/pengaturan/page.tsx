@@ -12,7 +12,10 @@ export default function PengaturanPage() {
   const [email, setEmail] = useState("email@example.com");
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
+
   const [theme, setTheme] = useState("light");
+  const [language, setLanguage] = useState("id");
+  const [accentColor, setAccentColor] = useState("#2563eb"); // default blue
 
   const handleSaveProfile = () => {
     alert("Profil berhasil diperbarui");
@@ -53,7 +56,7 @@ export default function PengaturanPage() {
   return (
     <div className="flex min-h-screen bg-gray-100">
 
-      {/* ================= SIDEBAR ================= */}
+      {/* SIDEBAR */}
       <aside className="w-60 bg-gray-900 text-white p-6">
         <h1 className="text-lg font-bold mb-8">CERDAS FINANSIAL</h1>
 
@@ -81,7 +84,7 @@ export default function PengaturanPage() {
         </button>
       </aside>
 
-      {/* ================= MAIN ================= */}
+      {/* MAIN */}
       <main className="flex-1 p-8">
         <h1 className="text-3xl font-bold mb-6">Pengaturan</h1>
 
@@ -115,7 +118,8 @@ export default function PengaturanPage() {
 
             <button
               onClick={handleSaveProfile}
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              style={{ backgroundColor: accentColor }}
+              className="mt-4 text-white px-4 py-2 rounded"
             >
               Simpan Perubahan
             </button>
@@ -150,22 +154,57 @@ export default function PengaturanPage() {
             </button>
           </section>
 
-          {/* TEMA */}
+          {/* BAHASA */}
           <section className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Tampilan</h2>
+            <h2 className="text-xl font-semibold mb-4">Bahasa & Regional</h2>
 
             <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
-              className="border p-2 rounded"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="border p-2 rounded w-full md:w-1/2"
             >
-              <option value="light">Light Mode</option>
-              <option value="dark">Dark Mode</option>
+              <option value="id">Bahasa Indonesia</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+              <option value="ar">العربية</option>
+              <option value="zh">中文</option>
+              <option value="ja">日本語</option>
+              <option value="ru">Русский</option>
+              <option value="pt">Português</option>
             </select>
 
-            <p className="text-gray-600 mt-2 text-sm">
-              Tema masih simulasi (bisa dihubungkan ke localStorage).
+            <p className="text-sm text-gray-600 mt-2">
+              Bahasa masih simulasi (bisa dihubungkan ke i18n / next-intl).
             </p>
+          </section>
+
+          {/* WARNA */}
+          <section className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold mb-4">Warna Tema</h2>
+
+            <div className="flex items-center gap-4">
+              <input
+                type="color"
+                value={accentColor}
+                onChange={(e) => setAccentColor(e.target.value)}
+                className="w-16 h-10"
+              />
+
+              <span className="text-gray-600">
+                Warna utama aplikasi
+              </span>
+            </div>
+
+            <div className="mt-4">
+              <button
+                style={{ backgroundColor: accentColor }}
+                className="text-white px-4 py-2 rounded"
+              >
+                Contoh Tombol
+              </button>
+            </div>
           </section>
 
           {/* RESET */}
