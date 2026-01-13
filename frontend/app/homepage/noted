@@ -7,11 +7,6 @@ export default function HomePage() {
   return (
     <>
       <style jsx>{`
-        main {
-          background: linear-gradient(135deg, #EED4DB 0%, #EED4DB 30%, #FFFFFF 100%);
-          position: relative;
-          overflow-x: hidden;
-        }
         
         /* Animasi background bergerak */
         main::before {

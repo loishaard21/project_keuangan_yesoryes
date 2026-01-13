@@ -3,13 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, } from "recharts";
 
 /* ================= TYPES ================= */
 type Transaction = {
@@ -25,15 +19,25 @@ export default function FinanceDashboard() {
   const router = useRouter();
   const pathname = usePathname();
 
+  // ================= ACCOUNT STATE =================
+  const [showAccountModal, setShowAccountModal] = useState(false);
+  const [accountForm, setAccountForm] = useState({
+    name: "",
+    balance: "",
+  });
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [accounts, setAccounts] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  
   const [form, setForm] = useState({
     type: "income",
     category: "",
     amount: "",
+    accountId: "",
   });
 
   /* ================= HANDLERS ================= */
@@ -41,26 +45,132 @@ export default function FinanceDashboard() {
     setForm({ ...form, [key]: value });
   };
 
-  const handleAddTransaction = () => {
-    const amount = Number(form.amount);
-    if (!form.category || isNaN(amount)) return;
+  const handleAddTransaction = async () => {
+  const amount = Number(form.amount);
+  if (!form.category || isNaN(amount) || !form.accountId) {
+  alert("Lengkapi data transaksi");
+  return;
+}
+
+  try {
+    const res = await fetch("http://localhost:3000/api/transactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+      amount,
+      type: form.type.toUpperCase(),
+      category: form.category,
+      accountId: Number(form.accountId), // ✅ INI POIN 2
+      userId: user.id,
+    }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Gagal menambahkan transaksi");
+    }
+
+    const savedTransaction = await res.json();
 
     const newTransaction: Transaction = {
-      id: crypto.randomUUID(),
-      type: form.type as "income" | "expense",
-      category: form.category,
-      amount,
-      date: new Date().toISOString().split("T")[0],
+      id: savedTransaction.id.toString(),
+      type: savedTransaction.type.toLowerCase(),
+      category: savedTransaction.category,
+      amount: savedTransaction.amount,
+      date: new Date(savedTransaction.createdAt)
+        .toISOString()
+        .split("T")[0],
     };
 
     setTransactions((prev) => [...prev, newTransaction]);
-    setForm({ type: "income", category: "", amount: "" });
+    setForm({ type: "income", category: "", amount: "", accountId: "" });
     setShowModal(false);
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Gagal menyimpan transaksi ke database");
+  }
+};
 
-  const handleDelete = (id: string) => {
+const user =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("user") || "null")
+    : null;
+
+React.useEffect(() => {
+  if (!user?.id) return;
+
+  fetch(`http://localhost:3000/api/transactions?userId=${user.id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const formatted = data.map((t: any) => ({
+        id: t.id.toString(),
+        type: t.type.toLowerCase(),
+        category: t.category,
+        amount: t.amount,
+        date: new Date(t.createdAt).toISOString().split("T")[0],
+      }));
+      setTransactions(formatted);
+    })
+    .catch(console.error);
+}, [user]);
+
+const handleAddAccount = async () => {
+  const balance = Number(accountForm.balance);
+
+  if (!accountForm.name || isNaN(balance)) {
+    alert("Nama akun dan saldo wajib diisi");
+    return;
+  }
+
+  if (!user?.id) {
+    alert("User belum login");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:3000/api/accounts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: accountForm.name,
+        balance,
+        userId: user.id, // ✅ AMBIL DARI LOGIN
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.error(data);
+      throw new Error("Gagal menambahkan akun");
+    }
+
+    alert("Akun berhasil ditambahkan");
+    setAccountForm({ name: "", balance: "" });
+    setShowAccountModal(false);
+  } catch (error) {
+    console.error("ADD ACCOUNT ERROR:", error);
+    alert("Gagal menyimpan akun");
+  }
+};
+
+
+  const handleDelete = async (id: string) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/transactions/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Gagal hapus transaksi");
+
     setTransactions((prev) => prev.filter((t) => t.id !== id));
-  };
+  } catch (err) {
+    alert("Gagal menghapus transaksi");
+  }
+};
 
   const handleLogout = () => {
     router.push("/login");
@@ -85,10 +195,18 @@ export default function FinanceDashboard() {
 
   const balance = totalIncome - totalExpense;
 
-  const chartData = [
-    { name: "Pendapatan", value: totalIncome },
-    { name: "Pengeluaran", value: totalExpense },
-  ];
+    const chartData = [
+  {
+    name: "Pendapatan",
+    value: totalIncome,
+    color: "#73986F",
+  },
+  {
+    name: "Pengeluaran",
+    value: totalExpense,
+    color: "#CB748E",
+  },
+];
 
   /* ================= RENDER ================= */
   return (
@@ -172,11 +290,8 @@ export default function FinanceDashboard() {
 
             {openUserMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-[#D698AB] overflow-hidden z-30">
-                <Link href="/profil" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
-                  Profil Saya
-                </Link>
                 <Link href="/pengaturan" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
-                  Pengaturan
+                  Profil Saya
                 </Link>
                 <div className="h-px bg-gray-100 mx-2"></div>
                 <button
@@ -189,6 +304,13 @@ export default function FinanceDashboard() {
             )}
           </div>
         </div>
+
+<button
+  onClick={() => setShowAccountModal(true)}
+  className="mb-6 bg-green-600 text-white px-4 py-2 rounded"
+>
+  Tambah Akun
+</button>
 
         {/* ================= SUMMARY ================= */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -271,15 +393,29 @@ export default function FinanceDashboard() {
         {showModal && (
           <Modal
             form={form}
+            accounts={accounts}
             onChange={handleInputChange}
             onClose={() => setShowModal(false)}
             onSave={handleAddTransaction}
           />
         )}
+
+        {showAccountModal && (
+  <AccountModal
+    form={accountForm}
+    onChange={(key: string, value: string) =>
+      setAccountForm({ ...accountForm, [key]: value })
+    }
+    onClose={() => setShowAccountModal(false)}
+    onSave={handleAddAccount}
+  />
+)}
       </div>
     </div>
   );
 }
+
+
 
 /* ================= HELPER COMPONENTS ================= */
 function Summary({
@@ -301,7 +437,7 @@ function Summary({
   );
 }
 
-function Modal({ form, onChange, onClose, onSave }: any) {
+function Modal({ form, accounts, onChange, onClose, onSave }: any) {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-96">
@@ -314,6 +450,19 @@ function Modal({ form, onChange, onClose, onSave }: any) {
         >
           <option value="income">Pendapatan</option>
           <option value="expense">Pengeluaran</option>
+        </select>
+
+        <select
+          value={form.accountId}
+          onChange={(e) => onChange("accountId", e.target.value)}
+          className="w-full border p-2 rounded mb-3"
+        >
+          <option value="">Pilih Akun</option>
+          {accounts.map((acc: any) => (
+            <option key={acc.id} value={acc.id}>
+              {acc.name}
+            </option>
+          ))}
         </select>
 
         <input
@@ -335,6 +484,39 @@ function Modal({ form, onChange, onClose, onSave }: any) {
             Batal
           </button>
           <button onClick={onSave} className="px-4 py-2 bg-blue-600 text-white rounded">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AccountModal({ form, onChange, onClose, onSave }: any) {
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg w-96">
+        <h2 className="text-xl font-bold mb-4">Tambah Akun</h2>
+
+        <input
+          value={form.name}
+          onChange={(e) => onChange("name", e.target.value)}
+          placeholder="Nama Akun (BCA, Dana, Cash)"
+          className="w-full border p-2 rounded mb-3"
+        />
+
+        <input
+          value={form.balance}
+          onChange={(e) => onChange("balance", e.target.value.replace(/\D/g, ""))}
+          placeholder="Saldo Awal"
+          className="w-full border p-2 rounded mb-4"
+        />
+
+        <div className="flex justify-end gap-2">
+          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">
+            Batal
+          </button>
+          <button onClick={onSave} className="px-4 py-2 bg-green-600 text-white rounded">
             Simpan
           </button>
         </div>

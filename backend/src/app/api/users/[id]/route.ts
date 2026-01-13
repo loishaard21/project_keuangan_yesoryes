@@ -2,23 +2,30 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { hashPassword } from "@/lib/hash";
 
-type Params = {
-  params: {
-    id: string;
-  };
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "http://localhost:3001",
+  "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
 
 // =======================
 // GET USER BY ID
 // =======================
-export async function GET(req: Request, context: Params) {
-  const { id } = await context.params;
-  const userId = Number(id);
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
 
+  const userId = Number(id);
   if (isNaN(userId)) {
     return NextResponse.json(
       { error: "ID tidak valid" },
-      { status: 400 }
+      { status: 400, headers: corsHeaders }
     );
   }
 
@@ -29,72 +36,66 @@ export async function GET(req: Request, context: Params) {
   if (!user) {
     return NextResponse.json(
       { error: "User tidak ditemukan" },
-      { status: 404 }
+      { status: 404, headers: corsHeaders }
     );
   }
 
-  return NextResponse.json(user);
+  return NextResponse.json(user, { headers: corsHeaders });
 }
 
 // =======================
-// UPDATE USER BY ID
+// UPDATE USER
 // =======================
-export async function PUT(req: Request, context: Params) {
-  try {
-    const { id } = await context.params;
-    const userId = Number(id);
-
-    if (isNaN(userId)) {
-      return NextResponse.json(
-        { error: "ID tidak valid" },
-        { status: 400 }
-      );
-    }
-
-    const body = await req.json();
-    const { email, name, password } = body;
-
-    const data: any = {};
-
-    if (email) data.email = email;
-    if (name) data.name = name;
-    if (password) {
-      data.password = await hashPassword(password);
-    }
-
-    if (Object.keys(data).length === 0) {
-      return NextResponse.json(
-        { error: "Tidak ada data untuk diupdate" },
-        { status: 400 }
-      );
-    }
-
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data,
-    });
-
-    return NextResponse.json(updatedUser);
-  } catch (error) {
-    console.error("UPDATE USER ERROR:", error);
-    return NextResponse.json(
-      { error: "Gagal Update User" },
-      { status: 500 }
-    );
-  }
-}
-
-// =======================
-// DELETE USER BY ID
-// =======================
-export async function DELETE(req: Request, context: Params) {
-  const { id } = await context.params;
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const userId = Number(id);
 
   if (isNaN(userId)) {
     return NextResponse.json(
       { error: "ID tidak valid" },
-      { status: 400 }
+      { status: 400, headers: corsHeaders }
+    );
+  }
+
+  const { email, name, password } = await req.json();
+
+  const data: any = {};
+  if (email) data.email = email;
+  if (name) data.name = name;
+  if (password) data.password = await hashPassword(password);
+
+  if (Object.keys(data).length === 0) {
+    return NextResponse.json(
+      { error: "Tidak ada data untuk diupdate" },
+      { status: 400, headers: corsHeaders }
+    );
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data,
+  });
+
+  return NextResponse.json(updatedUser, { headers: corsHeaders });
+}
+
+// =======================
+// DELETE USER
+// =======================
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const userId = Number(id);
+
+  if (isNaN(userId)) {
+    return NextResponse.json(
+      { error: "ID tidak valid" },
+      { status: 400, headers: corsHeaders }
     );
   }
 
@@ -102,7 +103,8 @@ export async function DELETE(req: Request, context: Params) {
     where: { id: userId },
   });
 
-  return NextResponse.json({
-    message: "User berhasil dihapus",
-  });
+  return NextResponse.json(
+    { message: "User berhasil dihapus" },
+    { headers: corsHeaders }
+  );
 }

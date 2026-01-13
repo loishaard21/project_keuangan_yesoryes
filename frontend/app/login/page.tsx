@@ -14,10 +14,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (key: string, value: string) => {
-    setForm({ ...form, [key]: value });
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
 
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!form.email || !form.password) {
@@ -28,24 +31,33 @@ export default function LoginPage() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:3000/api/users");
-      const users = await res.json();
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+        }),
+      });
 
-      const user = users.find(
-        (u: any) => u.email === form.email
-      );
+      const data = await res.json();
 
-      if (!user) {
-        alert("Email tidak ditemukan");
+      if (!res.ok) {
+        alert(data.error || "Login gagal");
         return;
       }
 
-      // ⚠️ sementara tanpa compare hash
+            // 🔥 SIMPAN USER KE LOCALSTORAGE
+      localStorage.setItem("user", JSON.stringify(data.user));
+
       alert("Login berhasil!");
       router.push("/dashboard");
+
     } catch (error) {
-      console.error(error);
-      alert("Login gagal");
+      console.error("LOGIN ERROR:", error);
+      alert("Terjadi kesalahan pada server");
     } finally {
       setLoading(false);
     }
@@ -60,37 +72,39 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block mb-2 text-sm font-bold text-[#426E55]">Email</label>
+            <label className="block mb-2 text-sm font-bold text-[#426E55]">
+              Email
+            </label>
             <input
               type="email"
               value={form.email}
               onChange={(e) => handleChange("email", e.target.value)}
-              // Border default "Sleeping pink", Focus "Growing pink", Text "Sleeping green"
-              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839] placeholder-[#D698AB]/70"
+              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839]"
               placeholder="nama@email.com"
             />
           </div>
 
           <div>
-            <label className="block mb-2 text-sm font-bold text-[#426E55]">Password</label>
+            <label className="block mb-2 text-sm font-bold text-[#426E55]">
+              Password
+            </label>
             <input
               type="password"
               value={form.password}
               onChange={(e) => handleChange("password", e.target.value)}
-              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839] placeholder-[#D698AB]/70"
+              className="w-full border-2 border-[#D698AB] px-4 py-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-4 focus:ring-[#CB748E]/20 transition-all text-[#2D4839]"
               placeholder="••••••••"
             />
           </div>
 
-
           <button
             type="submit"
             disabled={loading}
-            // Button base: "Sleeping green", Hover: "Grounding green", Text: "Shy pink" (biar soft)
             className={`w-full py-3.5 rounded-xl font-bold text-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1 
-              ${loading
-                ? "bg-[#73986F] cursor-not-allowed text-white"
-                : "bg-[#2D4839] hover:bg-[#426E55] text-[#EED4DB] hover:shadow-[#426E55]/40"
+              ${
+                loading
+                  ? "bg-[#73986F] cursor-not-allowed text-white"
+                  : "bg-[#2D4839] hover:bg-[#426E55] text-[#EED4DB] hover:shadow-[#426E55]/40"
               }`}
           >
             {loading ? "Memproses..." : "Login"}
@@ -101,7 +115,6 @@ export default function LoginPage() {
           Belum punya akun?{" "}
           <span
             onClick={() => router.push("/registrasi")}
-            // Link color: "Growing pink" hover ke "Sleeping green"
             className="text-[#CB748E] font-bold cursor-pointer hover:text-[#2D4839] hover:underline transition-colors"
           >
             Daftar sekarang
