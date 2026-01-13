@@ -290,11 +290,8 @@ const handleAddAccount = async () => {
 
             {openUserMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-[#D698AB] overflow-hidden z-30">
-                <Link href="/profil" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
-                  Profil Saya
-                </Link>
                 <Link href="/pengaturan" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
-                  Pengaturan
+                  Profil Saya
                 </Link>
                 <div className="h-px bg-gray-100 mx-2"></div>
                 <button
