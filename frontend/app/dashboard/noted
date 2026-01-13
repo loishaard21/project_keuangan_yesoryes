@@ -92,7 +92,6 @@ export default function FinanceDashboard() {
 
   /* ================= RENDER ================= */
   return (
-    // Background utama menggunakan "Shy pink"
     <div className="min-h-screen bg-[#EED4DB] text-[#2D4839]">
 
       {/* ================= OVERLAY ================= */}
@@ -105,7 +104,6 @@ export default function FinanceDashboard() {
 
       {/* ================= SIDEBAR ================= */}
       <aside
-        // Sidebar menggunakan "Sleeping green"
         className={`fixed top-0 left-0 h-full w-64 bg-[#2D4839] text-[#EED4DB] p-6 z-50
         transform transition-transform duration-300 shadow-2xl
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
@@ -129,8 +127,8 @@ export default function FinanceDashboard() {
               onClick={() => setSidebarOpen(false)}
               className={`px-4 py-3 rounded-xl transition-all duration-200 ${
                 pathname === item.path
-                  ? "bg-[#426E55] text-white font-bold shadow-lg" // Active state: Grounding green
-                  : "text-[#D698AB] hover:bg-[#426E55]/30 hover:text-white" // Inactive
+                  ? "bg-[#426E55] text-white font-bold shadow-lg"
+                  : "text-[#D698AB] hover:bg-[#426E55]/30 hover:text-white"
               }`}
             >
               {item.label}
@@ -194,7 +192,6 @@ export default function FinanceDashboard() {
 
         {/* ================= SUMMARY ================= */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Mengganti class text warna default dengan hex palette */}
           <Summary title="Saldo" value={balance} color="text-[#426E55]" />
           <Summary title="Pendapatan" value={totalIncome} color="text-[#73986F]" />
           <Summary title="Pengeluaran" value={totalExpense} color="text-[#CB748E]" />
@@ -207,9 +204,7 @@ export default function FinanceDashboard() {
             <ResponsiveContainer>
               <PieChart>
                 <Pie data={chartData} dataKey="value" outerRadius={90} paddingAngle={5} label>
-                  {/* Tulipe leafs untuk income */}
                   <Cell fill="#73986F" stroke="none" /> 
-                  {/* Growing pink untuk expense */}
                   <Cell fill="#CB748E" stroke="none" />
                 </Pie>
                 <Tooltip 
@@ -225,13 +220,27 @@ export default function FinanceDashboard() {
         <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-[#D698AB]/20">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-[#2D4839]">Daftar Transaksi</h2>
+            
+            {/* 🔥🔥🔥 TOMBOL DENGAN ANIMASI SHINE/KILAU 🔥🔥🔥 */}
             <button
               onClick={() => setShowModal(true)}
-              // Tombol Tambah: Grounding green
-              className="bg-[#426E55] hover:bg-[#2D4839] text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
+              className="
+                relative overflow-hidden group 
+                bg-[#426E55] text-white font-semibold 
+                px-6 py-2.5 rounded-xl shadow-lg 
+                transition-all duration-300 transform 
+                hover:scale-105 hover:shadow-[#426E55]/40 hover:shadow-2xl
+              "
             >
-              + Tambah Transaksi
+              {/* Layer Kilauan (Shine Effect) */}
+              <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 transition-all duration-700 ease-in-out group-hover:left-[100%]" />
+              
+              <span className="relative flex items-center gap-2">
+                <span className="text-lg font-bold">+</span> Tambah Transaksi
+              </span>
             </button>
+            {/* 🔥🔥🔥 END TOMBOL ANIMASI 🔥🔥🔥 */}
+
           </div>
 
           <div className="overflow-x-auto rounded-xl border border-[#D698AB]/30">
@@ -275,7 +284,6 @@ export default function FinanceDashboard() {
                     <td className="p-4 text-center">
                       <button
                         onClick={() => handleDelete(t.id)}
-                        // Tombol Hapus: Growing pink
                         className="bg-[#CB748E] hover:bg-[#a8566e] text-white px-3 py-1.5 rounded-lg text-sm transition shadow-sm hover:shadow-md"
                       >
                         Hapus
@@ -313,7 +321,7 @@ function Summary({
   color: string;
 }) {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-5px_rgba(45,72,57,0.1)] border border-[#D698AB]/20 flex flex-col justify-between h-32">
+    <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-5px_rgba(45,72,57,0.1)] border border-[#D698AB]/20 flex flex-col justify-between h-32 transition hover:-translate-y-1 duration-300">
       <h3 className="font-semibold text-[#73986F] text-sm uppercase tracking-wider">{title}</h3>
       <p className={`text-3xl font-extrabold ${color} mt-2`}>
         Rp {value.toLocaleString()}
@@ -325,7 +333,7 @@ function Summary({
 function Modal({ form, onChange, onClose, onSave }: any) {
   return (
     <div className="fixed inset-0 bg-[#2D4839]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl border border-[#D698AB]">
+      <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl border border-[#D698AB] animate-in fade-in zoom-in duration-200">
         <h2 className="text-2xl font-bold mb-6 text-[#2D4839]">Tambah Transaksi</h2>
 
         <div className="space-y-4">
@@ -371,7 +379,7 @@ function Modal({ form, onChange, onClose, onSave }: any) {
           </button>
           <button 
             onClick={onSave} 
-            className="px-5 py-2.5 bg-[#426E55] text-white font-bold rounded-xl hover:bg-[#2D4839] hover:shadow-lg transition"
+            className="px-5 py-2.5 bg-[#426E55] text-white font-bold rounded-xl hover:bg-[#2D4839] hover:shadow-lg transition transform active:scale-95"
           >
             Simpan
           </button>

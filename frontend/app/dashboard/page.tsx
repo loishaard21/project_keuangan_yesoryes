@@ -163,7 +163,7 @@ export default function FinanceDashboard() {
               onClick={() => setOpenUserMenu(!openUserMenu)}
               className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-md border border-[#D698AB] hover:shadow-lg transition"
             >
-              <img
+              <imgx
                 src="https://i.pravatar.cc/40"
                 className="w-8 h-8 rounded-full border border-[#CB748E]"
               />
@@ -222,9 +222,9 @@ export default function FinanceDashboard() {
             <h2 className="text-xl font-bold text-[#2D4839]">Riwayat Transaksi</h2>
             <button
               onClick={() => setShowModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-[#426E55] hover:bg-[#2D4839] text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
             >
-              Tambah Transaksi
+              + Tambah Transaksi
             </button>
           </div>
 

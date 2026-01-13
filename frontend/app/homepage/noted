@@ -1,0 +1,706 @@
+""use client";
+
+import Link from "next/link";
+import Image from "next/image";
+
+export default function HomePage() {
+  return (
+    <>
+      <style jsx>{`
+        main {
+          background: linear-gradient(135deg, #EED4DB 0%, #EED4DB 30%, #FFFFFF 100%);
+          position: relative;
+          overflow-x: hidden;
+        }
+        
+        /* Animasi background bergerak */
+        main::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(circle at 20% 80%, #D698AB22 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, #73986F22 0%, transparent 50%);
+          z-index: 0;
+          animation: float 25s infinite ease-in-out;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(40px, -30px) rotate(120deg); }
+          66% { transform: translate(-30px, 40px) rotate(240deg); }
+        }
+
+        /* Petal animation */
+        main::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20 Q55 10 60 20 Q65 30 60 40 Q55 50 50 40 Q45 30 40 40 Q35 50 30 40 Q25 30 30 20 Q35 10 40 20' fill='%23D698AB' opacity='0.1'/%3E%3C/svg%3E");
+          background-size: 200px;
+          animation: petals 60s infinite linear;
+          z-index: 0;
+        }
+
+        @keyframes petals {
+          0% { background-position: 0 0; }
+          100% { background-position: 200px 200px; }
+        }
+
+        /* ================= NAVBAR ================= */
+        header {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(12px);
+          border-bottom: 1px solid #EED4DB;
+          box-shadow: 0 4px 25px rgba(203, 116, 142, 0.08);
+          animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+          from { 
+            transform: translateY(-100%); 
+            opacity: 0;
+          }
+          to { 
+            transform: translateY(0); 
+            opacity: 1;
+          }
+        }
+
+        h1 {
+          background: linear-gradient(45deg, #CB748E 0%, #D698AB 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 4s infinite alternate;
+          background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        nav a:not(.login-link) {
+          color: #2D4839;
+          position: relative;
+          font-weight: 500;
+        }
+
+        nav a:not(.login-link)::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: -4px;
+          left: 50%;
+          background: linear-gradient(90deg, #CB748E, #D698AB);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          transform: translateX(-50%);
+          border-radius: 2px;
+        }
+
+        nav a:not(.login-link):hover::after {
+          width: 100%;
+        }
+
+        /* Login Button */
+        .login-link {
+          background: linear-gradient(135deg, #CB748E 0%, #D698AB 100%);
+          color: white;
+          box-shadow: 0 4px 18px rgba(203, 116, 142, 0.3);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .login-link:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(203, 116, 142, 0.4);
+        }
+
+        .login-link::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          transition: left 0.8s;
+        }
+
+        .login-link:hover::before {
+          left: 100%;
+        }
+
+        .login-link div {
+          background: linear-gradient(135deg, #EED4DB, #FFFFFF);
+        }
+
+        /* ================= HERO ================= */
+        section:first-of-type {
+          position: relative;
+          z-index: 1;
+        }
+
+        h2 {
+          color: #2D4839;
+        }
+
+        h2 span {
+          background: linear-gradient(45deg, #CB748E, #73986F);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          display: inline-block;
+          animation: bounce 3s infinite ease-in-out;
+          position: relative;
+        }
+
+        h2 span::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, #CB748E, #73986F);
+          transform: scaleX(0);
+          transform-origin: left;
+          animation: underline 3s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+          0%, 100% { 
+            transform: translateY(0); 
+          }
+          50% { 
+            transform: translateY(-8px); 
+          }
+        }
+
+        @keyframes underline {
+          0%, 100% { 
+            transform: scaleX(0);
+            opacity: 0;
+          }
+          50% { 
+            transform: scaleX(1);
+            opacity: 1;
+          }
+        }
+
+        .hero-button {
+          background: linear-gradient(135deg, #CB748E 0%, #D698AB 100%);
+          color: white;
+          box-shadow: 0 8px 25px rgba(203, 116, 142, 0.4);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hero-button:hover {
+          transform: translateY(-4px) scale(1.05);
+          box-shadow: 0 15px 35px rgba(203, 116, 142, 0.5);
+        }
+
+        .hero-button::after {
+          content: '→';
+          position: absolute;
+          right: 20px;
+          opacity: 0;
+          transition: all 0.3s ease;
+        }
+
+        .hero-button:hover::after {
+          opacity: 1;
+          transform: translateX(5px);
+        }
+
+        .hero-button:hover {
+          padding-right: 60px;
+        }
+
+        /* Image decoration */
+        .hero-image-container div {
+          background: linear-gradient(135deg, #D698AB, #73986F);
+          animation: pulse 5s infinite ease-in-out;
+          border-radius: 50%;
+        }
+
+        @keyframes pulse {
+          0%, 100% { 
+            opacity: 0.15; 
+            transform: scale(1);
+          }
+          50% { 
+            opacity: 0.25; 
+            transform: scale(1.05);
+          }
+        }
+
+        /* ================= MANFAAT ================= */
+        #manfaat {
+          background: rgba(238, 212, 219, 0.1);
+          border-radius: 40px;
+          margin: 40px;
+        }
+
+        #manfaat h3 {
+          color: #2D4839;
+        }
+
+        #manfaat h3 span {
+          border-bottom-color: #CB748E !important;
+          padding-bottom: 8px;
+          position: relative;
+        }
+
+        #manfaat h3 span::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: linear-gradient(90deg, #CB748E, #73986F);
+          border-radius: 3px;
+        }
+
+        #manfaat div.absolute {
+          background: radial-gradient(circle, #D698AB, transparent 70%);
+          animation: glow 6s infinite alternate;
+        }
+
+        @keyframes glow {
+          0% { opacity: 0.2; }
+          100% { opacity: 0.4; }
+        }
+
+        .benefit-card {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          border: 1px solid #EED4DB !important;
+          box-shadow: 0 10px 40px rgba(203, 116, 142, 0.08);
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .benefit-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 4px;
+          background: linear-gradient(90deg, transparent, #CB748E, #73986F, transparent);
+          transition: left 0.6s;
+        }
+
+        .benefit-card:hover::before {
+          left: 100%;
+        }
+
+        .benefit-card:hover {
+          transform: translateY(-12px);
+          border-color: #CB748E !important;
+          box-shadow: 0 25px 50px rgba(203, 116, 142, 0.15);
+        }
+
+        .benefit-card h4 {
+          color: #2D4839;
+          transition: color 0.3s ease;
+        }
+
+        .benefit-card:hover h4 {
+          color: #CB748E;
+        }
+
+        /* ================= FITUR ================= */
+        #fitur h3 {
+          color: #2D4839;
+          position: relative;
+          display: inline-block;
+        }
+
+        #fitur h3::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 100px;
+          height: 3px;
+          background: linear-gradient(90deg, #CB748E, #73986F);
+          border-radius: 3px;
+        }
+
+        .feature-card {
+          background: rgba(255, 255, 255, 0.98);
+          border: 1px solid #EED4DB !important;
+          box-shadow: 0 8px 30px rgba(115, 152, 111, 0.08);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .feature-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, #CB748E10, #73986F10);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+          opacity: 1;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-8px) scale(1.03);
+          border-color: #73986F !important;
+          box-shadow: 0 20px 40px rgba(115, 152, 111, 0.15);
+        }
+
+        .feature-card div div {
+          background: linear-gradient(135deg, #EED4DB, #FFFFFF);
+          border: 1px solid #D698AB;
+          color: #CB748E;
+          font-size: 1.5rem;
+          transition: all 0.3s ease;
+        }
+
+        .feature-card:hover div div {
+          background: linear-gradient(135deg, #CB748E, #D698AB);
+          color: white;
+          transform: rotate(5deg) scale(1.1);
+        }
+
+        .feature-card h4 {
+          color: #2D4839;
+        }
+
+        /* ================= CTA ================= */
+        .cta-section {
+          background: linear-gradient(135deg, #426E55 0%, #2D4839 100%);
+          position: relative;
+          overflow: hidden;
+          border-radius: 40px;
+          margin: 40px;
+        }
+
+        .cta-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+          animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+
+        .cta-section h3 {
+          text-shadow: 0 2px 15px rgba(0,0,0,0.2);
+          color: white;
+        }
+
+        .cta-section p {
+          color: rgba(255,255,255,0.9);
+        }
+
+        .cta-button {
+          background: linear-gradient(135deg, #EED4DB 0%, #FFFFFF 100%);
+          color: #2D4839 !important;
+          box-shadow: 0 10px 30px rgba(238, 212, 219, 0.3);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          font-weight: 600;
+        }
+
+        .cta-button:hover {
+          transform: translateY(-4px) scale(1.05);
+          box-shadow: 0 20px 40px rgba(238, 212, 219, 0.4);
+          color: #CB748E !important;
+        }
+
+        .cta-button::after {
+          content: '🌸';
+          position: absolute;
+          right: 20px;
+          opacity: 0;
+          transition: all 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+          opacity: 1;
+          transform: rotate(360deg);
+        }
+
+        .cta-button:hover {
+          padding-right: 70px;
+        }
+
+        /* Floating elements animation */
+        .floating-element {
+          animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+
+        /* Scroll animations */
+        * {
+          scroll-behavior: smooth;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          header, section {
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+          }
+          
+          #manfaat, .cta-section {
+            margin: 20px !important;
+          }
+          
+          h2 {
+            font-size: 2.5rem !important;
+          }
+          
+          .grid-cols-4 {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          
+          .grid-cols-3 {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .grid-cols-4, .grid-cols-3 {
+            grid-template-columns: 1fr !important;
+          }
+          
+          h2 {
+            font-size: 2rem !important;
+          }
+          
+          .hero-button, .cta-button {
+            padding: 12px 24px !important;
+          }
+        }
+      `}</style>
+
+      <main className="min-h-screen font-sans antialiased">
+
+        {/* ================= NAVBAR ================= */}
+        <header className="sticky top-0 z-50 flex justify-between items-center px-10 py-6">
+          <h1 className="text-2xl font-extrabold">
+            Cerdas Finansial
+          </h1>
+
+          <nav className="space-x-6 font-medium">
+            <Link href="#fitur" className="transition-colors duration-300">
+              Fitur
+            </Link>
+            <Link href="#manfaat" className="transition-colors duration-300">
+              Manfaat
+            </Link>
+            <Link href="/login"
+              className="login-link group relative px-5 py-2 rounded-full overflow-hidden">
+              <span className="relative z-10 group-hover:tracking-wider transition-all">Login</span>
+              {/* Animasi background saat hover */}
+              <div
+                className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100">
+              </div>
+            </Link>
+          </nav>
+        </header>
+
+        {/* ================= HERO ================= */}
+        <section className="grid md:grid-cols-2 gap-12 px-10 py-24 items-center">
+          <div className="floating-element">
+            <h2 className="text-5xl font-extrabold leading-tight mb-6 tracking-tight">
+              Kelola Keuangan <span>Lebih Mudah</span> <br />
+              Tanpa Ribet & Manual
+            </h2>
+
+            <p className="text-lg mb-8 leading-relaxed max-w-lg text-gray-700">
+              Cerdas Finansial adalah aplikasi pengelolaan keuangan berbasis web
+              yang membantu pengguna mencatat, mengontrol, dan menganalisis
+              pemasukan serta pengeluaran secara terstruktur.
+            </p>
+
+            <Link href="/registrasi"
+              className="hero-button inline-block px-8 py-4 rounded-full font-bold transition-all duration-300">
+              Coba Sekarang
+            </Link>
+          </div>
+
+          <div className="hero-image-container flex justify-center relative">
+            {/* Dekorasi blur di belakang gambar */}
+            <div
+              className="absolute -inset-4 opacity-20 blur-2xl rounded-full">
+            </div>
+            <Image src="/images/dashboard.png" alt="Dashboard Cerdas Finansial" width={600} height={400}
+              className="relative rounded-2xl border-4 border-white shadow-2xl transform hover:scale-[1.02] transition-transform duration-500"
+              priority />
+          </div>
+        </section>
+
+        {/* ================= MANFAAT ================= */}
+        <section id="manfaat" className="py-24 px-10 relative overflow-hidden">
+          <div
+            className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2">
+          </div>
+
+          <h3 className="text-3xl font-bold text-center mb-16">
+            Kenapa Harus Pakai <span className="border-b-4">Cerdas Finansial?</span>
+          </h3>
+
+          <div className="grid md:grid-cols-3 gap-8 relative z-10">
+            <div
+              className="benefit-card p-8 rounded-2xl border transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center bg-gradient-to-br from-[#EED4DB] to-white">
+                <span className="text-[#CB748E] text-xl">✓</span>
+              </div>
+              <h4 className="font-bold text-xl mb-3 transition-colors">
+                Pencatatan Lebih Akurat
+              </h4>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Mengurangi kesalahan pencatatan manual dengan sistem otomatis yang terintegrasi.
+              </p>
+            </div>
+
+            <div
+              className="benefit-card p-8 rounded-2xl border transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center bg-gradient-to-br from-[#EED4DB] to-white">
+                <span className="text-[#CB748E] text-xl">📈</span>
+              </div>
+              <h4 className="font-bold text-xl mb-3 transition-colors">
+                Laporan Keuangan Jelas
+              </h4>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Data keuangan tersaji rapi dalam visualisasi grafik yang mudah dipahami.
+              </p>
+            </div>
+
+            <div
+              className="benefit-card p-8 rounded-2xl border transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-full mb-4 flex items-center justify-center bg-gradient-to-br from-[#EED4DB] to-white">
+                <span className="text-[#CB748E] text-xl">💰</span>
+              </div>
+              <h4 className="font-bold text-xl mb-3 transition-colors">
+                Kontrol Pengeluaran
+              </h4>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Fitur budgeting pintar untuk menjaga pengeluaran agar tidak melebihi batas.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= FITUR ================= */}
+        <section id="fitur" className="py-24 px-10">
+          <h3 className="text-3xl font-bold text-center mb-16">
+            Fitur Unggulan
+          </h3>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="feature-card border p-6 rounded-2xl shadow-sm transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center font-bold text-lg">
+                📊
+              </div>
+              <h4 className="font-bold mb-2">
+                Dashboard Keuangan
+              </h4>
+              <p className="text-gray-600 text-sm">
+                Ringkasan saldo, pemasukan, dan pengeluaran real-time.
+              </p>
+            </div>
+
+            <div className="feature-card border p-6 rounded-2xl shadow-sm transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center font-bold text-lg">
+                💸
+              </div>
+              <h4 className="font-bold mb-2">
+                Manajemen Transaksi
+              </h4>
+              <p className="text-gray-600 text-sm">
+                Catat transaksi harian dengan cepat dan mudah.
+              </p>
+            </div>
+
+            <div className="feature-card border p-6 rounded-2xl shadow-sm transition-all duration-300">
+              <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center font-bold text-lg">
+                🛡️
+              </div>
+              <h4 className="font-bold mb-2">
+                Anggaran (Budgeting)
+              </h4>
+              <p className="text-gray-600 text-sm">
+                Atur batas pengeluaran setiap kategori agar hemat.
+              </p>
+            </div>
+
+            <div className="feature-card border p-6 rounded-2xl shadow-sm transition-all duration-300">
+              <div
+                className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center font-bold text-lg">
+                📑
+              </div>
+              <h4 className="font-bold mb-2">
+                Laporan Keuangan
+              </h4>
+              <p className="text-gray-600 text-sm">
+                Export laporan bulanan dan tahunan secara otomatis.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= CTA ================= */}
+        <section className="cta-section text-white py-24 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-5"></div>
+          <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full blur-3xl opacity-20 bg-[#CB748E]"></div>
+
+          <div className="relative z-10">
+            <h3 className="text-4xl font-bold mb-6">
+              Siap Mengelola Keuangan Lebih Baik?
+            </h3>
+            <p className="mb-10 text-lg max-w-2xl mx-auto">
+              Jangan biarkan uangmu habis tanpa jejak. Mulai gunakan Cerdas Finansial sekarang dan rasakan
+              kemudahannya.
+            </p>
+            <Link href="/registrasi" className="cta-button px-8 py-4 rounded-full font-bold transition-colors shadow-lg">
+              Daftar Gratis Sekarang
+            </Link>
+          </div>
+
+        </section>
+
+      </main>
+    </>
+  );
+}
