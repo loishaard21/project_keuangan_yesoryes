@@ -51,14 +51,18 @@ export default function HomePage() {
           >
             Manfaat
           </Link>
-          
-          <Link href="/login"
-            className="group relative px-5 py-2 rounded-full overflow-hidden bg-[#426E55] text-white shadow-lg shadow-[#426E55]/30 hover:shadow-[#426E55]/50 transition-all duration-300">
-            <span className="relative z-10 group-hover:tracking-wider transition-all">Login</span>
-            {/* Animasi background saat hover */}
-            <div
-              className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-[#2D4839]/20">
-            </div>
+
+          <Link 
+            href="/login"
+            className="group relative px-6 py-2.5 rounded-full overflow-hidden bg-gradient-to-r from-[#426E55] to-[#2D4839] text-white shadow-lg shadow-[#426E55]/30 hover:shadow-xl hover:shadow-[#426E55]/50 transition-all duration-300 hover:-translate-y-0.5"
+          >
+            <span className="relative z-10 group-hover:tracking-wider transition-all duration-300 flex items-center">
+              Login
+              <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-[#73986F] to-[#426E55] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
         </nav>
       </header>
