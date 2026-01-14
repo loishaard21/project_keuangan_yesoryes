@@ -74,6 +74,7 @@ export default function HomePage() {
       >
         {/* Animated background elements */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-[#73986F]/10 to-[#426E55]/5 rounded-full animate-pulse-slow"></div>
+        <div className="absolute bottom-10 left-10 w-64 h-64 bg-[#73986F]/10 rounded-full animate-pulse-slow animation-delay-1000"></div>
         <div>
           <h2 className="text-5xl font-extrabold text-[#2D4839] leading-tight mb-6 tracking-tight">
             Kelola Keuangan <span className="text-[#CB748E]">Lebih Mudah</span> <br />
