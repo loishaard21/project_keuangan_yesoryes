@@ -44,9 +44,14 @@ export default function HomePage() {
           >
             Fitur
           </Link>
-          <Link href="#manfaat" className="hover:text-[#CB748E] transition-colors duration-300">
+          
+          <Link 
+            href="#manfaat" 
+            className="hover:text-[#73986F] transition-all duration-300 hover:-translate-y-0.5 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-[#73986F] after:to-[#426E55] hover:after:w-full after:transition-all after:duration-300"
+          >
             Manfaat
           </Link>
+          
           <Link href="/login"
             className="group relative px-5 py-2 rounded-full overflow-hidden bg-[#426E55] text-white shadow-lg shadow-[#426E55]/30 hover:shadow-[#426E55]/50 transition-all duration-300">
             <span className="relative z-10 group-hover:tracking-wider transition-all">Login</span>
