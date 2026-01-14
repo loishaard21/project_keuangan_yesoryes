@@ -29,10 +29,10 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white via-[#F8FBFA] to-[#F0F7F5] text-[#2D4839] selection:bg-[#73986F]/30 selection:text-[#2D4839] font-sans antialiased overflow-x-hidden">
+    <main className="min-h-screen bg-[#FDF8F9] text-[#426E55] selection:bg-[#CB748E] selection:text-white font-sans antialiased">
 
       {/* ================= NAVBAR ================= */}
-      <header className="sticky top-0 z-50 flex justify-between items-center px-10 py-6 border-b border-[#EED4DB]/50 bg-white/70 backdrop-blur-md transition-all">
+      <header className="sticky top-0 z-50 flex justify-between items-center px-6 md:px-10 py-5 border-b border-[#73986F]/20 bg-white/90 backdrop-blur-lg transition-all duration-300 hover:border-[#73986F]/40">
         <h1 className="text-2xl font-extrabold bg-gradient-to-r from-[#CB748E] to-[#D698AB] bg-clip-text text-transparent">
           Cerdas Finansial
         </h1>
