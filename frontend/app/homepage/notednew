@@ -8,12 +8,6 @@ export default function HomePage() {
     
   return (
 
-          <p className="text-[#426E55]/90 text-lg mb-8 leading-relaxed max-w-lg">
-            Cerdas Finansial adalah aplikasi pengelolaan keuangan berbasis web
-            yang membantu pengguna mencatat, mengontrol, dan menganalisis
-            pemasukan serta pengeluaran secara terstruktur.
-          </p>
-
           <div className="flex flex-col sm:flex-row gap-4">
             <Link 
               href="/registrasi"
