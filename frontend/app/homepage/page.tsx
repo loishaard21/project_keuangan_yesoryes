@@ -108,13 +108,18 @@ export default function HomePage() {
           {/* Floating decorative elements */}
           <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-br from-[#73986F] to-[#426E55] rounded-full animate-float-subtle animation-delay-500"></div>
           <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-br from-[#73986F] to-[#2D4839] rounded-full animate-float-subtle animation-delay-1000"></div>
-          {/* Dekorasi blur di belakang gambar */}
+          
           <div
-            className="absolute -inset-4 bg-gradient-to-r from-[#CB748E] to-[#73986F] opacity-20 blur-2xl rounded-full">
+            className="absolute -inset-6 bg-gradient-to-r from-[#73986F]/20 to-[#426E55]/20 opacity-60 blur-2xl rounded-3xl animate-pulse-slow">
           </div>
-          <Image src="/images/dashboard.png" alt="Dashboard Cerdas Finansial" width={600} height={400}
-            className="relative rounded-2xl shadow-2xl shadow-[#2D4839]/20 border border-white/50 transform hover:scale-[1.02] transition-transform duration-500"
-            priority />
+          <Image 
+            src="/images/dashboard.png" 
+            alt="Dashboard Cerdas Finansial" 
+            width={600} 
+            height={400}
+            className="relative rounded-3xl shadow-2xl shadow-[#2D4839]/20 border-2 border-white/50 transform hover:scale-[1.02] transition-transform duration-500 hover:shadow-3xl hover:shadow-[#73986F]/20"
+            priority
+          />
         </div>
       </section>
 
