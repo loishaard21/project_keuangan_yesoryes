@@ -7,22 +7,6 @@ import { useEffect, useRef } from "react";
 export default function HomePage() {
     
   return (
-      {/* ================= HERO ================= */}
-        
-        <div className="animate-fade-in-right">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-[#E6F1ED] to-[#73986F]/20 text-[#426E55] font-medium mb-6 animate-bounce-subtle">
-            <span className="w-2 h-2 bg-[#73986F] rounded-full mr-2 animate-ping-slow"></span>
-            Solusi Keuangan Modern
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#2D4839] leading-tight mb-6 tracking-tight">
-            <span className="block">Kelola Keuangan</span>
-            <span className="relative inline-block">
-              <span className="text-[#426E55] animate-text-shimmer bg-gradient-to-r from-[#426E55] via-[#73986F] to-[#426E55] bg-[length:200%_auto] bg-clip-text">
-                Lebih Mudah & Cerdas
-              </span>
-            </span>
-          </h2>
 
           <p className="text-[#426E55]/90 text-lg mb-8 leading-relaxed max-w-lg">
             Cerdas Finansial adalah aplikasi pengelolaan keuangan berbasis web

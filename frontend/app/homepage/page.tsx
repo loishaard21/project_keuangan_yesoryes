@@ -75,10 +75,14 @@ export default function HomePage() {
         {/* Animated background elements */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-[#73986F]/10 to-[#426E55]/5 rounded-full animate-pulse-slow"></div>
         <div className="absolute bottom-10 left-10 w-64 h-64 bg-[#73986F]/10 rounded-full animate-pulse-slow animation-delay-1000"></div>
-        <div>
-          <h2 className="text-5xl font-extrabold text-[#2D4839] leading-tight mb-6 tracking-tight">
-            Kelola Keuangan <span className="text-[#CB748E]">Lebih Mudah</span> <br />
-            Tanpa Ribet & Manual
+        <div className="animate-fade-in-right">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#2D4839] leading-tight mb-6 tracking-tight">
+            <span className="block">Kelola Keuangan</span>
+            <span className="relative inline-block">
+              <span className="text-[#426E55] animate-text-shimmer bg-gradient-to-r from-[#426E55] via-[#73986F] to-[#426E55] bg-[length:200%_auto] bg-clip-text">
+                Lebih Mudah & Cerdas
+              </span>
+            </span>
           </h2>
 
           <p className="text-[#426E55] text-lg mb-8 leading-relaxed max-w-lg">
