@@ -68,7 +68,12 @@ export default function HomePage() {
       </header>
 
       {/* ================= HERO ================= */}
-      <section className="grid md:grid-cols-2 gap-12 px-10 py-24 items-center bg-gradient-to-br from-white via-[#FDF8F9] to-[#EED4DB]/40">
+      <section 
+        ref={heroRef}
+        className="grid md:grid-cols-2 gap-12 px-6 md:px-10 py-20 md:py-24 items-center bg-gradient-to-br from-white via-[#F8FBFA] to-[#E6F1ED] relative overflow-hidden"
+      >
+        {/* Animated background elements */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-[#73986F]/10 to-[#426E55]/5 rounded-full animate-pulse-slow"></div>
         <div>
           <h2 className="text-5xl font-extrabold text-[#2D4839] leading-tight mb-6 tracking-tight">
             Kelola Keuangan <span className="text-[#CB748E]">Lebih Mudah</span> <br />
