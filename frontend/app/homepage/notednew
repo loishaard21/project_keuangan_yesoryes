@@ -8,9 +8,7 @@ export default function HomePage() {
     
   return ( 
       
-        <h1 className="text-2xl font-extrabold bg-gradient-to-r from-[#426E55] via-[#73986F] to-[#2D4839] bg-clip-text text-transparent animate-gradient-x bg-[length:200%_auto]">
-          Cerdas Finansial
-        </h1>
+        
 
         <nav className="flex items-center space-x-6 text-[#426E55] font-medium">
           <Link 
