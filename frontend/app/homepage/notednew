@@ -7,22 +7,8 @@ import { useEffect, useRef } from "react";
 export default function HomePage() {
     
   return (
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            
-            
-            <Link 
-              href="#fitur"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold border-2 border-[#73986F]/30 text-[#426E55] hover:border-[#73986F] hover:text-[#2D4839] hover:bg-[#73986F]/5 transition-all duration-300"
-            >
-              Jelajahi Fitur
-            </Link>
-          </div>
-        </div>
-
-        <div className="flex justify-center relative animate-float-slow">
-          {/* Floating decorative elements */}
-          <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-br from-[#73986F] to-[#426E55] rounded-full animate-float-subtle animation-delay-500"></div>
+        
+          
           <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-br from-[#73986F] to-[#2D4839] rounded-full animate-float-subtle animation-delay-1000"></div>
           
           <div

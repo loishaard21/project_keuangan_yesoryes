@@ -104,7 +104,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="flex justify-center relative">
+        <div className="flex justify-center relative animate-float-slow">
+          {/* Floating decorative elements */}
+          <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-br from-[#73986F] to-[#426E55] rounded-full animate-float-subtle animation-delay-500"></div>
           {/* Dekorasi blur di belakang gambar */}
           <div
             className="absolute -inset-4 bg-gradient-to-r from-[#CB748E] to-[#73986F] opacity-20 blur-2xl rounded-full">
