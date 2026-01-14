@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
         
           
-          <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-br from-[#73986F] to-[#2D4839] rounded-full animate-float-subtle animation-delay-1000"></div>
+          
           
           <div
             className="absolute -inset-6 bg-gradient-to-r from-[#73986F]/20 to-[#426E55]/20 opacity-60 blur-2xl rounded-3xl animate-pulse-slow">
