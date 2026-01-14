@@ -22,15 +22,8 @@ export default function HomePage() {
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#426E55]/10 rounded-full blur-3xl opacity-30 -translate-y-1/2 -translate-x-1/2 animate-pulse-slow animation-delay-1000"></div>
 
         <div className="text-center mb-16 animate-fade-in-up">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-[#E6F1ED] to-[#73986F]/20 text-[#426E55] font-medium mb-4">
-            Keunggulan
-          </div>
-          <h3 className="text-3xl font-bold text-[#2D4839]">
-            Kenapa Harus Pakai <span className="relative inline-block">
-              Cerdas Finansial?
-              <span className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-[#73986F] to-[#426E55] opacity-60 rounded-full"></span>
-            </span>
-          </h3>
+          
+          
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 relative z-10">
