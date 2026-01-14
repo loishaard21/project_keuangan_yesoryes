@@ -6,9 +6,30 @@ import { useEffect, useRef} from "react";
 export default function HomePage() {
   const heroRef = useRef(null);
   const featureCardsRef = useRef([]);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-fade-in-up");
+        }
+      });
+    }, observerOptions);
   
+    featureCardsRef.current.forEach(card => {
+      if (card) observer.observe(card);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#FDF8F9] text-[#426E55] selection:bg-[#CB748E] selection:text-white font-sans antialiased">
+    <main className="min-h-screen bg-gradient-to-b from-white via-[#F8FBFA] to-[#F0F7F5] text-[#2D4839] selection:bg-[#73986F]/30 selection:text-[#2D4839] font-sans antialiased overflow-x-hidden">
 
       {/* ================= NAVBAR ================= */}
       <header className="sticky top-0 z-50 flex justify-between items-center px-10 py-6 border-b border-[#EED4DB]/50 bg-white/70 backdrop-blur-md transition-all">
