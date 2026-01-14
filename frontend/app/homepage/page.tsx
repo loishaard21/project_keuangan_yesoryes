@@ -37,7 +37,7 @@ export default function HomePage() {
           Cerdas Finansial
         </h1>
 
-        <nav className="space-x-6 text-[#426E55] font-medium">
+        <nav className="flex items-center space-x-6 text-[#426E55] font-medium">
           <Link href="#fitur" className="hover:text-[#CB748E] transition-colors duration-300">
             Fitur
           </Link>
