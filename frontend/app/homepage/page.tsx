@@ -38,7 +38,10 @@ export default function HomePage() {
         </h1>
 
         <nav className="flex items-center space-x-6 text-[#426E55] font-medium">
-          <Link href="#fitur" className="hover:text-[#CB748E] transition-colors duration-300">
+          <Link 
+            href="#fitur" 
+            className="hover:text-[#73986F] transition-all duration-300 hover:-translate-y-0.5 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-[#73986F] after:to-[#426E55] hover:after:w-full after:transition-all after:duration-300"
+          >
             Fitur
           </Link>
           <Link href="#manfaat" className="hover:text-[#CB748E] transition-colors duration-300">
