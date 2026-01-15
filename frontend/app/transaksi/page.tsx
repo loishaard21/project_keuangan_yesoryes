@@ -169,7 +169,7 @@ export default function TransaksiPage() {
           <div className="relative">
             <button
               onClick={() => setOpenUserMenu(!openUserMenu)}
-              className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow border"
+              className="flex items-center gap-3 bg-white/95 px-5 py-2.5 rounded-full shadow-lg border border-[#73986F]/20 hover:shadow-xl transition-all hover:scale-105 active:scale-95"
             >
               <img
                 src="https://i.pravatar.cc/40"
