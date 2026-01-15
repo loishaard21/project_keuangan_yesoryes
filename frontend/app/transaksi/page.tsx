@@ -230,9 +230,12 @@ export default function TransaksiPage() {
             </div>
             <button
               onClick={() => setShowModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-gradient-to-r from-[#426E55] to-[#2D4839] text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 group hover:scale-105 hover:-translate-y-0.5 active:scale-95"
             >
-              Tambah Transaksi
+              <span className={`text-xl transition-transform ${showModal ? "rotate-45" : ""}`}>
+                +
+              </span>
+              <span>Tambah Transaksi</span>
             </button>
           </div>
 
