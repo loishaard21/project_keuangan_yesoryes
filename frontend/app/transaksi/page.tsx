@@ -175,10 +175,16 @@ export default function TransaksiPage() {
                 {user?.name?.charAt(0) || "A"}
               </div>
               <span className="text-sm font-bold text-[#2D4839]">{user?.name || "Akun"}</span>
+              <div className={`transition-transform duration-200 ${openUserMenu ? "rotate-180" : ""}`}>
+                ▼
+              </div>
             </button>
-
+            
+            {/* DROPDOWN MENU */}
             {openUserMenu && (
-              <div className="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-lg z-50">
+              <div
+                className="absolute right-0 mt-2 w-56 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-[#73986F]/20 overflow-hidden z-30 animate-slideInDown"
+              >
                 <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Profil Saya
                 </Link>
