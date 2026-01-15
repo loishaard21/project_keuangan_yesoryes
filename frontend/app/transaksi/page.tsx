@@ -239,47 +239,50 @@ export default function TransaksiPage() {
             </button>
           </div>
 
-          <table className="w-full border">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="border p-2">Tanggal</th>
-                <th className="border p-2">Jenis</th>
-                <th className="border p-2">Kategori</th>
-                <th className="border p-2">Nominal</th>
-                <th className="border p-2">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.length === 0 && (
+          {/* ================= TRANSACTION TABLE ================= */}
+          <div className="overflow-x-auto rounded-2xl border border-[#73986F]/10">  
+            <table className="w-full">
+              <thead className="bg-gray-100">
                 <tr>
-                  <td colSpan={5} className="text-center py-4 text-gray-500">
-                    Belum ada transaksi
-                  </td>
+                  <th className="border p-2">Tanggal</th>
+                  <th className="border p-2">Jenis</th>
+                  <th className="border p-2">Kategori</th>
+                  <th className="border p-2">Nominal</th>
+                  <th className="border p-2">Aksi</th>
                 </tr>
-              )}
+              </thead>
+              <tbody>
+                {transactions.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="text-center py-4 text-gray-500">
+                      Belum ada transaksi
+                    </td>
+                  </tr>
+                )}
 
-              {transactions.map((t) => (
-                <tr key={t.id}>
-                  <td className="border p-2">{t.date}</td>
-                  <td className="border p-2">
-                    {t.type === "income" ? "Pendapatan" : "Pengeluaran"}
-                  </td>
-                  <td className="border p-2">{t.category}</td>
-                  <td className="border p-2">
-                    Rp {t.amount.toLocaleString()}
-                  </td>
-                  <td className="border p-2">
-                    <button
-                      onClick={() => handleDelete(t.id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded"
-                    >
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                {transactions.map((t) => (
+                  <tr key={t.id}>
+                    <td className="border p-2">{t.date}</td>
+                    <td className="border p-2">
+                      {t.type === "income" ? "Pendapatan" : "Pengeluaran"}
+                    </td>
+                    <td className="border p-2">{t.category}</td>
+                    <td className="border p-2">
+                      Rp {t.amount.toLocaleString()}
+                    </td>
+                    <td className="border p-2">
+                      <button
+                        onClick={() => handleDelete(t.id)}
+                        className="bg-red-600 text-white px-3 py-1 rounded"
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>    
         </div>
 
         {/* ================= MODAL ================= */}
