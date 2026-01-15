@@ -197,12 +197,20 @@ export default function TransaksiPage() {
                     <span className="font-medium group-hover:translate-x-1 transition-transform">Profil Saya</span>
                   </div>
                 </Link>
-
+                <div className="h-px bg-gradient-to-r from-transparent via-[#73986F]/20 to-transparent mx-4"></div>
                 <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
+                  onClick={() => {
+                    handleLogout();
+                    setOpenUserMenu(false);
+                  }}
+                  className="w-full text-left px-5 py-4 text-[#CB748E] font-bold hover:bg-gradient-to-r from-[#fff0f3] to-[#f9f9f9] transition-all duration-300 group hover:scale-[1.02] active:scale-95"
                 >
-                  Logout
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#CB748E] to-[#D698AB] flex items-center justify-center text-white text-sm">
+                      🚪
+                    </div>
+                    <span className="group-hover:translate-x-1 transition-transform">Logout</span>
+                  </div>
                 </button>
               </div>
             )}
