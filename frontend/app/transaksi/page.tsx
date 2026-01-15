@@ -67,20 +67,19 @@ export default function TransaksiPage() {
   /* ================= RENDER ================= */
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f0f7f4] via-[#e8f4ee] to-[#d9ede3] text-[#2D4839]">
-
       {/* ================= OVERLAY ================= */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black/40 z-40"
+          className="fixed inset-0 bg-[#2D4839]/40 z-40 backdrop-blur-sm animate-fadeIn"
         />
       )}
 
       {/* ================= SIDEBAR ================= */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white p-6 z-50
-        transform transition-transform duration-300
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-[#2D4839] to-[#426E55] text-white p-6 z-50 shadow-2xl transform transition-all duration-500 ease-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="flex justify-between items-center mb-6">
           <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
