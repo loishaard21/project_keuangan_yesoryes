@@ -95,7 +95,7 @@ export default function TransaksiPage() {
           </button>
         </div>
 
-        <nav className="flex flex-col space-y-4 text-gray-300">
+        <nav className="flex flex-col space-y-3">
           {[
             { label: "Dashboard", path: "/dashboard" },
             { label: "Transaksi", path: "/transaksi" },
