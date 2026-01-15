@@ -115,7 +115,15 @@ export default function TransaksiPage() {
                     : "text-white/80 hover:text-white hover:bg-white/10"
                   }`}
               >
-                {item.label}
+                <span className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
+                <span className="relative z-10">{item.label}</span>
+                <div
+                  className={`ml-auto relative z-10 transition-all duration-300 ${
+                    pathname === item.path ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"
+                  }`}
+                >
+                  →
+                </div>
               </Link>
             </div>
           ))}
