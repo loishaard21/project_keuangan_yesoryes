@@ -77,18 +77,17 @@ export default function TransaksiPage() {
 
       {/* ================= SIDEBAR ================= */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-[#2D4839] to-[#426E55] text-white p-6 z-50 shadow-2xl transform transition-all duration-500 ease-out ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-[#2D4839] to-[#426E55] text-white p-6 z-50 shadow-2xl transform transition-all duration-500 ease-out ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex justify-between items-center mb-10 border-b border-[#73986F]/40 pb-4">
-          <h1 
+          <h1
             className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-white to-[#D698AB] bg-clip-text text-transparent animate-slideInLeft"
           >
             CERDAS FINANSIAL
           </h1>
-          <button 
-            onClick={() => setSidebarOpen(false)} 
+          <button
+            onClick={() => setSidebarOpen(false)}
             className="text-white/70 hover:text-white transition-all duration-300 hover:rotate-90 p-1"
           >
             ✕
@@ -102,19 +101,23 @@ export default function TransaksiPage() {
             { label: "Laporan", path: "/laporan" },
             { label: "Anggaran", path: "/anggaran" },
             { label: "Pengaturan", path: "/pengaturan" },
-          ].map((item) => (
-            <Link
+          ].map((item, index) => (
+            <div
               key={item.path}
-              href={item.path}
-              onClick={() => setSidebarOpen(false)}
-              className={
-                pathname === item.path
-                  ? "text-white font-semibold"
-                  : "hover:text-white"
-              }
+              className="animate-slideInLeft"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
-              {item.label}
-            </Link>
+              <Link
+                href={item.path}
+                onClick={() => setSidebarOpen(false)}
+                className={`px-4 py-3 rounded-xl transition-all duration-300 flex items-center gap-3 group relative overflow-hidden ${pathname === item.path
+                    ? "bg-white/20 backdrop-blur-sm text-white font-bold shadow-lg border border-white/10"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+              >
+                {item.label}
+              </Link>
+            </div>
           ))}
         </nav>
       </aside>
@@ -156,7 +159,7 @@ export default function TransaksiPage() {
                 <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
                   Profil Saya
                 </Link>
-                
+
                 <button
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
