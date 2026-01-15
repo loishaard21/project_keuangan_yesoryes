@@ -171,11 +171,10 @@ export default function TransaksiPage() {
               onClick={() => setOpenUserMenu(!openUserMenu)}
               className="flex items-center gap-3 bg-white/95 px-5 py-2.5 rounded-full shadow-lg border border-[#73986F]/20 hover:shadow-xl transition-all hover:scale-105 active:scale-95"
             >
-              <img
-                src="https://i.pravatar.cc/40"
-                className="w-8 h-8 rounded-full"
-              />
-              <span className="text-sm font-medium">Akun</span>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#73986F] to-[#426E55] flex items-center justify-center text-white font-bold shadow-md">
+                {user?.name?.charAt(0) || "A"}
+              </div>
+              <span className="text-sm font-bold text-[#2D4839]">{user?.name || "Akun"}</span>
             </button>
 
             {openUserMenu && (
