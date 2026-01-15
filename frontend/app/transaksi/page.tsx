@@ -141,7 +141,7 @@ export default function TransaksiPage() {
             {/* HAMBURGER BUTTON */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 bg-white rounded-md shadow border"
+              className="p-3 bg-white/90 hover:bg-white rounded-xl shadow-sm border border-[#73986F]/20 transition-all backdrop-blur-sm hover:scale-105 active:scale-95"
             >
               <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
               <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
