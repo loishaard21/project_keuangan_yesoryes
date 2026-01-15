@@ -185,8 +185,17 @@ export default function TransaksiPage() {
               <div
                 className="absolute right-0 mt-2 w-56 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-[#73986F]/20 overflow-hidden z-30 animate-slideInDown"
               >
-                <Link href="/pengaturan" className="block px-4 py-2 hover:bg-gray-100">
-                  Profil Saya
+                <Link 
+                  href="/pengaturan" 
+                  className="block px-5 py-4 text-[#2D4839] hover:bg-gradient-to-r from-[#EED4DB]/20 to-[#f9f9f9] transition-all duration-300 group"
+                  onClick={() => setOpenUserMenu(false)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#73986F] to-[#426E55] flex items-center justify-center text-white text-sm">
+                      👤
+                    </div>
+                    <span className="font-medium group-hover:translate-x-1 transition-transform">Profil Saya</span>
+                  </div>
                 </Link>
 
                 <button
