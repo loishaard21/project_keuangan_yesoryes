@@ -593,11 +593,6 @@ export default function FinanceDashboard() {
           to { opacity: 1; }
         }
         
-        @keyframes slideInDown {
-          from { transform: translateY(-20px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        
         @keyframes slideInUp {
           from { transform: translateY(20px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
@@ -620,10 +615,6 @@ export default function FinanceDashboard() {
         
         .animate-fadeIn {
           animation: fadeIn 0.5s ease-out forwards;
-        }
-        
-        .animate-slideInDown {
-          animation: slideInDown 0.5s ease-out forwards;
         }
         
         .animate-slideInUp {
