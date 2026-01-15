@@ -242,8 +242,8 @@ export default function TransaksiPage() {
           {/* ================= TRANSACTION TABLE ================= */}
           <div className="overflow-x-auto rounded-2xl border border-[#73986F]/10">  
             <table className="w-full">
-              <thead className="bg-gray-100">
-                <tr>
+              <thead>
+                <tr className="bg-gradient-to-r from-[#73986F]/5 to-[#426E55]/5">
                   <th className="border p-2">Tanggal</th>
                   <th className="border p-2">Jenis</th>
                   <th className="border p-2">Kategori</th>
