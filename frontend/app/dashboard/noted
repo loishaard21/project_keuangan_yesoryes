@@ -1,0 +1,564 @@
+// "use client";
+
+// import React, { useMemo, useState } from "react";
+// import Link from "next/link";
+// import { usePathname, useRouter } from "next/navigation";
+// import {
+//   PieChart,
+//   Pie,
+//   Cell,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
+
+// /* ================= TYPES ================= */
+// type Transaction = {
+//   id: string;
+//   type: "income" | "expense";
+//   category: string;
+//   amount: number;
+//   date: string;
+// };
+
+// /* ================= MAIN COMPONENT ================= */
+// export default function FinanceDashboard() {
+//   const router = useRouter();
+//   const pathname = usePathname();
+
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const [openUserMenu, setOpenUserMenu] = useState(false);
+//   const [showModal, setShowModal] = useState(false);
+
+//   const [transactions, setTransactions] = useState<Transaction[]>([]);
+//   const [form, setForm] = useState({
+//     type: "income",
+//     category: "",
+//     amount: "",
+//   });
+
+//   /* ================= HANDLERS ================= */
+//   const handleInputChange = (key: string, value: string) => {
+//     setForm({ ...form, [key]: value });
+//   };
+
+//   const handleAddTransaction = () => {
+//     const amount = Number(form.amount);
+//     if (!form.category || isNaN(amount)) return;
+
+//     const newTransaction: Transaction = {
+//       id: crypto.randomUUID(),
+//       type: form.type as "income" | "expense",
+//       category: form.category,
+//       amount,
+//       date: new Date().toISOString().split("T")[0],
+//     };
+
+//     setTransactions((prev) => [...prev, newTransaction]);
+//     setForm({ type: "income", category: "", amount: "" });
+//     setShowModal(false);
+//   };
+
+//   const handleDelete = (id: string) => {
+//     setTransactions((prev) => prev.filter((t) => t.id !== id));
+//   };
+
+//   const handleLogout = () => {
+//     router.push("/login");
+//   };
+
+//   /* ================= CALCULATION ================= */
+//   const totalIncome = useMemo(
+//     () =>
+//       transactions
+//         .filter((t) => t.type === "income")
+//         .reduce((a, b) => a + b.amount, 0),
+//     [transactions]
+//   );
+
+//   const totalExpense = useMemo(
+//     () =>
+//       transactions
+//         .filter((t) => t.type === "expense")
+//         .reduce((a, b) => a + b.amount, 0),
+//     [transactions]
+//   );
+
+//   const balance = totalIncome - totalExpense;
+
+//   const chartData = [
+//     { name: "Pendapatan", value: totalIncome },
+//     { name: "Pengeluaran", value: totalExpense },
+//   ];
+
+<<<<<<< HEAD
+  /* ================= RENDER ================= */
+  return (
+    <div className="min-h-screen bg-[#EED4DB] text-[#2D4839]">
+=======
+//   /* ================= RENDER ================= */
+//   return (
+//     // Background utama menggunakan "Shy pink"
+//     <div className="min-h-screen bg-[#EED4DB] text-[#2D4839]">
+>>>>>>> b095fd687e1d43328cc4d1dc063c5d61efc8014b
+
+//       {/* ================= OVERLAY ================= */}
+//       {sidebarOpen && (
+//         <div
+//           onClick={() => setSidebarOpen(false)}
+//           className="fixed inset-0 bg-[#2D4839]/60 z-40 backdrop-blur-sm"
+//         />
+//       )}
+
+<<<<<<< HEAD
+      {/* ================= SIDEBAR ================= */}
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 bg-[#2D4839] text-[#EED4DB] p-6 z-50
+        transform transition-transform duration-300 shadow-2xl
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex justify-between items-center mb-10 border-b border-[#73986F]/30 pb-4">
+          <h1 className="font-extrabold text-xl tracking-wide">CERDAS FINANSIAL</h1>
+          <button onClick={() => setSidebarOpen(false)} className="text-[#D698AB] hover:text-white transition">✕</button>
+        </div>
+
+        <nav className="flex flex-col space-y-2">
+          {[
+            { label: "Dashboard", path: "/dashboard" },
+            { label: "Transaksi", path: "/transaksi" },
+            { label: "Laporan", path: "/laporan" },
+            { label: "Anggaran", path: "/anggaran" },
+            { label: "Pengaturan", path: "/pengaturan" },
+          ].map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              onClick={() => setSidebarOpen(false)}
+              className={`px-4 py-3 rounded-xl transition-all duration-200 ${
+                pathname === item.path
+                  ? "bg-[#426E55] text-white font-bold shadow-lg"
+                  : "text-[#D698AB] hover:bg-[#426E55]/30 hover:text-white"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </aside>
+=======
+//       {/* ================= SIDEBAR ================= */}
+//       <aside
+//         // Sidebar menggunakan "Sleeping green"
+//         className={`fixed top-0 left-0 h-full w-64 bg-[#2D4839] text-[#EED4DB] p-6 z-50
+//         transform transition-transform duration-300 shadow-2xl
+//         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+//       >
+//         <div className="flex justify-between items-center mb-10 border-b border-[#73986F]/30 pb-4">
+//           <h1 className="font-extrabold text-xl tracking-wide">CERDAS FINANSIAL</h1>
+//           <button onClick={() => setSidebarOpen(false)} className="text-[#D698AB] hover:text-white transition">✕</button>
+//         </div>
+
+//         <nav className="flex flex-col space-y-2">
+//           {[
+//             { label: "Dashboard", path: "/dashboard" },
+//             { label: "Transaksi", path: "/transaksi" },
+//             { label: "Laporan", path: "/laporan" },
+//             { label: "Anggaran", path: "/anggaran" },
+//             { label: "Pengaturan", path: "/pengaturan" },
+//           ].map((item) => (
+//             <Link
+//               key={item.path}
+//               href={item.path}
+//               onClick={() => setSidebarOpen(false)}
+//               className={`px-4 py-3 rounded-xl transition-all duration-200 ${
+//                 pathname === item.path
+//                   ? "bg-[#426E55] text-white font-bold shadow-lg" // Active state: Grounding green
+//                   : "text-[#D698AB] hover:bg-[#426E55]/30 hover:text-white" // Inactive
+//               }`}
+//             >
+//               {item.label}
+//             </Link>
+//           ))}
+//         </nav>
+//       </aside>
+>>>>>>> b095fd687e1d43328cc4d1dc063c5d61efc8014b
+
+//       {/* ================= MAIN ================= */}
+//       <div className="p-6 lg:ml-0 transition-all">
+
+//         {/* ================= TOP BAR ================= */}
+//         <div className="flex justify-between items-center mb-8">
+
+//           <div className="flex items-center gap-4">
+//             {/* HAMBURGER */}
+//             <button
+//               onClick={() => setSidebarOpen(true)}
+//               className="p-2 bg-white/50 hover:bg-white rounded-xl shadow-sm border border-[#D698AB] transition"
+//             >
+//               <span className="block w-6 h-0.5 bg-[#2D4839] mb-1"></span>
+//               <span className="block w-6 h-0.5 bg-[#2D4839] mb-1"></span>
+//               <span className="block w-6 h-0.5 bg-[#2D4839]"></span>
+//             </button>
+
+//             <h1 className="text-3xl font-extrabold text-[#2D4839]">Dashboard Keuangan</h1>
+//           </div>
+
+//           {/* PROFILE */}
+//           <div className="relative">
+//             <button
+//               onClick={() => setOpenUserMenu(!openUserMenu)}
+//               className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-md border border-[#D698AB] hover:shadow-lg transition"
+//             >
+//               <img
+//                 src="https://i.pravatar.cc/40"
+//                 className="w-8 h-8 rounded-full border border-[#CB748E]"
+//               />
+//               <span className="text-sm font-bold text-[#2D4839]">Akun</span>
+//             </button>
+
+//             {openUserMenu && (
+//               <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-[#D698AB] overflow-hidden z-30">
+//                 <Link href="/profil" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
+//                   Profil Saya
+//                 </Link>
+//                 <Link href="/pengaturan" className="block px-4 py-3 text-[#2D4839] hover:bg-[#EED4DB] transition">
+//                   Pengaturan
+//                 </Link>
+//                 <div className="h-px bg-gray-100 mx-2"></div>
+//                 <button
+//                   onClick={handleLogout}
+//                   className="w-full text-left px-4 py-3 text-[#CB748E] font-bold hover:bg-[#fff0f3] transition"
+//                 >
+//                   Logout
+//                 </button>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+
+<<<<<<< HEAD
+        {/* ================= SUMMARY ================= */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Summary title="Saldo" value={balance} color="text-[#426E55]" />
+          <Summary title="Pendapatan" value={totalIncome} color="text-[#73986F]" />
+          <Summary title="Pengeluaran" value={totalExpense} color="text-[#CB748E]" />
+        </div>
+
+        {/* ================= CHART ================= */}
+        <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-[#D698AB]/30 mb-8">
+          <h2 className="text-xl font-bold mb-4 text-[#2D4839]">Ringkasan Grafik</h2>
+          <div className="h-64">
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie data={chartData} dataKey="value" outerRadius={90} paddingAngle={5} label>
+                  <Cell fill="#73986F" stroke="none" /> 
+                  <Cell fill="#CB748E" stroke="none" />
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #D698AB' }}
+                  itemStyle={{ color: '#2D4839', fontWeight: 'bold' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* ================= TRANSACTION TABLE ================= */}
+        <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-[#D698AB]/20">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-[#2D4839]">Daftar Transaksi</h2>
+            
+            {/* 🔥🔥🔥 TOMBOL DENGAN ANIMASI SHINE/KILAU 🔥🔥🔥 */}
+            <button
+              onClick={() => setShowModal(true)}
+              className="
+                relative overflow-hidden group 
+                bg-[#426E55] text-white font-semibold 
+                px-6 py-2.5 rounded-xl shadow-lg 
+                transition-all duration-300 transform 
+                hover:scale-105 hover:shadow-[#426E55]/40 hover:shadow-2xl
+              "
+            >
+              {/* Layer Kilauan (Shine Effect) */}
+              <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 transition-all duration-700 ease-in-out group-hover:left-[100%]" />
+              
+              <span className="relative flex items-center gap-2">
+                <span className="text-lg font-bold">+</span> Tambah Transaksi
+              </span>
+            </button>
+            {/* 🔥🔥🔥 END TOMBOL ANIMASI 🔥🔥🔥 */}
+
+          </div>
+=======
+//         {/* ================= SUMMARY ================= */}
+//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+//           {/* Mengganti class text warna default dengan hex palette */}
+//           <Summary title="Saldo" value={balance} color="text-[#426E55]" />
+//           <Summary title="Pendapatan" value={totalIncome} color="text-[#73986F]" />
+//           <Summary title="Pengeluaran" value={totalExpense} color="text-[#CB748E]" />
+//         </div>
+
+//         {/* ================= CHART ================= */}
+//         <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-[#D698AB]/30 mb-8">
+//           <h2 className="text-xl font-bold mb-4 text-[#2D4839]">Ringkasan Grafik</h2>
+//           <div className="h-64">
+//             <ResponsiveContainer>
+//               <PieChart>
+//                 <Pie data={chartData} dataKey="value" outerRadius={90} paddingAngle={5} label>
+//                   {/* Tulipe leafs untuk income */}
+//                   <Cell fill="#73986F" stroke="none" /> 
+//                   {/* Growing pink untuk expense */}
+//                   <Cell fill="#CB748E" stroke="none" />
+//                 </Pie>
+//                 <Tooltip 
+//                   contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #D698AB' }}
+//                   itemStyle={{ color: '#2D4839', fontWeight: 'bold' }}
+//                 />
+//               </PieChart>
+//             </ResponsiveContainer>
+//           </div>
+//         </div>
+
+//         {/* ================= TRANSACTION TABLE ================= */}
+//         <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-[#D698AB]/20">
+//           <div className="flex justify-between items-center mb-6">
+//             <h2 className="text-xl font-bold text-[#2D4839]">Daftar Transaksi</h2>
+//             <button
+//               onClick={() => setShowModal(true)}
+//               // Tombol Tambah: Grounding green
+//               className="bg-[#426E55] hover:bg-[#2D4839] text-white font-semibold px-5 py-2.5 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
+//             >
+//               + Tambah Transaksi
+//             </button>
+//           </div>
+>>>>>>> b095fd687e1d43328cc4d1dc063c5d61efc8014b
+
+//           <div className="overflow-x-auto rounded-xl border border-[#D698AB]/30">
+//             <table className="w-full text-left">
+//               <thead className="bg-[#D698AB]/20 text-[#2D4839]">
+//                 <tr>
+//                   <th className="p-4 font-bold">Tanggal</th>
+//                   <th className="p-4 font-bold">Jenis</th>
+//                   <th className="p-4 font-bold">Kategori</th>
+//                   <th className="p-4 font-bold">Nominal</th>
+//                   <th className="p-4 font-bold text-center">Aksi</th>
+//                 </tr>
+//               </thead>
+//               <tbody className="divide-y divide-[#D698AB]/20 bg-white">
+//                 {transactions.length === 0 && (
+//                   <tr>
+//                     <td colSpan={5} className="text-center py-8 text-[#73986F] italic">
+//                       Belum ada transaksi saat ini.
+//                     </td>
+//                   </tr>
+//                 )}
+
+<<<<<<< HEAD
+                {transactions.map((t) => (
+                  <tr key={t.id} className="hover:bg-[#EED4DB]/30 transition">
+                    <td className="p-4 text-[#426E55]">{t.date}</td>
+                    <td className="p-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                        t.type === 'income' 
+                        ? 'bg-[#73986F]/20 text-[#2D4839]' 
+                        : 'bg-[#CB748E]/20 text-[#CB748E]'
+                      }`}>
+                        {t.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}
+                      </span>
+                    </td>
+                    <td className="p-4 text-[#2D4839]">{t.category}</td>
+                    <td className={`p-4 font-bold ${
+                        t.type === 'income' ? 'text-[#73986F]' : 'text-[#CB748E]'
+                    }`}>
+                      Rp {t.amount.toLocaleString()}
+                    </td>
+                    <td className="p-4 text-center">
+                      <button
+                        onClick={() => handleDelete(t.id)}
+                        className="bg-[#CB748E] hover:bg-[#a8566e] text-white px-3 py-1.5 rounded-lg text-sm transition shadow-sm hover:shadow-md"
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+=======
+//                 {transactions.map((t) => (
+//                   <tr key={t.id} className="hover:bg-[#EED4DB]/30 transition">
+//                     <td className="p-4 text-[#426E55]">{t.date}</td>
+//                     <td className="p-4">
+//                       <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+//                         t.type === 'income' 
+//                         ? 'bg-[#73986F]/20 text-[#2D4839]' 
+//                         : 'bg-[#CB748E]/20 text-[#CB748E]'
+//                       }`}>
+//                         {t.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}
+//                       </span>
+//                     </td>
+//                     <td className="p-4 text-[#2D4839]">{t.category}</td>
+//                     <td className={`p-4 font-bold ${
+//                         t.type === 'income' ? 'text-[#73986F]' : 'text-[#CB748E]'
+//                     }`}>
+//                       Rp {t.amount.toLocaleString()}
+//                     </td>
+//                     <td className="p-4 text-center">
+//                       <button
+//                         onClick={() => handleDelete(t.id)}
+//                         // Tombol Hapus: Growing pink
+//                         className="bg-[#CB748E] hover:bg-[#a8566e] text-white px-3 py-1.5 rounded-lg text-sm transition shadow-sm hover:shadow-md"
+//                       >
+//                         Hapus
+//                       </button>
+//                     </td>
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div>
+//         </div>
+>>>>>>> b095fd687e1d43328cc4d1dc063c5d61efc8014b
+
+//         {/* ================= MODAL ================= */}
+//         {showModal && (
+//           <Modal
+//             form={form}
+//             onChange={handleInputChange}
+//             onClose={() => setShowModal(false)}
+//             onSave={handleAddTransaction}
+//           />
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+<<<<<<< HEAD
+/* ================= HELPER COMPONENTS ================= */
+function Summary({
+  title,
+  value,
+  color,
+}: {
+  title: string;
+  value: number;
+  color: string;
+}) {
+  return (
+    <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-5px_rgba(45,72,57,0.1)] border border-[#D698AB]/20 flex flex-col justify-between h-32 transition hover:-translate-y-1 duration-300">
+      <h3 className="font-semibold text-[#73986F] text-sm uppercase tracking-wider">{title}</h3>
+      <p className={`text-3xl font-extrabold ${color} mt-2`}>
+        Rp {value.toLocaleString()}
+      </p>
+    </div>
+  );
+}
+
+function Modal({ form, onChange, onClose, onSave }: any) {
+  return (
+    <div className="fixed inset-0 bg-[#2D4839]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl border border-[#D698AB] animate-in fade-in zoom-in duration-200">
+        <h2 className="text-2xl font-bold mb-6 text-[#2D4839]">Tambah Transaksi</h2>
+=======
+// /* ================= HELPER COMPONENTS ================= */
+// function Summary({
+//   title,
+//   value,
+//   color,
+// }: {
+//   title: string;
+//   value: number;
+//   color: string;
+// }) {
+//   return (
+//     <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-5px_rgba(45,72,57,0.1)] border border-[#D698AB]/20 flex flex-col justify-between h-32">
+//       <h3 className="font-semibold text-[#73986F] text-sm uppercase tracking-wider">{title}</h3>
+//       <p className={`text-3xl font-extrabold ${color} mt-2`}>
+//         Rp {value.toLocaleString()}
+//       </p>
+//     </div>
+//   );
+// }
+
+// function Modal({ form, onChange, onClose, onSave }: any) {
+//   return (
+//     <div className="fixed inset-0 bg-[#2D4839]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+//       <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl border border-[#D698AB]">
+//         <h2 className="text-2xl font-bold mb-6 text-[#2D4839]">Tambah Transaksi</h2>
+>>>>>>> b095fd687e1d43328cc4d1dc063c5d61efc8014b
+
+//         <div className="space-y-4">
+//           <div>
+//             <label className="block text-sm font-bold text-[#426E55] mb-1">Jenis</label>
+//             <select
+//               value={form.type}
+//               onChange={(e) => onChange("type", e.target.value)}
+//               className="w-full border-2 border-[#D698AB]/50 p-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-2 focus:ring-[#CB748E]/20 text-[#2D4839]"
+//             >
+//               <option value="income">Pendapatan</option>
+//               <option value="expense">Pengeluaran</option>
+//             </select>
+//           </div>
+
+//           <div>
+//              <label className="block text-sm font-bold text-[#426E55] mb-1">Kategori</label>
+//             <input
+//               value={form.category}
+//               onChange={(e) => onChange("category", e.target.value)}
+//               placeholder="Contoh: Gaji, Makanan"
+//               className="w-full border-2 border-[#D698AB]/50 p-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-2 focus:ring-[#CB748E]/20 text-[#2D4839] placeholder-[#D698AB]"
+//             />
+//           </div>
+
+//           <div>
+//             <label className="block text-sm font-bold text-[#426E55] mb-1">Nominal (Rp)</label>
+//             <input
+//               value={form.amount}
+//               onChange={(e) => onChange("amount", e.target.value.replace(/\D/g, ""))}
+//               placeholder="0"
+//               className="w-full border-2 border-[#D698AB]/50 p-3 rounded-xl outline-none focus:border-[#CB748E] focus:ring-2 focus:ring-[#CB748E]/20 text-[#2D4839] placeholder-[#D698AB]"
+//             />
+//           </div>
+//         </div>
+
+<<<<<<< HEAD
+        <div className="flex justify-end gap-3 mt-8">
+          <button 
+            onClick={onClose} 
+            className="px-5 py-2.5 bg-gray-100 text-[#426E55] font-bold rounded-xl hover:bg-gray-200 transition"
+          >
+            Batal
+          </button>
+          <button 
+            onClick={onSave} 
+            className="px-5 py-2.5 bg-[#426E55] text-white font-bold rounded-xl hover:bg-[#2D4839] hover:shadow-lg transition transform active:scale-95"
+          >
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+=======
+//         <div className="flex justify-end gap-3 mt-8">
+//           <button 
+//             onClick={onClose} 
+//             className="px-5 py-2.5 bg-gray-100 text-[#426E55] font-bold rounded-xl hover:bg-gray-200 transition"
+//           >
+//             Batal
+//           </button>
+//           <button 
+//             onClick={onSave} 
+//             className="px-5 py-2.5 bg-[#426E55] text-white font-bold rounded-xl hover:bg-[#2D4839] hover:shadow-lg transition"
+//           >
+//             Simpan
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+>>>>>>> b095fd687e1d43328cc4d1dc063c5d61efc8014b

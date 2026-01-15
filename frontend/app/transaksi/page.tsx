@@ -59,6 +59,11 @@ export default function TransaksiPage() {
     router.push("/login");
   };
 
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("user") || "null")
+      : null;
+
   /* ================= RENDER ================= */
   return (
     <div className="min-h-screen bg-gray-100">
