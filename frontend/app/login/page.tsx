@@ -12,6 +12,7 @@ export default function LoginPage() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -83,11 +84,7 @@ export default function LoginPage() {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       // Animasi sukses sebelum redirect
-      const button = e.currentTarget.querySelector('button[type="submit"]');
-      if (button) {
-        button.innerHTML = '<span class="inline-flex items-center"><svg class="w-5 h-5 mr-2 animate-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Login Berhasil!</span>';
-        button.classList.add('bg-gradient-to-r', 'from-[#426E55]', 'to-[#2D4839]');
-      }
+      setSuccess(true);
 
       setTimeout(() => {
         alert("Login berhasil!");

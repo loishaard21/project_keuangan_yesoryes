@@ -30,6 +30,8 @@ export default function FinanceDashboard() {
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const [accounts, setAccounts] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -38,6 +40,7 @@ export default function FinanceDashboard() {
     type: "income",
     category: "",
     amount: "",
+    accountId: "",
   });
 
   /* ================= HANDLERS ================= */
@@ -47,7 +50,7 @@ export default function FinanceDashboard() {
 
   const handleAddTransaction = async () => {
     const amount = Number(form.amount);
-    if (!form.category || isNaN(amount)) {
+    if (!form.category || isNaN(amount) || !form.accountId) {
       alert("Lengkapi data transaksi");
       return;
     }
@@ -62,6 +65,7 @@ export default function FinanceDashboard() {
           amount,
           type: form.type.toUpperCase(),
           category: form.category,
+          accountId: Number(form.accountId),
           userId: user.id,
         }),
       });
@@ -83,7 +87,7 @@ export default function FinanceDashboard() {
       };
 
       setTransactions((prev) => [...prev, newTransaction]);
-      setForm({ type: "income", category: "", amount: "" });
+      setForm({ type: "income", category: "", amount: "", accountId: "" });
       setShowModal(false);
     } catch (error) {
       console.error(error);
@@ -91,30 +95,42 @@ export default function FinanceDashboard() {
     }
   };
 
-  const user =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("user") || "null")
-      : null;
+
+      
+useEffect(() => {
+  setMounted(true);
+
+  const savedUser = localStorage.getItem("user");
+  if (savedUser) {
+    setUser(JSON.parse(savedUser));
+  }
+}, []);
 
   useEffect(() => {
-    if (!user?.id) return;
+  if (!user?.id) return;
 
-    setIsLoading(true);
-    fetch(`http://localhost:3000/api/transactions?userId=${user.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const formatted = data.map((t: any) => ({
-          id: t.id.toString(),
-          type: t.type.toLowerCase(),
-          category: t.category,
-          amount: t.amount,
-          date: new Date(t.createdAt).toISOString().split("T")[0],
-        }));
-        setTransactions(formatted);
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-  }, [user]);
+  setIsLoading(true);
+
+  Promise.all([
+    fetch(`http://localhost:3000/api/transactions?userId=${user.id}`).then(res => res.json()),
+    fetch(`http://localhost:3000/api/accounts?userId=${user.id}`).then(res => res.json()),
+  ])
+    .then(([transactionsData, accountsData]) => {
+      const formattedTransactions = transactionsData.map((t: any) => ({
+        id: t.id.toString(),
+        type: t.type.toLowerCase(),
+        category: t.category,
+        amount: t.amount,
+        date: new Date(t.createdAt).toISOString().split("T")[0],
+      }));
+
+      setTransactions(formattedTransactions);
+      setAccounts(accountsData); // 🔥 INI YANG SEBELUMNYA HILANG
+    })
+    .catch(console.error)
+    .finally(() => setIsLoading(false));
+}, [user]);
+
 
   const handleAddAccount = async () => {
     const balance = Number(accountForm.balance);
@@ -150,6 +166,12 @@ export default function FinanceDashboard() {
       }
 
       alert("Akun berhasil ditambahkan");
+      const refreshed = await fetch(
+      `http://localhost:3000/api/accounts?userId=${user.id}`
+      ).then(res => res.json());
+
+      setAccounts(refreshed);
+
       setAccountForm({ name: "", balance: "" });
       setShowAccountModal(false);
     } catch (error) {
@@ -209,6 +231,8 @@ export default function FinanceDashboard() {
   ];
 
   /* ================= RENDER ================= */
+ if (!mounted) return null;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f0f7f4] via-[#e8f4ee] to-[#d9ede3] text-[#2D4839]">
       {/* ================= OVERLAY ================= */}
@@ -568,6 +592,7 @@ export default function FinanceDashboard() {
         {showModal && (
           <Modal
             form={form}
+            accounts={accounts}
             onChange={handleInputChange}
             onClose={() => setShowModal(false)}
             onSave={handleAddTransaction}
@@ -668,7 +693,7 @@ function SummaryCard({ title, value, color, icon, delay }: any) {
   );
 }
 
-function Modal({ form, onChange, onClose, onSave }: any) {
+function Modal({ form, accounts, onChange, onClose, onSave }: any) {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-[#73986F]/20 w-full max-w-md animate-slideInUp">
@@ -706,6 +731,25 @@ function Modal({ form, onChange, onClose, onSave }: any) {
               className="w-full border-2 border-[#73986F]/20 p-3 rounded-xl focus:outline-none focus:border-[#73986F] focus:ring-2 focus:ring-[#73986F]/30 transition-all bg-white focus:scale-[1.02] text-[#2D4839]"
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-[#2D4839] mb-2">
+              Akun
+            </label>
+            <select
+              value={form.accountId}
+              onChange={(e) => onChange("accountId", e.target.value)}
+              className="w-full border-2 border-[#73986F]/20 p-3 rounded-xl focus:outline-none focus:border-[#73986F]"
+            >
+              <option value="">-- Pilih Akun --</option>
+              {accounts.map((acc) => (
+                <option key={acc.id} value={acc.id}>
+                  {acc.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
 
           <div>
             <label className="block text-sm font-medium text-[#2D4839] mb-2">Nominal (Rp)</label>
