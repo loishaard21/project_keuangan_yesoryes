@@ -82,7 +82,11 @@ export default function TransaksiPage() {
         }`}
       >
         <div className="flex justify-between items-center mb-10 border-b border-[#73986F]/40 pb-4">
-          <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
+          <h1 
+            className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-white to-[#D698AB] bg-clip-text text-transparent animate-slideInLeft"
+          >
+            CERDAS FINANSIAL
+          </h1>
           <button onClick={() => setSidebarOpen(false)}>✕</button>
         </div>
 
