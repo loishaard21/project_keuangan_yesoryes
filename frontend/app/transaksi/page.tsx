@@ -81,7 +81,7 @@ export default function TransaksiPage() {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-10 border-b border-[#73986F]/40 pb-4">
           <h1 className="font-bold text-lg">CERDAS FINANSIAL</h1>
           <button onClick={() => setSidebarOpen(false)}>✕</button>
         </div>
