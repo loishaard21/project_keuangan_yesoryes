@@ -255,7 +255,11 @@ export default function TransaksiPage() {
                 {transactions.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="text-center p-8">
-                      <div className="flex flex-col items-center justify-center py-12"></div>
+                      <div className="flex flex-col items-center justify-center py-12">
+                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#EED4DB] to-[#D698AB] flex items-center justify-center mb-4 shadow-lg">
+                          <span className="text-3xl">📝</span>
+                        </div>
+                      </div>
                       Belum ada transaksi
                     </td>
                   </tr>
