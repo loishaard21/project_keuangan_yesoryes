@@ -221,7 +221,7 @@ export default function TransaksiPage() {
         <div
           className="bg-white/90 p-8 rounded-3xl shadow-xl border border-[#73986F]/10 animate-fadeIn"
         >
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <h2 className="text-xl font-semibold">Daftar Transaksi</h2>
             <button
               onClick={() => setShowModal(true)}
