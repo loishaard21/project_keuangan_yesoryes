@@ -87,7 +87,12 @@ export default function TransaksiPage() {
           >
             CERDAS FINANSIAL
           </h1>
-          <button onClick={() => setSidebarOpen(false)}>✕</button>
+          <button 
+            onClick={() => setSidebarOpen(false)} 
+            className="text-white/70 hover:text-white transition-all duration-300 hover:rotate-90 p-1"
+          >
+            ✕
+          </button>
         </div>
 
         <nav className="flex flex-col space-y-4 text-gray-300">
