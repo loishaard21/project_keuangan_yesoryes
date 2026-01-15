@@ -222,7 +222,12 @@ export default function TransaksiPage() {
           className="bg-white/90 p-8 rounded-3xl shadow-xl border border-[#73986F]/10 animate-fadeIn"
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <h2 className="text-xl font-semibold">Daftar Transaksi</h2>
+            <div>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-[#2D4839] to-[#426E55] bg-clip-text text-transparent">
+                Daftar Transaksi
+              </h2>
+              <p className="text-[#73986F] mt-1 font-medium">Kelola semua transaksi keuangan Anda</p>
+            </div>
             <button
               onClick={() => setShowModal(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded"
