@@ -369,6 +369,43 @@ export default function TransaksiPage() {
           </div>
         )}
       </div>
+
+      {/* ================= CUSTOM CSS ANIMATIONS ================= */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slideInDown {
+          from { transform: translateY(-20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+          from { transform: translateX(-20px); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .animate-slideInUp {
+          animation: slideInUp 0.5s ease-out forwards;
+          opacity: 0;
+        }
+
+        .animate-slideInLeft {
+          animation: slideInLeft 0.5s ease-out forwards;
+          opacity: 0;
+        }
+      `}</style>
     </div>
   );
 }
