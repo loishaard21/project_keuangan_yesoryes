@@ -143,12 +143,26 @@ export default function TransaksiPage() {
               onClick={() => setSidebarOpen(true)}
               className="p-3 bg-white/90 hover:bg-white rounded-xl shadow-sm border border-[#73986F]/20 transition-all backdrop-blur-sm hover:scale-105 active:scale-95"
             >
-              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
-              <span className="block w-6 h-0.5 bg-gray-800 mb-1"></span>
-              <span className="block w-6 h-0.5 bg-gray-800"></span>
+              <span 
+                className={`block w-6 h-0.5 bg-gradient-to-r from-[#2D4839] to-[#426E55] mb-1.5 transition-all duration-300 ${
+                  sidebarOpen ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span 
+                className={`block w-6 h-0.5 bg-gradient-to-r from-[#2D4839] to-[#426E55] mb-1.5 transition-all duration-300 ${
+                  sidebarOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span 
+                className={`block w-6 h-0.5 bg-gradient-to-r from-[#2D4839] to-[#426E55] transition-all duration-300 ${
+                  sidebarOpen ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
             </button>
 
-            <h1 className="text-3xl font-bold">Manajemen Transaksi</h1>
+            <h1 className="text-3xl font-extrabold bg-gradient-to-r from-[#2D4839] via-[#426E55] to-[#73986F] bg-clip-text text-transparent">
+              Manajemen Transaksi
+            </h1>
           </div>
 
           {/* PROFILE MENU */}
