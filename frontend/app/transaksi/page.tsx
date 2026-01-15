@@ -252,13 +252,14 @@ export default function TransaksiPage() {
                 </tr>
               </thead>
               <tbody>
-                {transactions.length === 0 && (
+                {transactions.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="text-center py-4 text-gray-500">
+                    <td colSpan={5} className="text-center p-8">
+                      <div className="flex flex-col items-center justify-center py-12"></div>
                       Belum ada transaksi
                     </td>
                   </tr>
-                )}
+                ): null}
 
                 {transactions.map((t) => (
                   <tr key={t.id}>
