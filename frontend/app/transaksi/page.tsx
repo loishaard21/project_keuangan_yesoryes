@@ -66,7 +66,7 @@ export default function TransaksiPage() {
 
   /* ================= RENDER ================= */
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-[#f0f7f4] via-[#e8f4ee] to-[#d9ede3] text-[#2D4839]">
 
       {/* ================= OVERLAY ================= */}
       {sidebarOpen && (
