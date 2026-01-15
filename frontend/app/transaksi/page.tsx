@@ -244,11 +244,11 @@ export default function TransaksiPage() {
             <table className="w-full">
               <thead>
                 <tr className="bg-gradient-to-r from-[#73986F]/5 to-[#426E55]/5">
-                  <th className="border p-2">Tanggal</th>
-                  <th className="border p-2">Jenis</th>
-                  <th className="border p-2">Kategori</th>
-                  <th className="border p-2">Nominal</th>
-                  <th className="border p-2">Aksi</th>
+                  <th className="p-4 text-left text-[#2D4839] font-semibold border-b border-[#73986F]/10">Tanggal</th>
+                  <th className="p-4 text-left text-[#2D4839] font-semibold border-b border-[#73986F]/10">Jenis</th>
+                  <th className="p-4 text-left text-[#2D4839] font-semibold border-b border-[#73986F]/10">Kategori</th>
+                  <th className="p-4 text-left text-[#2D4839] font-semibold border-b border-[#73986F]/10">Nominal</th>
+                  <th className="p-4 text-left text-[#2D4839] font-semibold border-b border-[#73986F]/10">Aksi</th>
                 </tr>
               </thead>
               <tbody>
