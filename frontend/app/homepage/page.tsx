@@ -303,16 +303,10 @@ export default function HomePage() {
               </svg>
             </Link>
             
-            <Link 
-              href="#manfaat" 
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold border-2 border-[#73986F] text-white hover:bg-[#73986F]/20 hover:border-[#E6F1ED] transition-all duration-300"
-            >
-              Pelajari Lebih Lanjut
-            </Link>
           </div>
           
           <p className="mt-8 text-sm text-[#E6F1ED]/60">
-            Gratis selamanya untuk pengguna individu • Tidak ada biaya tersembunyi
+            @2026 Three Ord(dinary)
           </p>
         </div>
       </section>
