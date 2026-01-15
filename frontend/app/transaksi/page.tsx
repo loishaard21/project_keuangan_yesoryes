@@ -218,7 +218,9 @@ export default function TransaksiPage() {
         </div>
 
         {/* ================= TABLE ================= */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        <div
+          className="bg-white/90 p-8 rounded-3xl shadow-xl border border-[#73986F]/10 animate-fadeIn"
+        >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Daftar Transaksi</h2>
             <button
