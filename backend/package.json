@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
     "bcryptjs": "^3.0.3",
     "next": "16.0.3",
     "react": "19.2.0",
@@ -22,7 +21,6 @@
     "baseline-browser-mapping": "^2.9.5",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
-    "prisma": "^6.19.0",
     "typescript": "^5"
   }
 }
